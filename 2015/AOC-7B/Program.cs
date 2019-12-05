@@ -29,6 +29,9 @@ public static class Program {
     private static void Main(string[] args) {
         ParseInput();
 
+        // Sub the original output from wire A for the input of wire B, then resolve again
+        _wireMap["b"].operandA = "3176";
+
         Console.WriteLine(Resolve("a"));
     }
 
