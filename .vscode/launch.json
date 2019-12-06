@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "2015/AOC-1A",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/2015/AOC-1A/bin/Debug/netcoreapp2.1/AOC-1A.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/2015/AOC-1A",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ]
+}
