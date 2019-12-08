@@ -14,8 +14,30 @@ public struct MatrixInt {
         return m;
     }
 
+    public static implicit operator MatrixInt(int[] vector) {
+        MatrixInt m = new MatrixInt(vector.Length, 1);
+
+        for (int i = 0; i < vector.Length; ++i) {
+            m[i, 0] = vector[i];
+        }
+
+        return m;
+    }
+
+    public static implicit operator int[](MatrixInt matrix) {
+        Debug.Assert(matrix.cols == 1, "Cannot convert a matrix with more than one column into a vector (int[])");
+
+        int[] v = new int[matrix.rows];
+
+        for (int i = 0; i < matrix.rows; ++i) {
+            v[i] = matrix[i, 0];
+        }
+
+        return v;
+    }
+
     public static MatrixInt operator*(MatrixInt a, MatrixInt b) {
-        Debug.Assert(a.cols == b.rows, "Invalid arguments, unable to multiple mismatched matrix sizes.");
+        Debug.Assert(a.cols == b.rows, "Invalid arguments, unable to multiply mismatched matrix sizes.");
 
         MatrixInt c = new MatrixInt(a.rows, b.cols);
 
