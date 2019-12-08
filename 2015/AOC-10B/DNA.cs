@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -47,7 +46,7 @@ public class DNA {
 
         for (int i = 0; i < ruleSet.Length; ++i) {
             foreach (int subIndex in ruleSet[i].Select(e => elementMap[e].index)) {
-                _dna[subIndex, i] = 1;
+                ++_dna[subIndex, i];
             }
         }
     }
@@ -57,7 +56,7 @@ public class DNA {
 
         int[] elementCounts = iterDNA * initial;
 
-        ulong length = 0UL;
+        ulong length = 0;
 
         for (int i = 0; i < elementCounts.Length; ++i) {
             int count = elementCounts[i];
