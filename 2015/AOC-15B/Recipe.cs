@@ -19,7 +19,8 @@ public class Recipe {
         }
     }
 
-    public const int MAX_QUANTITY = 100;
+    public const int QUANTITY = 100;
+    public const int CALORIES = 500;
 
     private static List<Ingredient> _ingredients = new List<Ingredient>();
 
@@ -48,49 +49,36 @@ public class Recipe {
 
     public Recipe() {
         _quantities = new int[_ingredients.Count];
-
-        for (int i = 0; i < _quantities.Length; ++i) {
-            _quantities[i] = MAX_QUANTITY / _ingredients.Count;
-        }
-        _quantities[0] += MAX_QUANTITY % _ingredients.Count; // Drop leftovers in the first ingredient
     }
 
     public void MaximizeScore() {
-        while (TryImprove()) {
-            int score = CalculateScore(_quantities);
-            string ingredients = _quantities.Select(i => $"{i}").Aggregate((a, b) => $"{a} {b}");
-            Console.WriteLine($"Improved: {ingredients} = {score}");
-        }
+        int[] recipe = new int[_ingredients.Count];
 
-        Console.WriteLine("Unable to further improve recipe.");
-    }
+        int bestScore = int.MinValue;
 
-    private bool TryImprove() {
-        int baseScore = GetScore();
-        int[] nextRecipe = new int[_ingredients.Count];
-        
-        void Reset() => _quantities.CopyTo(nextRecipe, 0);
-
-        for (int i = 0; i < _quantities.Length; ++i) {
-            for (int j = 0; j < _quantities.Length; ++j) {
-                if (i == j) continue;
-
-                Reset();
-                
-                if (nextRecipe[i] == 100 || nextRecipe[j] == 0) continue;
-
-                ++nextRecipe[i];
-                --nextRecipe[j];
-
-                int score = CalculateScore(nextRecipe);
-                if (score > baseScore) {
-                    nextRecipe.CopyTo(_quantities, 0);
-                    return true;
+        void RecipeLoop(int index = 0, int max = QUANTITY) {
+            if (index == recipe.Length - 1) {
+                recipe[index] = max; // Use up remaining ingredients
+                if (CalculateCalories(recipe) == CALORIES) {
+                    int score = CalculateScore(recipe);
+                    if (bestScore < score) {
+                        bestScore = score;
+                        recipe.CopyTo(_quantities, 0);
+                    }
                 }
+                return;
+            }
+
+            for (int i = max; i >= 0; --i) {
+                recipe[index] = i;
+                RecipeLoop(index + 1, max - i);
             }
         }
 
-        return false;
+        RecipeLoop();
+
+        string ingredients = _quantities.Select(i => $"{i}").Aggregate((a, b) => $"{a} {b}");
+        Console.WriteLine($"Optimized: {ingredients} = {bestScore}");
     }
 
     public int GetScore() => CalculateScore(_quantities);
@@ -107,5 +95,15 @@ public class Recipe {
         }
 
         return propScores.Aggregate((a, b) => a * b);
+    }
+
+    private int CalculateCalories(int[] quantities) {
+        int calories = 0;
+
+        for (int i = 0; i < _ingredients.Count; ++i) {
+            calories += (_ingredients[i].calories * quantities[i]);
+        }
+
+        return calories;
     }
 }
