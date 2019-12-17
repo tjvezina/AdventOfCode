@@ -12,6 +12,10 @@ namespace AdventOfCode.Year2019 {
         private int _width;
         private int _height;
 
+        private Point _botPos;
+        private Direction _botDir;
+        private BotAction[] _actions;
+
         private void Init(string input) {
             _intCode = new IntCode(input);
         }
@@ -32,7 +36,10 @@ namespace AdventOfCode.Year2019 {
             return $"Sum of alignment parameters: {alignParams}";
         }
         
-        protected override string SolvePart2() => null;
+        protected override string SolvePart2() {
+            BuildActionsList();
+            return null;
+        }
 
         private void HandleOnOutput(long output) => _output.Add((char)output);
 
@@ -42,11 +49,19 @@ namespace AdventOfCode.Year2019 {
 
             _map = new char[_width, _height];
 
+            Point? bot = null;
+            List<char> botChars = new List<char> { '>', '<', '^', 'v' }; // Maps to Direction enum values
             for (int y = 0; y < _height; ++y) {
                 for (int x = 0; x < _width; ++x) {
                     _map[x, y] = _output[x + y * (_width + 1)];
+                    if (bot == null && botChars.Contains(_map[x, y])) {
+                        bot = new Point(x, y);
+                    }
                 }
             }
+
+            _botPos = bot.Value;
+            _botDir = (Direction)botChars.IndexOf(_map[_botPos.x, _botPos.y]);
         }
 
         private IEnumerable<Point> GetIntersections() {
@@ -61,6 +76,10 @@ namespace AdventOfCode.Year2019 {
                     }
                 }
             }
+        }
+
+        private void BuildActionsList() {
+            // TODO
         }
     }
 }
