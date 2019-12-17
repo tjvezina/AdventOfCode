@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace AdventOfCode.Year2019 {
+    public class Day : Challenge {
+        private void Init(string[] input) { }
+
+        protected override string SolvePart1() => null;
+        
+        protected override string SolvePart2() => null;
+    }
+}
