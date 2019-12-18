@@ -30,7 +30,7 @@ namespace AdventOfCode.Year2019 {
             _paintedTiles.Clear();
             _state = State.Paint;
             _pos = Point.zero;
-            _dir = Point.up;
+            _dir = Direction.Up;
             if (firstTileIsWhite) {
                 _whiteTiles.Add(_pos);
             }
@@ -62,9 +62,9 @@ namespace AdventOfCode.Year2019 {
                     break;
                 case State.Move:
                     if (output == 0) {
-                        _dir = new Point(-_dir.y, _dir.x);
+                        _dir = _dir.RotateCCW();
                     } else {
-                        _dir = new Point(_dir.y, -_dir.x);
+                        _dir = _dir.RotateCW();
                     }
                     _pos += _dir;
                     _state = State.Paint;

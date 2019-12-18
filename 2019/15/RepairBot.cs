@@ -7,13 +7,6 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019 {
     public class RepairBot {
-        private enum Direction {
-            North = 1,
-            South = 2,
-            West = 3,
-            East = 4
-        }
-
         private enum Tile {
             Wall = 0,
             Empty = 1,
@@ -22,11 +15,11 @@ namespace AdventOfCode.Year2019 {
 
         private static int ManhattanDistance(Point a, Point b) => Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
 
-        private static readonly Dictionary<Direction, Point> DIRECTION_TO_POINT = new Dictionary<Direction, Point> {
-            { Direction.North, Point.up    },
-            { Direction.South, Point.down  },
-            { Direction.East,  Point.right },
-            { Direction.West,  Point.left  }
+        private static readonly Dictionary<Direction, long> INPUT_MAP = new Dictionary<Direction, long> {
+            { Direction.Up,    1 },
+            { Direction.Down,  2 },
+            { Direction.Right, 3 },
+            { Direction.Left,  4 }
         };
 
         private IntCode _intCode;
@@ -73,7 +66,7 @@ namespace AdventOfCode.Year2019 {
             Point prev = _position;
             while (path.Count > 0) {
                 Point next = path.Pop();
-                _moves.Enqueue(DIRECTION_TO_POINT.First(p => p.Value == next - prev).Key);
+                _moves.Enqueue(next - prev);
                 prev = next;
             }
         }
@@ -83,15 +76,15 @@ namespace AdventOfCode.Year2019 {
 
             while (_moves.Count > 1) {
                 direction = _moves.Dequeue();
-                _position += DIRECTION_TO_POINT[direction];
-                _intCode.Input((long)direction);
+                _position += direction;
+                _intCode.Input(INPUT_MAP[direction]);
             }
 
             direction = _moves.Dequeue();
-            _pendingPosition = _position + DIRECTION_TO_POINT[direction];
+            _pendingPosition = _position + direction;
 
             _intCode.OnOutput += HandleUnknownMove;
-            _intCode.Input((long)direction);
+            _intCode.Input(INPUT_MAP[direction]);
             _intCode.OnOutput -= HandleUnknownMove;
         }
 
@@ -115,10 +108,10 @@ namespace AdventOfCode.Year2019 {
 
         private void AddUnknownNeighbors() {
             Point[] neighbors = new[] {
-                _position + Point.up,
-                _position + Point.right,
-                _position + Point.down,
-                _position + Point.left,
+                _position + Direction.Right,
+                _position + Direction.Left,
+                _position + Direction.Up,
+                _position + Direction.Down
             };
 
             foreach (Point neighbor in neighbors.Where(n => !_map.ContainsKey(n))) {
@@ -154,10 +147,10 @@ namespace AdventOfCode.Year2019 {
                 openSet.Remove(current);
 
                 List<Point> neighbors = new List<Point> {
-                    current + Point.up,
-                    current + Point.right,
-                    current + Point.down,
-                    current + Point.left,
+                    current + Direction.Right,
+                    current + Direction.Left,
+                    current + Direction.Up,
+                    current + Direction.Down
                 };
 
                 if (parentMap.ContainsKey(current)) {

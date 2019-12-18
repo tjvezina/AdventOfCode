@@ -7,6 +7,7 @@ namespace AdventOfCode.Year2019 {
         private RepairBot _bot;
 
         private void Init(string input) {
+            SpaceUtil.system = CoordSystem.YUp;
             _bot = new RepairBot(input);
         }
 

@@ -7,6 +7,7 @@ namespace AdventOfCode.Year2019 {
         private PaintBot _paintBot;
 
         private void Init(string input) {
+            SpaceUtil.system = CoordSystem.YUp;
             _paintBot = new PaintBot(input);
         }
 

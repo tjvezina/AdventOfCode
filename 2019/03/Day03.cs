@@ -22,6 +22,7 @@ namespace AdventOfCode.Year2019 {
         private Wire _wireB;
 
         private void Init(string[] input) {
+            SpaceUtil.system = CoordSystem.YUp;
             _wireA = ParseWireInput(input[0]);
             _wireB = ParseWireInput(input[1]);
         }
@@ -53,7 +54,7 @@ namespace AdventOfCode.Year2019 {
                     wire.verticalSteps.Add(step);
                 }
 
-                step.start += step.direction.ToPoint() * step.distance;
+                step.start += (Point)step.direction * step.distance;
                 step.length += step.distance;
             }
 
