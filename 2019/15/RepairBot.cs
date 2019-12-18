@@ -107,12 +107,7 @@ namespace AdventOfCode.Year2019 {
         }
 
         private void AddUnknownNeighbors() {
-            Point[] neighbors = new[] {
-                _position + Direction.Right,
-                _position + Direction.Left,
-                _position + Direction.Up,
-                _position + Direction.Down
-            };
+            Point[] neighbors = EnumUtil.GetValues<Direction>().Select(d => _position + d).ToArray();
 
             foreach (Point neighbor in neighbors.Where(n => !_map.ContainsKey(n))) {
                 _unknown.Add(neighbor);
@@ -146,12 +141,7 @@ namespace AdventOfCode.Year2019 {
 
                 openSet.Remove(current);
 
-                List<Point> neighbors = new List<Point> {
-                    current + Direction.Right,
-                    current + Direction.Left,
-                    current + Direction.Up,
-                    current + Direction.Down
-                };
+                List<Point> neighbors = EnumUtil.GetValues<Direction>().Select(d => current + d).ToList();
 
                 if (parentMap.ContainsKey(current)) {
                     neighbors.Remove(parentMap[current]);
