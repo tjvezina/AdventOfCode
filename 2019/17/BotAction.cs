@@ -1,17 +1,23 @@
 namespace AdventOfCode.Year2019 {
-    public abstract class BotAction {
+    public enum Turn { Left, Right }
+
+    public struct BotAction {
+        public Turn turn;
+        public int steps;
+
+        public BotAction(Turn turn, int steps) {
+            this.turn = turn;
+            this.steps = steps;
+        }
+
         public int charCount => ToString().Length;
-    }
 
-    public class Move : BotAction {
-        public int units;
+        public override string ToString() => $"{turn.ToString()[0]},{steps}";
 
-        public override string ToString() => $"{units}";
-    }
-
-    public class Turn : BotAction {
-        public bool left;
-
-        public override string ToString() => (left ? "L" : "R");
+        public bool Equals(BotAction a) => a.turn == turn && a.steps == steps;
+        public override bool Equals(object obj) => obj is BotAction && Equals((BotAction)obj);
+        public override int GetHashCode() => steps * (turn == Turn.Left ? 1 : -1);
+        public static bool operator==(BotAction a, BotAction b) => a.Equals(b);
+        public static bool operator!=(BotAction a, BotAction b) => !(a == b);
     }
 }
