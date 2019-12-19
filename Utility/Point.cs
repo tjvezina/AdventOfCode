@@ -8,8 +8,12 @@ namespace AdventOfCode {
         public static implicit operator Direction(Point point) => point.ToDirection();
         public static implicit operator Point(Direction direction) => direction.ToPoint();
 
+        public static int TaxiDist(Point a, Point b) => Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
+
         public int x;
         public int y;
+
+        public int taxiLength => TaxiDist(this, Point.zero);
 
         public int this[int i]
         {

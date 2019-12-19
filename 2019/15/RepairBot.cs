@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using AdventOfCode.Year2019.IntCodeV4;
 
@@ -12,8 +10,6 @@ namespace AdventOfCode.Year2019 {
             Empty = 1,
             Goal = 2
         }
-
-        private static int ManhattanDistance(Point a, Point b) => Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
 
         private static readonly Dictionary<Direction, long> INPUT_MAP = new Dictionary<Direction, long> {
             { Direction.Up,    1 },
@@ -53,13 +49,17 @@ namespace AdventOfCode.Year2019 {
             }
 
             goalDist = FindPath(Point.zero, goalPos.Value).Count;
-            timeToFill = _map.Select(p => FindPath(goalPos.Value, p.Key).Count).OrderBy(c => c).Last();
+            timeToFill = _map
+                .Where(p => p.Value == Tile.Empty)
+                .Select(p => FindPath(goalPos.Value, p.Key).Count)
+                .OrderBy(c => c)
+                .Last();
 
             DrawMap();
         }
 
         private void BuildPathToNearestUnknown() {
-            Point target = _unknown.OrderBy(p => ManhattanDistance(p, _position)).First();
+            Point target = _unknown.OrderBy(p => Point.TaxiDist(p, _position)).First();
 
             Stack<Point> path = FindPath(_position, target);
 
@@ -115,52 +115,8 @@ namespace AdventOfCode.Year2019 {
         }
 
         private Stack<Point> FindPath(Point start, Point end) {
-            int GetH(Point p) => ManhattanDistance(p, end);
-
-            Debug.Assert(_map.ContainsKey(start), $"Pathfinding failed, invalid start {start}");
-
-            HashSet<Point> openSet = new HashSet<Point> { start };
-            Dictionary<Point, Point> parentMap = new Dictionary<Point, Point>();
-            Dictionary<Point, int> gMap = new Dictionary<Point, int> { { start, 0 } };
-            Dictionary<Point, int> fMap = new Dictionary<Point, int> { { start, GetH(start) } };
-
-            int GetG(Point p) => gMap.ContainsKey(p) ? gMap[p] : int.MaxValue;
-            int GetF(Point p) => fMap.ContainsKey(p) ? fMap[p] : int.MaxValue;
-
-            while (openSet.Count > 0) {
-                Point current = openSet.OrderBy(GetF).First();
-
-                if (current == end) {
-                    Stack<Point> path = new Stack<Point>();
-                    while (parentMap.ContainsKey(current)) {
-                        path.Push(current);
-                        current = parentMap[current];
-                    }
-                    return path;
-                }
-
-                openSet.Remove(current);
-
-                List<Point> neighbors = EnumUtil.GetValues<Direction>().Select(d => current + d).ToList();
-
-                if (parentMap.ContainsKey(current)) {
-                    neighbors.Remove(parentMap[current]);
-                }
-
-                int gNext = GetG(current) + 1;
-                foreach (Point neighbor in neighbors) {
-                    if (neighbor != end && (!_map.ContainsKey(neighbor) || _map[neighbor] == Tile.Wall)) continue;
-
-                    if (gNext < GetG(neighbor)) {
-                        gMap[neighbor] = gNext;
-                        fMap[neighbor] = gNext + GetH(neighbor);
-                        parentMap[neighbor] = current;
-                        openSet.Add(neighbor);
-                    }
-                }
-            }
-
-            throw new Exception($"Failed to find path from {start} to {end}");
+            bool IsValid(Point p) => (_map.ContainsKey(p) && _map[p] != Tile.Wall) || (p == end && !_map.ContainsKey(p));
+            return Pathfinder.FindPath(start, end, IsValid);
         }
 
         private void DrawMap() {
@@ -179,22 +135,27 @@ namespace AdventOfCode.Year2019 {
             for (int y = max.y; y >= min.y; --y) {
                 for (int x = min.x; x <= max.x; ++x) {
                     Point p = new Point(x, y);
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    ConsoleColor color = ConsoleColor.DarkGray;
                     if (_map.ContainsKey(p)) {
-                        if (path.Contains(p)) Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        if (p == Point.zero) Console.BackgroundColor = ConsoleColor.DarkRed;
                         switch (_map[p]) {
-                            case Tile.Empty: Console.Write("-"); break;
-                            case Tile.Wall:  Console.Write("#"); break;
-                            case Tile.Goal:  Console.Write("O"); break;
+                            case Tile.Goal:
+                                color = ConsoleColor.Green;
+                                break;
+                            case Tile.Empty:
+                                if (p == Point.zero) color = ConsoleColor.DarkRed;
+                                else if (path.Contains(p)) color = ConsoleColor.DarkYellow;
+                                else color = ConsoleColor.Black;
+                                break;
                         }
-                    } else {
-                        Console.Write(" ");
                     }
+                    Console.BackgroundColor = color;
+                    Console.Write("  ");
                 }
+                Console.BackgroundColor = (ConsoleColor)(-1);
                 Console.WriteLine(string.Empty);
             }
-            Console.BackgroundColor = ConsoleColor.Black;
+
+            Console.WriteLine(string.Empty);
         }
     }
 }
