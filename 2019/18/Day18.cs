@@ -6,7 +6,7 @@ using System.Linq;
 namespace AdventOfCode.Year2019 {
     public class Day18 : Challenge {
         private class NodeData : Dictionary<char, (int, string)> { }
-        private class RouteData : Dictionary<(char, string), int> { }
+        private class RouteData : Dictionary<(string, string), int> { }
 
         private bool IsWall(char c) => c == '#';
         private bool IsStart(char c) => "@1234".Contains(c);
@@ -39,9 +39,32 @@ namespace AdventOfCode.Year2019 {
             return $"Shortest path to all keys: {FindShortestPath()}";
         }
 
-        protected override string SolvePart2() => null;
+        protected override string SolvePart2() {
+            UpdateMap();
+            BuildGraph();
+            return $"Shortest path to all keys: {FindShortestPath()}";
+        }
+
+        private void UpdateMap() {
+            Point start = Point.zero;
+            foreach ((int x, int y, char c) in _map.GetElements()) {
+                if (IsStart(c)) {
+                    start = new Point(x, y);
+                    break;
+                }
+            }
+
+            foreach (Point p in EnumUtil.GetValues<Direction>().Select(d => start + d).Append(start)) {
+                _map[p.x, p.y] = '#';
+            }
+            _map[start.x-1, start.y-1] = '1';
+            _map[start.x+1, start.y-1] = '2';
+            _map[start.x-1, start.y+1] = '3';
+            _map[start.x+1, start.y+1] = '4';
+        }
 
         private void BuildGraph() {
+            _nodeMap.Clear();
             foreach ((int x, int y, char c) in _map.GetElements()) {
                 if (IsKey(c) || IsStart(c)) {
                     _nodeMap[c] = BuildNodeData(new Point(x, y));
@@ -80,19 +103,26 @@ namespace AdventOfCode.Year2019 {
         }
 
         private int FindShortestPath() {
-            IEnumerable<char> allKeys = _nodeMap.Keys.Except(new[] { '@' });
+            string allStarts = new string(_map.GetElements().Select(((int x, int y, char c) e) => e.c).Where(IsStart).ToArray());
 
-            RouteData data = new RouteData { { ('@', ""), 0 } };
+            IEnumerable<char> allKeys = _nodeMap.Keys.Except(allStarts);
+
+            RouteData data = new RouteData { { (allStarts, string.Empty), 0 } };
             for (int i = 0; i < allKeys.Count(); ++i) {
                 RouteData nextData = new RouteData();
-                foreach (((char start, string keys), int dist) in data) {
+                foreach (((string starts, string keys), int dist) in data) {
                     foreach (char end in allKeys.Where(k => !keys.Contains(k))) {
-                        (int distToEnd, string route) = _nodeMap[start][end];
-                        if (route.All(c => keys.Contains(char.ToLower(c)))) {
-                            int newDist = dist + distToEnd;
-                            (char, string) nextNode = (end, new string(keys.Append(end).OrderBy(k => k).ToArray()));
-                            if (!nextData.ContainsKey(nextNode) || newDist < nextData[nextNode]) {
-                                nextData[nextNode] = newDist;
+                        for (int s = 0; s < starts.Length; ++s) {
+                            char start = starts[s];
+                            NodeData node = _nodeMap[start];
+                            if (!node.ContainsKey(end)) continue;
+                            (int distToEnd, string route) = node[end];
+                            if (route.All(c => keys.Contains(char.ToLower(c)))) {
+                                int newDist = dist + distToEnd;
+                                (string, string) nextNode = (starts.Replace(start, end), new string(keys.Append(end).OrderBy(k => k).ToArray()));
+                                if (!nextData.ContainsKey(nextNode) || newDist < nextData[nextNode]) {
+                                    nextData[nextNode] = newDist;
+                                }
                             }
                         }
                     }
