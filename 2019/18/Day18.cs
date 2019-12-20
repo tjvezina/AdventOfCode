@@ -13,25 +13,14 @@ namespace AdventOfCode.Year2019 {
         private bool IsKey(char c) => c >= 'a' && c <= 'z';
         private bool IsDoor(char c) => c >= 'A' && c <= 'Z';
 
-        private char[,] _map;
-        private int _width;
-        private int _height;
+        private CharMap _map;
 
         private Dictionary<char, NodeData> _nodeMap = new Dictionary<char, NodeData>();
 
         private void Init(string[] data) {
             SpaceUtil.system = CoordSystem.YDown;
 
-            _height = data.Length;
-            _width = data[0].Length;
-            _map = new char[_width, _height];
-
-            for (int y = 0; y < _height; ++y) {
-                string line = data[y];
-                for (int x = 0; x < _width; ++x) {
-                    _map[x, y] = line[x];
-                }
-            }
+            _map = new CharMap(data);
         }
 
         protected override string SolvePart1() {
@@ -47,7 +36,7 @@ namespace AdventOfCode.Year2019 {
 
         private void UpdateMap() {
             Point start = Point.zero;
-            foreach ((int x, int y, char c) in _map.GetElements()) {
+            foreach ((int x, int y, char c) in _map.Enumerate()) {
                 if (IsStart(c)) {
                     start = new Point(x, y);
                     break;
@@ -55,7 +44,7 @@ namespace AdventOfCode.Year2019 {
             }
 
             foreach (Point p in EnumUtil.GetValues<Direction>().Select(d => start + d).Append(start)) {
-                _map[p.x, p.y] = '#';
+                _map[p] = '#';
             }
             _map[start.x-1, start.y-1] = '1';
             _map[start.x+1, start.y-1] = '2';
@@ -65,7 +54,7 @@ namespace AdventOfCode.Year2019 {
 
         private void BuildGraph() {
             _nodeMap.Clear();
-            foreach ((int x, int y, char c) in _map.GetElements()) {
+            foreach ((int x, int y, char c) in _map.Enumerate()) {
                 if (IsKey(c) || IsStart(c)) {
                     _nodeMap[c] = BuildNodeData(new Point(x, y));
                 }
@@ -103,7 +92,7 @@ namespace AdventOfCode.Year2019 {
         }
 
         private int FindShortestPath() {
-            string allStarts = new string(_map.GetElements().Select(((int x, int y, char c) e) => e.c).Where(IsStart).ToArray());
+            string allStarts = new string(_map.GetElements().Where(IsStart).ToArray());
 
             IEnumerable<char> allKeys = _nodeMap.Keys.Except(allStarts);
 

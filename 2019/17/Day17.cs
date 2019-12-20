@@ -11,9 +11,7 @@ namespace AdventOfCode.Year2019 {
         private string _intCodeMemory;
 
         private List<char> _output = new List<char>();
-        private char[,] _map;
-        private int _width;
-        private int _height;
+        private CharMap _map;
 
         private Point _botPos;
         private Direction _botDir;
@@ -71,16 +69,16 @@ namespace AdventOfCode.Year2019 {
         private void HandleOnOutput(long output) => _output.Add((char)output);
 
         private void ProcessOutput() {
-            _width = _output.IndexOf('\n');
-            _height = (_output.Count + 1) / (_width + 1); // Account for newline chars on all but the last line
+            int width = _output.IndexOf('\n');
+            int height = (_output.Count + 1) / (width + 1); // Account for newline chars on all but the last line
 
-            _map = new char[_width, _height];
+            _map = new CharMap(width, height);
 
             Point? bot = null;
             List<char> botChars = new List<char> { '>', '<', '^', 'v' }; // Maps to Direction enum values
-            for (int y = 0; y < _height; ++y) {
-                for (int x = 0; x < _width; ++x) {
-                    _map[x, y] = _output[x + y * (_width + 1)];
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x) {
+                    _map[x, y] = _output[x + y * (width + 1)];
                     if (bot == null && botChars.Contains(_map[x, y])) {
                         bot = new Point(x, y);
                     }
@@ -93,13 +91,11 @@ namespace AdventOfCode.Year2019 {
         }
 
         private IEnumerable<Point> GetIntersections() {
-            for (int y = 1; y < _height - 1; ++y) {
-                for (int x = 1; x < _width - 1; ++x) {
-                    Point p = new Point(x, y);
-                    // Checking a point + 3 sides is sufficient to confirm intersection
-                    if (IsPath(p) && IsPath(p + Direction.Up) && IsPath(p + Direction.Down) & IsPath(p + Direction.Left)) {
-                        yield return p;
-                    }
+            foreach ((int x, int y, char c) in _map.Enumerate()) {
+                Point p = new Point(x, y);
+                // Checking a point + 3 sides is sufficient to confirm intersection
+                if (IsPath(p) && IsPath(p + Direction.Up) && IsPath(p + Direction.Down) & IsPath(p + Direction.Left)) {
+                    yield return p;
                 }
             }
         }
@@ -213,7 +209,7 @@ namespace AdventOfCode.Year2019 {
             _mainRoutine = actionIDs.ToCharArray().Select(c => $"{c}").Aggregate((a, b) => $"{a},{b}").ToArray();
         }
 
-        private bool IsPath(Point p) => p.x >= 0 && p.x < _width && p.y >= 0 && p.y < _height && _map[p.x, p.y] == '#';
+        private bool IsPath(Point p) => _map.GetCharOrDefault(p) == '#';
 
         private int Occurances(string input, string pattern) {
             int count = 0;

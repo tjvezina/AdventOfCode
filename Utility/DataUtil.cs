@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace AdventOfCode {
     public static class DataUtil {
         public static bool NextPermutation(int[] data) {
@@ -41,14 +39,6 @@ namespace AdventOfCode {
             }
 
             return true;
-        }
-
-        public static IEnumerable<(int x, int y, T)> GetElements<T>(this T[,] array) {
-            for (int y = 0; y < array.GetLength(1); ++y) {
-                for (int x = 0; x < array.GetLength(0); ++x) {
-                    yield return (x, y, array[x, y]);
-                }
-            }
         }
     }
 }
