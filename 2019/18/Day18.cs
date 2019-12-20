@@ -1,100 +1,106 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace AdventOfCode.Year2019 {
     public class Day18 : Challenge {
-        public enum Tile { Empty, Wall }
+        private class NodeData : Dictionary<char, (int, string)> { }
+        private class RouteData : Dictionary<(char, string), int> { }
 
-        public struct Key {
-            public char id;
-            public Point pos;
-        }
+        private bool IsWall(char c) => c == '#';
+        private bool IsStart(char c) => "@1234".Contains(c);
+        private bool IsKey(char c) => c >= 'a' && c <= 'z';
+        private bool IsDoor(char c) => c >= 'A' && c <= 'Z';
 
-        private Tile[,] _map;
+        private char[,] _map;
         private int _width;
         private int _height;
 
-        private Point _startPos;
-        // Map key positions to door positions (if any)
-        private List<Key> _keyList = new List<Key>();
-        // Map door positions to whether or not they are unlocked
-        private Dictionary<Point, Key> _doorMap = new Dictionary<Point, Key>();
+        private Dictionary<char, NodeData> _nodeMap = new Dictionary<char, NodeData>();
 
-        private void Init(string[] input) {
+        private void Init(string[] data) {
             SpaceUtil.system = CoordSystem.YDown;
 
-            _width = input[0].Length;
-            _height = input.Length;
-            _map = new Tile[_width, _height];
-
-            Dictionary<char, Point> keysAndDoors = new Dictionary<char, Point>();
+            _height = data.Length;
+            _width = data[0].Length;
+            _map = new char[_width, _height];
 
             for (int y = 0; y < _height; ++y) {
-                string line = input[y];
+                string line = data[y];
                 for (int x = 0; x < _width; ++x) {
-                    char c = line[x];
-                    if (c == '#') {
-                        _map[x, y] = Tile.Wall;
-                        continue;
-                    }
-                    _map[x, y] = Tile.Empty;
-
-                    if (c == '@') {
-                        _startPos = new Point(x, y);
-                        continue;
-                    }
-                    
-                    keysAndDoors[c] = new Point(x, y);
+                    _map[x, y] = line[x];
                 }
-            }
-
-            char keyID = 'a';
-            while (keysAndDoors.ContainsKey(keyID)) {
-                Key key = new Key { id = keyID, pos = keysAndDoors[keyID] };
-                _keyList.Add(key);
-
-                char doorID = (char)(keyID + ('A' - 'a')); // To uppercase
-                if (keysAndDoors.ContainsKey(doorID)) {
-                    _doorMap[keysAndDoors[doorID]] = key;
-                }
-
-                ++keyID;
             }
         }
 
         protected override string SolvePart1() {
-            int dist = DistanceToCollectKeys(_startPos, _keyList);
-            return $"Shortest distance to collect all keys: {dist}";
+            BuildGraph();
+            return $"Shortest path to all keys: {FindShortestPath()}";
         }
-        
+
         protected override string SolvePart2() => null;
 
-        private int DistanceToCollectKeys(Point start, List<Key> keys, Dictionary<string, int> cache = null) {
-            bool IsValid(Point p, Point end) {
-                return _map[p.x, p.y] != Tile.Wall && // Not a wall
-                    (p == end || !keys.Any(k => k.pos == p)) && // Not a key, except target
-                    (!_doorMap.ContainsKey(p) || !keys.Contains(_doorMap[p])); // Not a door, unless unlocked
+        private void BuildGraph() {
+            foreach ((int x, int y, char c) in _map.GetElements()) {
+                if (IsKey(c) || IsStart(c)) {
+                    _nodeMap[c] = BuildNodeData(new Point(x, y));
+                }
             }
+        }
 
-            if (keys.Count == 0) return 0;
+        private NodeData BuildNodeData(Point start) {
+            NodeData data = new NodeData();
+            HashSet<Point> visited = new HashSet<Point>();
+            Queue<(Point, int, string)> queue = new Queue<(Point, int, string)>();
+            queue.Enqueue((start, 0, string.Empty));
 
-            string cacheKey = $"{start}{keys.Select(k => $"{k.id}").Aggregate((a, b) => $"{a}{b}")}";
-            cache = cache ?? new Dictionary<string, int>();
-            if (!cache.ContainsKey(cacheKey)) {
-                int minDist = int.MaxValue;
-                foreach (Key key in keys) {
-                    if (Pathfinder.TryFindPath(start, key.pos, (p) => IsValid(p, key.pos), out Stack<Point> path)) {
-                        List<Key> keysLeft = new List<Key>(keys);
-                        keysLeft.Remove(key);
-                        minDist = Math.Min(minDist, path.Count + DistanceToCollectKeys(key.pos, keysLeft, cache));
+            while (queue.Count > 0) {
+                (Point pos, int dist, string route) = queue.Dequeue();
+                char c = _map[pos.x, pos.y];
+                if (dist > 0 && (IsKey(c) || IsDoor(c))) {
+                    data[c] = (dist, route);
+                    route += c;
+                }
+                visited.Add(pos);
+
+                Point[] neighbors = new[] {
+                    pos + new Point(0,  1), pos + new Point( 1, 0),
+                    pos + new Point(0, -1), pos + new Point(-1, 0)
+                };
+
+                foreach (Point neighbor in neighbors) {
+                    if (!IsWall(_map[neighbor.x, neighbor.y]) && !visited.Contains(neighbor)) {
+                        queue.Enqueue((neighbor, dist + 1, route));
                     }
                 }
-
-                cache[cacheKey] = minDist;
             }
 
-            return cache[cacheKey];
+            return data;
+        }
+
+        private int FindShortestPath() {
+            IEnumerable<char> allKeys = _nodeMap.Keys.Except(new[] { '@' });
+
+            RouteData data = new RouteData { { ('@', ""), 0 } };
+            for (int i = 0; i < allKeys.Count(); ++i) {
+                RouteData nextData = new RouteData();
+                foreach (((char start, string keys), int dist) in data) {
+                    foreach (char end in allKeys.Where(k => !keys.Contains(k))) {
+                        (int distToEnd, string route) = _nodeMap[start][end];
+                        if (route.All(c => keys.Contains(char.ToLower(c)))) {
+                            int newDist = dist + distToEnd;
+                            (char, string) nextNode = (end, new string(keys.Append(end).OrderBy(k => k).ToArray()));
+                            if (!nextData.ContainsKey(nextNode) || newDist < nextData[nextNode]) {
+                                nextData[nextNode] = newDist;
+                            }
+                        }
+                    }
+                }
+                data = nextData;
+            }
+
+            return data.Values.OrderBy(d => d).First();
         }
     }
 }
