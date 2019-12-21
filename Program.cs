@@ -3,8 +3,15 @@ using System.Linq;
 
 namespace AdventOfCode {
     public static class Program {
-        // Set to a specific year while working on puzzles from that year
-        public static readonly int DEFAULT_YEAR = DateTime.Now.Year;
+        // Set to a specific year while working on puzzles from that year, or null for current year
+        private static readonly int? ACTIVE_YEAR = null;
+        private static int defaultYear {
+            get {
+                if (ACTIVE_YEAR.HasValue) return ACTIVE_YEAR.Value;
+                return DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
+            }
+        }
+        private static int defaultDay => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
         private static void Main(string[] args) {
             Type type;
@@ -27,7 +34,7 @@ namespace AdventOfCode {
             string[] parts = data.Split('.');
 
             if (parts.Length == 1) {
-                year = DEFAULT_YEAR;
+                year = defaultYear;
                 int.TryParse(parts[0], out day);
             } else {
                 int.TryParse(parts[0], out year);
@@ -44,20 +51,10 @@ namespace AdventOfCode {
         }
 
         private static Type GetMostRecentChallenge() {
-            int year;
-            int day;
-
-            if (DateTime.Now.Month == 12) {
-                year = DateTime.Now.Year;
-                day = DateTime.Now.Day;
-            }
-            else {
-                year = DateTime.Now.Year - 1;
-                day = 25;
-            }
+            int year = defaultYear;
 
             Type type = null;
-            Enumerable.Range(1, day).Reverse().FirstOrDefault(d => (type = Challenge.GetType(year, d)) != null);
+            Enumerable.Range(1, defaultDay).Reverse().FirstOrDefault(d => (type = Challenge.GetType(year, d)) != null);
 
             if (type == null) {
                 Console.WriteLine($"No challenges found in {year}");
