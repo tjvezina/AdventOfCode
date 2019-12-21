@@ -50,7 +50,7 @@ namespace AdventOfCode {
         }
 
         private void Init() {
-            string inputPath = $"{year}/{day:00}/input.txt";
+            string inputPath = GetFilePath("input.txt");
             string[] input = null;
 
             if (File.Exists(inputPath)) {
@@ -85,6 +85,10 @@ namespace AdventOfCode {
 
             throw new Exception($"Found Init function, but unknown parameter type: {initParams[0]}");
         }
+
+        private string GetFilePath(string fileName) => $"{year}/{day:00}/{fileName}";
+
+        protected string[] LoadFile(string fileName) => File.ReadAllLines(GetFilePath(fileName));
 
         protected virtual void Reset() { }
 
