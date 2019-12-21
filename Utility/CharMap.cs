@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace AdventOfCode {
@@ -53,6 +54,15 @@ namespace AdventOfCode {
                 for (int x = 0; x < width; ++x) {
                     yield return (x, y, _map[x, y]);
                 }
+            }
+        }
+
+        public void Draw() {
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x) {
+                    Console.Write(_map[x, y]);
+                }
+                Console.WriteLine(string.Empty);
             }
         }
     }

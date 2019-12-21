@@ -116,7 +116,7 @@ namespace AdventOfCode.Year2019 {
 
         private Stack<Point> FindPath(Point start, Point end) {
             bool IsValid(Point p) => (_map.ContainsKey(p) && _map[p] != Tile.Wall) || (p == end && !_map.ContainsKey(p));
-            return Pathfinder.FindPath(start, end, IsValid);
+            return Pathfinder.FindPathInGrid(start, end, IsValid);
         }
 
         private void DrawMap() {
