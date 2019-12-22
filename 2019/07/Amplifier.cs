@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using AdventOfCode.Year2019.IntCodeV3;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day07 {
     public class Amplifier {
         public bool IsComplete => _intCode.state == IntCode.State.Complete;
 

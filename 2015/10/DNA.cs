@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2015 {
+namespace AdventOfCode.Year2015.Day10 {
     public class DNA {
         public struct Element {
             public int index;

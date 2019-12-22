@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day11 {
     public class PaintBot {
         private enum State {
             Paint,
@@ -88,7 +88,7 @@ namespace AdventOfCode.Year2019 {
                     Console.BackgroundColor = (_whiteTiles.Contains(new Point(x, y)) ? ConsoleColor.White : ConsoleColor.Black);
                     Console.Write("  ");
                 }
-                Console.WriteLine(string.Empty);
+                Console.WriteLine();
             }
 
             Console.BackgroundColor = ConsoleColor.Black;

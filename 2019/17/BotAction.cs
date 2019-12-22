@@ -1,4 +1,4 @@
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day17 {
     public enum Turn { Left, Right }
 
     public struct BotAction {

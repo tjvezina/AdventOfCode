@@ -1,66 +1,74 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
 
 namespace AdventOfCode {
     public static class Program {
         // Set to a specific year while working on puzzles from that year, or null for current year
         private static readonly int? ACTIVE_YEAR = null;
-        private static int defaultYear {
-            get {
-                if (ACTIVE_YEAR.HasValue) return ACTIVE_YEAR.Value;
-                return DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
-            }
-        }
-        private static int defaultDay => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
+        private static int GetDefaultYear() => ACTIVE_YEAR ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
+        private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
         private static void Main(string[] args) {
-            Type type;
-
-            if (args.Length > 0) {
-                type = ParseChallengeData(args[0]);
-            } else {
-                type = GetMostRecentChallenge();
+            if (args.Length == 1 && args[0] == "testall") {
+                TestAll();
+                return;
             }
-            
+
+            Type type = args.Length switch {
+                0 => GetMostRecentChallenge(),
+                1 => ParseArgs(args[0]),
+                _ => throw new Exception("Too many args, 0 or 1 expected")
+            };
+
             if (type != null) {
-                Challenge.Run(type);
+                ChallengeManager.Run(type);
             }
         }
 
-        private static Type ParseChallengeData(string data) {
+        private static Type ParseArgs(string data) {
             int year = 0;
             int day = 0;
             
             string[] parts = data.Split('.');
 
             if (parts.Length == 1) {
-                year = defaultYear;
+                year = GetDefaultYear();
                 int.TryParse(parts[0], out day);
             } else {
                 int.TryParse(parts[0], out year);
                 int.TryParse(parts[1], out day);
             }
 
-            Type type = Challenge.GetType(year, day);
+            Type type = ChallengeManager.GetType(year, day);
 
             if (type == null) {
-                Console.WriteLine($"Failed to find challenge for {year}.{day}");
+                Console.WriteLine($"Challenge not found for {year}.{day}");
             }
 
             return type;
         }
 
         private static Type GetMostRecentChallenge() {
-            int year = defaultYear;
+            int year = GetDefaultYear();
 
-            Type type = null;
-            Enumerable.Range(1, defaultDay).Reverse().FirstOrDefault(d => (type = Challenge.GetType(year, d)) != null);
-
-            if (type == null) {
-                Console.WriteLine($"No challenges found in {year}");
+            for (int day = GetDefaultDay(); day >= 1; --day) {
+                Type type = ChallengeManager.GetType(year, day);
+                if (type != null) return type;
             }
 
-            return type;
+            Console.WriteLine($"No challenges found in {year}");
+            return null;
+        }
+
+        private static void TestAll() {
+            for (int year = 2015; year <= DateTime.Now.Year; ++year) {
+                for (int day = 1; day <= 25; ++day) {
+                    Type type = ChallengeManager.GetType(year, day);
+                    if (type != null) {
+                        ChallengeManager.Run(type, test:true);
+                    }
+                }
+            }
         }
     }
 }

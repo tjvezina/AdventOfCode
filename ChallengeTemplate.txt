@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year201# {
-    public class Day## : Challenge {
-        private void Init(string[] input) { }
+namespace AdventOfCode.Year201#.Day## {
+    public class Challenge : BaseChallenge {
+        public override void InitPart1() { }
 
-        protected override string SolvePart1() {
+        public override string SolvePart1() {
             return null;
         }
+
+        public override void InitPart2() { }
         
-        protected override string SolvePart2() {
+        public override string SolvePart2() {
             return null;
         }
     }

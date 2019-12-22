@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day07 {
     public class AmplifierManager {
         public const int AMP_COUNT = 5;
 

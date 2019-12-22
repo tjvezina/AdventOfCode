@@ -62,7 +62,7 @@ namespace AdventOfCode {
                 for (int x = 0; x < width; ++x) {
                     Console.Write(_map[x, y]);
                 }
-                Console.WriteLine(string.Empty);
+                Console.WriteLine();
             }
         }
     }

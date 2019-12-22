@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day15 {
     public class RepairBot {
         private enum Tile {
             Wall = 0,
@@ -132,6 +132,7 @@ namespace AdventOfCode.Year2019 {
                 max.y = Math.Max(max.y, p.y);
             }
 
+            ConsoleColor prevBackground = Console.BackgroundColor;
             for (int y = max.y; y >= min.y; --y) {
                 for (int x = min.x; x <= max.x; ++x) {
                     Point p = new Point(x, y);
@@ -151,11 +152,11 @@ namespace AdventOfCode.Year2019 {
                     Console.BackgroundColor = color;
                     Console.Write("  ");
                 }
-                Console.BackgroundColor = (ConsoleColor)(-1);
-                Console.WriteLine(string.Empty);
+                Console.BackgroundColor = prevBackground;
+                Console.WriteLine();
             }
 
-            Console.WriteLine(string.Empty);
+            Console.WriteLine();
         }
     }
 }

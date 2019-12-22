@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day08 {
     public class SpaceImage {
         int[,,] _data;
 
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2019 {
                     Console.BackgroundColor = (color == 0 ? ConsoleColor.Black : ConsoleColor.White);
                     Console.Write("  ");
                 }
-                Console.WriteLine(string.Empty);
+                Console.WriteLine();
             }
             Console.BackgroundColor = ConsoleColor.Black;
         }

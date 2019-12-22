@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019 {
+namespace AdventOfCode.Year2019.Day13 {
     public class Arcade {
         public enum Tile {
             Empty = 0,

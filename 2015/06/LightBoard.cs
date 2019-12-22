@@ -1,6 +1,6 @@
 using System;
 
-namespace AdventOfCode.Year2015 {
+namespace AdventOfCode.Year2015.Day06 {
     public class LightBoard {
         public const int SIZE = 1000;
 
