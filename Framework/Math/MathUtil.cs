@@ -1,13 +1,17 @@
 using System;
+using System.Numerics;
 
 namespace AdventOfCode {
     public static class MathUtil {
         public static int Mod(int value, int divisor) {
-            return (divisor == 0 ? 0 : value - (divisor * (int)Math.Floor((double)value / divisor)));
+            return (divisor == 0 ? 0 : value - (divisor * (int)Math.Floor((decimal)value / divisor)));
+        }
+        public static long Mod(long value, long divisor) {
+            return (divisor == 0 ? 0 : value - (divisor * (long)Math.Floor((decimal)value / divisor)));
         }
         
-        public static int Wrap(int value, int a, int b) => Wrap(value, new Range(a, b));
-        public static int Wrap(int value, Range range) => range.Wrap(value);
+        public static int Wrap(int value, int a, int b) => Mod(value - a, b - a) + a;
+        public static long Wrap(long value, long a, long b) => Mod(value - a, b - a) + a;
 
         // Lowest common multiple
         public static int LCM(int a, int b) => (a * b) / GCD(a, b);
@@ -32,6 +36,33 @@ namespace AdventOfCode {
             }
 
             return a;
+        }
+
+        public static int Power(int b, int e) => (int)Power((long)b, e);
+        public static long Power(long b, long e) {
+            long result = 1;
+            while (e > 0) {
+                if ((e & 1) != 0) {
+                    result *= b;
+                }
+                b *= b;
+                e >>= 1;
+            }
+            return result;
+        }
+
+        public static int ModPower(int b, int e, int m) => (int)ModPower((BigInteger)b, e, m);
+        public static long ModPower(long b, long e, long m) => (long)ModPower((BigInteger)b, e, m);
+        public static BigInteger ModPower(BigInteger b, BigInteger e, BigInteger m) {
+            BigInteger result = 1;
+            while (e > 0) {
+                if ((e & 1) != 0) {
+                    result = (result * b) % m;
+                }
+                b = (b * b) % m;
+                e >>= 1;
+            }
+            return result;
         }
     }
 }

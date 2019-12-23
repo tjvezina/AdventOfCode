@@ -19,6 +19,6 @@ namespace AdventOfCode {
 
         public bool Contains(int value) => (min <= value && value <= max);
         
-        public int Wrap(int value) => MathUtil.Mod(value - a, b - a) + a;
+        public int Wrap(int value) => MathUtil.Wrap(value, a, b);
     }
 }
