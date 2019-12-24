@@ -7,25 +7,34 @@ namespace AdventOfCode.Year2019.Day09 {
      public class Challenge : BaseChallenge {
         private IntCode _intCode;
 
+        private long _lastOutput;
+
         public override void InitPart1() {
             _intCode = new IntCode(input);
-            _intCode.OnOutput += (o => Console.WriteLine("Output: " + o));
+            _intCode.OnOutput += HandleOnOutput;
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "4261108180";
+        public override (string, object) SolvePart1() {
             _intCode.Begin();
             _intCode.Input(1);
-            return null;
+            return ("Final output: ", _lastOutput);
         }
         
         public override void InitPart2() {
             _intCode.Reset();
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "77944";
+        public override (string, object) SolvePart2() {
             _intCode.Begin();
             _intCode.Input(2);
-            return null;
+            return ("Final output: ", _lastOutput);
+        }
+
+        private void HandleOnOutput(long output) {
+            _lastOutput = output;
+            Console.WriteLine($"Output: {output}");
         }
     }
 }

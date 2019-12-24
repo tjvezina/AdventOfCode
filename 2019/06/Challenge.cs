@@ -31,7 +31,8 @@ namespace AdventOfCode.Year2019.Day06 {
             }
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "130681";
+        public override (string, object) SolvePart1() {
             int orbitTotal = 0;
 
             foreach (Body body in _bodyMap.Values) {
@@ -42,10 +43,11 @@ namespace AdventOfCode.Year2019.Day06 {
                 }
             }
 
-            return $"Total direct + indirect orbits: {orbitTotal}";
+            return ("Total direct + indirect orbits: ", orbitTotal);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "313";
+        public override (string, object) SolvePart2() {
             List<Body> myHierarchy = new List<Body>();
             List<Body> santaHierarchy = new List<Body>();
 
@@ -71,7 +73,7 @@ namespace AdventOfCode.Year2019.Day06 {
             Debug.Assert(commonParent != null, "Failed to find common parent body in hierarchies, santa is unreachable!");
 
             int transferCount = myHierarchy.IndexOf(commonParent) + santaHierarchy.IndexOf(commonParent);
-            return $"Orbital transfers to santa: {transferCount}";
+            return ("Orbital transfers to santa: ", transferCount);
         }
     }
 }

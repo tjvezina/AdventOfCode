@@ -57,9 +57,10 @@ namespace AdventOfCode.Year2015.Day07 {
             }
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "3176";
+        public override (string, object) SolvePart1() {
             _part1Output = Resolve("a");
-            return $"{_part1Output}";
+            return ("Wire \"a\" output: ", _part1Output);
         }
         
         public override void InitPart2() {
@@ -68,10 +69,11 @@ namespace AdventOfCode.Year2015.Day07 {
             }
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "14710";
+        public override (string, object) SolvePart2() {
             // Sub the original output from wire A for the input of wire B, then resolve again
             _wireMap["b"].operandA = $"{_part1Output}";
-            return $"{Resolve("a")}";
+            return ("Wire \"a\" output (round 2): ", Resolve("a"));
         }
 
         private UInt16 Resolve(string operand) {

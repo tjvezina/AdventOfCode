@@ -4,12 +4,18 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day08 {
      public class Challenge : BaseChallenge {
-        public override string SolvePart1() {
-            return $"{inputSet.Sum(s => s.Length) - inputSet.Sum(GetCharCount)}";
+        public override string part1Answer => "1333";
+        public override (string, object) SolvePart1() {
+            int totalChars = inputSet.Sum(s => s.Length);
+            int visibleChars = inputSet.Sum(GetCharCount);
+            return ("Non-visible characters: ", totalChars - visibleChars);
         }
         
-        public override string SolvePart2() {
-            return $"{inputSet.Sum(GetEscapedCount) - inputSet.Sum(s => s.Length)}";
+        public override string part2Answer => "2046";
+        public override (string, object) SolvePart2() {
+            int totalChars = inputSet.Sum(s => s.Length);
+            int escapeChars = inputSet.Sum(GetEscapedCount);
+            return ("New escape char count: ", escapeChars - totalChars);
         }
 
         private int GetCharCount(string str) {

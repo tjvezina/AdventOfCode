@@ -10,14 +10,16 @@ namespace AdventOfCode.Year2019.Day01 {
             _massList = inputSet.Select(int.Parse);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "3323874";
+        public override (string, object) SolvePart1() {
             int fuelCost = _massList.Select(GetFuelCost).Sum();
-            return $"Total fuel cost: {fuelCost}";
+            return ("Total fuel cost: ", fuelCost);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "4982961";
+        public override (string, object) SolvePart2() {
             int fuelCost = _massList.Select(GetFuelCostRecursive).Sum();
-            return $"Total fuel cost (including fuel itself): {fuelCost}";
+            return ("Total fuel cost (including fuel itself): ", fuelCost);
         }
 
         private int GetFuelCost(int mass) => (int)Math.Max(0, mass / 3 - 2);
@@ -26,7 +28,7 @@ namespace AdventOfCode.Year2019.Day01 {
             int fuel = GetFuelCost(mass);
 
             if (fuel > 0) {
-                fuel += GetFuelCost(fuel);
+                fuel += GetFuelCostRecursive(fuel);
             }
 
             return fuel;

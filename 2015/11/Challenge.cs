@@ -8,14 +8,16 @@ namespace AdventOfCode.Year2015.Day11 {
 
         private Password _password = new Password(INPUT);
 
-        public override string SolvePart1() {
+        public override string part1Answer => "vzbxxyzz";
+        public override (string, object) SolvePart1() {
             NextValidPassword();
-            return $"Next valid password: {_password}";
+            return ("Next valid password: ", _password);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "vzcaabcc";
+        public override (string, object) SolvePart2() {
             NextValidPassword();
-            return $"Next valid password: {_password}";
+            return ("Next valid password: ", _password);
         }
 
         private void NextValidPassword() {

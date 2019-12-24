@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day15 {
-    public abstract class AbstractRecipe {
+    public abstract class Recipe {
         protected class Ingredient {
             public const int PROPERTY_COUNT = 4;
 
@@ -21,6 +21,8 @@ namespace AdventOfCode.Year2015.Day15 {
 
         public const int QUANTITY = 100;
         public const int CALORIES = 500;
+
+        public int bestScore { get; protected set; }
 
         protected static List<Ingredient> _ingredients = new List<Ingredient>();
 

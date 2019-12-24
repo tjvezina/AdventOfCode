@@ -6,14 +6,14 @@ namespace AdventOfCode.Year201#.Day## {
     public class Challenge : BaseChallenge {
         public override void InitPart1() { }
 
-        public override string SolvePart1() {
-            return null;
+        public override string part1Answer => null;
+        public override (string, object) SolvePart1() {
+            return (null, null);
         }
-
-        public override void InitPart2() { }
         
-        public override string SolvePart2() {
-            return null;
+        public override string part2Answer => null;
+        public override (string, object) SolvePart2() {
+            return (null, null);
         }
     }
 }

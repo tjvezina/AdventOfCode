@@ -3,33 +3,63 @@ using System.IO;
 
 namespace AdventOfCode {
     public static class Program {
+        private const int FIRST_YEAR = 2015;
+        private static Range ALL_YEARS => new Range(FIRST_YEAR, DateTime.Now.Year);
+        private static Range ALL_DAYS => new Range(1, 25);
+
         // Set to a specific year while working on puzzles from that year, or null for current year
         private static readonly int? ACTIVE_YEAR = null;
         private static int GetDefaultYear() => ACTIVE_YEAR ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
         private static void Main(string[] args) {
-            if (args.Length == 1 && args[0] == "testall") {
-                TestAll();
-                return;
+            if (args.Length > 0 && args[0] == "test") {
+                TestMode(args.Length > 1 ? args[1] : null);
+            } else {
+                RunMode(args.Length > 0 ? args[0] : null);
             }
+        }
 
-            Type type = args.Length switch {
-                0 => GetMostRecentChallenge(),
-                1 => ParseArgs(args[0]),
-                _ => throw new Exception("Too many args, 0 or 1 expected")
-            };
+        private static void RunMode(string date) {
+            Type type = (date == null ? GetMostRecentChallenge() : GetChallengeTypeForDate(date));
 
             if (type != null) {
                 ChallengeManager.Run(type);
             }
         }
 
-        private static Type ParseArgs(string data) {
+        private static void TestMode(string date) {
+            if (date == null) {
+                ChallengeManager.Test(GetMostRecentChallenge());
+                return;
+            }
+
+            if (date == "all") {
+                TestAll();
+                return;
+            }
+
+            string[] parts = date.Split('.');
+            int year;
+            int day;
+
+            if (parts.Length == 1) {
+                if (int.TryParse(parts[0], out year)) {
+                    TestYear(year);
+                }
+                return;
+            }
+
+            if (int.TryParse(parts[0], out year) && int.TryParse(parts[1], out day)) {
+                TestDay(year, day);
+            }
+        }
+
+        private static Type GetChallengeTypeForDate(string date) {
             int year = 0;
             int day = 0;
             
-            string[] parts = data.Split('.');
+            string[] parts = date.Split('.');
 
             if (parts.Length == 1) {
                 year = GetDefaultYear();
@@ -60,13 +90,24 @@ namespace AdventOfCode {
             return null;
         }
 
-        private static void TestAll() {
-            for (int year = 2015; year <= DateTime.Now.Year; ++year) {
-                for (int day = 1; day <= 25; ++day) {
+        private static void TestAll() => TestRange(ALL_YEARS, ALL_DAYS);
+        private static void TestYear(int year) => TestRange(new Range(year, year), ALL_DAYS);
+        private static void TestDay(int year, int day) => TestRange(new Range(year, year), new Range(day, day));
+        private static void TestRange(Range years, Range days) {
+            bool wasYearHeaderDrawn;
+            for (int year = years.min; year <= years.max; ++year) {
+                wasYearHeaderDrawn = false;
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                for (int day = days.min; day <= days.max; ++day) {
                     Type type = ChallengeManager.GetType(year, day);
-                    if (type != null) {
-                        ChallengeManager.Run(type, test:true);
+                    if (type == null) continue;
+
+                    if (!wasYearHeaderDrawn) {
+                        wasYearHeaderDrawn = true;
+                        Console.WriteLine($"-- {year} --");
                     }
+                    
+                    ChallengeManager.Test(type);
                 }
             }
         }

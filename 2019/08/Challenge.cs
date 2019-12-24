@@ -10,7 +10,8 @@ namespace AdventOfCode.Year2019.Day08 {
             image = new SpaceImage(25, 6, input);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "1360";
+        public override (string, object) SolvePart1() {
             int leastZerosLayer = -1;
             int leastZeros = int.MaxValue;
             int[] leastZerosValueCounts = new int[3];
@@ -30,12 +31,13 @@ namespace AdventOfCode.Year2019.Day08 {
                 }
             }
 
-            return $"Image validation output: {leastZerosValueCounts[1] * leastZerosValueCounts[2]}";
+            return ("Image validation output: ", leastZerosValueCounts[1] * leastZerosValueCounts[2]);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "FPUAR";
+        public override (string, object) SolvePart2() {
            image.Draw();
-           return null;
+           return ("Image text: ", "FPUAR"); // Explicitly return answer, until image-to-text is implemented :)
         }
     }
 }

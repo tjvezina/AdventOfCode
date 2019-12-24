@@ -15,13 +15,15 @@ namespace AdventOfCode.Year2019.Day02 {
             _intCode.Load(input);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "5434663";
+        public override (string, object) SolvePart1() {
             _intCode.Execute(NOUN, VERB);
 
-            return $"Output of {NOUN}/{VERB}: {_intCode[0]}";
+            return ($"Output of {NOUN}/{VERB}: ", _intCode[0]);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "4559";
+        public override (string, object) SolvePart2() {
             const int TARGET_OUTPUT = 19690720;
 
             for (int noun = 0; noun <= 99; ++noun) {
@@ -30,12 +32,12 @@ namespace AdventOfCode.Year2019.Day02 {
                     _intCode.Execute(noun, verb);
 
                     if (_intCode[0] == TARGET_OUTPUT) {
-                        return $"Input found: {(100 * noun + verb)}";
+                        return ("Input found: ", 100 * noun + verb);
                     }
                 }
             }
 
-            return "Failed to find input to produce target output.";
+            throw new Exception("Failed to find input to produce target output.");
         }
     }
 }

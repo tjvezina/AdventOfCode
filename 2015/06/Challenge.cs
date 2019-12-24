@@ -45,28 +45,29 @@ namespace AdventOfCode.Year2015.Day06 {
             _instructions = inputSet.Select(i => new Instruction(i));
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "377891";
+        public override (string, object) SolvePart1() {
             LightBoard board = new LightBoard(
                 turnOn:(x) => 1,
                 turnOff:(x) => 0,
                 toggle:(x) => x == 0 ? 1 : 0
             );
 
-            return $"Lit lights: {RunInstructions(board)}";
+            return ("Lit lights: ", RunInstructions(board));
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "14110788";
+        public override (string, object) SolvePart2() {
             LightBoard board = new LightBoard(
                 turnOn:(x) => x + 1,
-                turnOff:(x) => Math.Min(0, x - 1),
+                turnOff:(x) => Math.Max(0, x - 1),
                 toggle:(x) => x + 2
             );
 
-            return $"Total brightness: {RunInstructions(board)}";
+            return ("Total brightness: ", RunInstructions(board));
         }
 
         private int RunInstructions(LightBoard board) {
-
             foreach (Instruction instruction in _instructions) {
                 switch (instruction.type) {
                     case InstructionType.TurnOn:  board.TurnOn(instruction.start, instruction.end);  break;

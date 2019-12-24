@@ -18,7 +18,8 @@ namespace AdventOfCode.Year2019.Day19 {
             _intCode = new IntCode(input);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "215";
+        public override (string, object) SolvePart1() {
             for (int y = 0; y < 50; ++y) {
                 for (int x = 0; x < 50; ++x) {
                     char c = '.';
@@ -31,10 +32,11 @@ namespace AdventOfCode.Year2019.Day19 {
                 Console.WriteLine();
             }
 
-            return $"Drone was pulled from {_pulledCount} locations";
+            return ("Drone was pulled from {0} locations", _pulledCount);
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "7720975";
+        public override (string, object) SolvePart2() {
             Point p = new Point(100, 100);
             List<Direction> moves = new List<Direction>();
 
@@ -47,7 +49,7 @@ namespace AdventOfCode.Year2019.Day19 {
                         if (IsPointPulled(topLeft)) {
                             Point botLeft = topLeft + new Point(0, 99);
                             if (IsPointPulled(botLeft)) {
-                                return $"Result: {topLeft.x * 10_000 + topLeft.y}";
+                                return ("Result: ", topLeft.x * 10_000 + topLeft.y);
                             }
                         }
                     }

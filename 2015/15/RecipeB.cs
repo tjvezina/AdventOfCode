@@ -2,11 +2,11 @@ using System;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day15 {
-    public class RecipeB : AbstractRecipe {
+    public class RecipePart2 : Recipe {
         public override void MaximizeScore() {
             int[] recipe = new int[_ingredients.Count];
 
-            int bestScore = int.MinValue;
+            bestScore = 0;
 
             void RecipeLoop(int index = 0, int max = QUANTITY) {
                 if (index == recipe.Length - 1) {

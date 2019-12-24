@@ -15,12 +15,14 @@ namespace AdventOfCode.Year2015.Day17 {
             }
         }
 
-        public override string SolvePart1() {
-            return $"Valid combinations: {CountCombinations(write:false)}";
+        public override string part1Answer => "4372";
+        public override (string, object) SolvePart1() {
+            return ("Valid combinations: ", CountCombinations(write:false));
         }
         
-        public override string SolvePart2() {
-            return $"Valid combinations: {CountCombinations(write:true, minimize:true)}";
+        public override string part2Answer => "4";
+        public override (string, object) SolvePart2() {
+            return ("Valid combinations: ", CountCombinations(write:true, minimize:true));
         }
 
         private int CountCombinations(bool write, bool minimize = false) {

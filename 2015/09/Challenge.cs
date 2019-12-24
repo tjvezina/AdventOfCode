@@ -43,7 +43,30 @@ namespace AdventOfCode.Year2015.Day09 {
                 _distMap[indexB][indexA] = distance;
             }
 
+            _bestDist = int.MaxValue;
             Reset();
+        }
+
+        public override string part1Answer => "141";
+        public override (string, object) SolvePart1() {
+            bool IsShorter(int dist, int best) => dist < best;
+            
+            FindBestOrder(condition:IsShorter);
+            return ("Shortest route: ", _bestDist);
+        }
+
+        public override void InitPart2() {
+            _bestDist = 0;
+            Reset();
+        }
+        
+        public override string part2Answer => "736";
+        public override (string, object) SolvePart2() {
+            bool IsLonger(int dist, int best) => dist > best;
+            
+            _bestDist = 0;
+            FindBestOrder(condition:IsLonger);
+            return ("Shortest route: ", _bestDist);
         }
 
         private void Reset() {
@@ -53,24 +76,6 @@ namespace AdventOfCode.Year2015.Day09 {
             for (int i = 0; i < _cities.Count; ++i) {
                 _order[i] = i;
             }
-        }
-
-        public override string SolvePart1() {
-            bool IsShorter(int dist, int best) => dist < best;
-            
-            _bestDist = int.MaxValue;
-            FindBestOrder(condition:IsShorter);
-            return $"Shortest route: {_bestDist}";
-        }
-
-        public override void InitPart2() => Reset();
-        
-        public override string SolvePart2() {
-            bool IsLonger(int dist, int best) => dist > best;
-            
-            _bestDist = 0;
-            FindBestOrder(condition:IsLonger);
-            return $"Shortest route: {_bestDist}";
         }
 
         private void FindBestOrder(Func<int, int, bool> condition) {

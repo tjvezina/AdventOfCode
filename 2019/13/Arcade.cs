@@ -27,7 +27,9 @@ namespace AdventOfCode.Year2019.Day13 {
         private Tile[,] _screen = new Tile[0, 0];
         private Point _nextPos = Point.zero;
 
-        private int _score;
+        public int blockCount { get; private set; }
+
+        public int score { get; private set; }
         private int _paddleX;
         private int _ballX;
 
@@ -48,21 +50,18 @@ namespace AdventOfCode.Year2019.Day13 {
             }
 
             if (insertQuarters) {
-                Console.WriteLine("Final score: " + _score);
+                Console.WriteLine("Final score: " + score);
             } else {
                 RunDiagnosticCheck();
             }
         }
 
         private void RunDiagnosticCheck() {
-            int blocks = 0;
             for (int y = 0; y < _screen.GetLength(1); ++y) {
                 for (int x = 0; x < _screen.GetLength(0); ++x) {
-                    blocks += (_screen[x, y] == Tile.Block ? 1 : 0);
+                    blockCount += (_screen[x, y] == Tile.Block ? 1 : 0);
                 }
             }
-
-            Console.WriteLine($"{blocks} blocks on screen");
         }
 
         private void HandleOnOutput(long output) {
@@ -74,7 +73,7 @@ namespace AdventOfCode.Year2019.Day13 {
             }
             else if (state == State.Type) {
                 if (_nextPos == SCORE_POS) {
-                    _score = (int)output;
+                    score = (int)output;
                 } else {
                     ResizeScreen();
                     Tile tile = (Tile)output;

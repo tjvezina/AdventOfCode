@@ -7,20 +7,20 @@ namespace AdventOfCode.Year2015.Day20 {
         private const int TARGET = 29_000_000;
         private const int HOUSE_LIMIT = 50; // Max houses/elf
 
-        public override string SolvePart1() {
+        public override string part1Answer => "665280";
+        public override (string, object) SolvePart1() {
             for (int i = 1; ; ++i) {
                 if (CountPresents(i) >= TARGET) {
-                    return $"House {i}";
+                    return ("House ", i);
                 }
             }
         }
 
-        public override void InitPart2() { }
-        
-        public override string SolvePart2() {
+        public override string part2Answer => "705600";
+        public override (string, object) SolvePart2() {
             for (int i = 1; ; ++i) {
                 if (CountPresentsLimited(i) >= TARGET) {
-                    return $"House {i}";
+                    return ("House ", i);
                 }
             }
         }

@@ -10,15 +10,17 @@ namespace AdventOfCode.Year2019.Day07 {
             _ampManager = new AmplifierManager(input);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "20413";
+        public override (string, object) SolvePart1() {
             return TestAllPermutations(Enumerable.Range(0, AmplifierManager.AMP_COUNT).ToArray());
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "3321777";
+        public override (string, object) SolvePart2() {
             return TestAllPermutations(Enumerable.Range(5, AmplifierManager.AMP_COUNT).ToArray());
         }
 
-        private string TestAllPermutations(int[] _phase) {
+        private (string format, int bestOutput) TestAllPermutations(int[] _phase) {
             int[] bestPhase = new int[_phase.Length];
             int bestOutput = 0;
 
@@ -32,7 +34,7 @@ namespace AdventOfCode.Year2019.Day07 {
             } while (DataUtil.NextPermutation(_phase));
 
             string bestPhaseStr = bestPhase.Select(p => p.ToString()).Aggregate((a, b) => $"{a},{b}");
-            return $"Best output: {bestOutput} ({bestPhaseStr})";
+            return ($"Best output: {{0}} ({bestPhaseStr})", bestOutput);
         }
     }
 }

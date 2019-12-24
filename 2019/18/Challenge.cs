@@ -23,15 +23,17 @@ namespace AdventOfCode.Year2019.Day18 {
             _map = new CharMap(inputSet);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "5406";
+        public override (string, object) SolvePart1() {
             BuildGraph();
-            return $"Shortest path to all keys: {FindShortestPath()}";
+            return ("Shortest path to all keys: ", FindShortestPath());
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "1938";
+        public override (string, object) SolvePart2() {
             UpdateMap();
             BuildGraph();
-            return $"Shortest path to all keys: {FindShortestPath()}";
+            return ("Shortest path to all keys: ", FindShortestPath());
         }
 
         private void UpdateMap() {

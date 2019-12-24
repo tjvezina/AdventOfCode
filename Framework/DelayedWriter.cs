@@ -12,6 +12,8 @@ public class DelayedWriter : TextWriter {
 
     public override Encoding Encoding => Encoding.GetEncoding(850);
 
+    public bool isEmpty => queue.Count == 0;
+
     private Queue<WriteData> queue = new Queue<WriteData>();
 
     public override void Write(string value) {

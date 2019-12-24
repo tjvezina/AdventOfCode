@@ -9,6 +9,9 @@ namespace AdventOfCode {
         public int year { get; }
         public int day { get; }
 
+        public abstract string part1Answer { get; }
+        public abstract string part2Answer { get; }
+
         protected string[] inputSet { get; }
         protected string input { get; }
 
@@ -29,9 +32,9 @@ namespace AdventOfCode {
         protected string[] LoadFile(string fileName) => File.ReadAllLines(GetFilePath(fileName));
 
         public virtual void InitPart1() { }
-        public abstract string SolvePart1();
+        public abstract (string format, object answer) SolvePart1();
 
         public virtual void InitPart2() { }
-        public abstract string SolvePart2();
+        public abstract (string format, object answer) SolvePart2();
     }
 }

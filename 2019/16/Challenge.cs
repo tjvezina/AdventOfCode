@@ -12,17 +12,19 @@ namespace AdventOfCode.Year2019.Day16 {
             _input = input.Select(c => c - '0').ToArray();
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "44098263";
+        public override (string, object) SolvePart1() {
             int[] output = new int[_input.Length];
             _input.CopyTo(output, 0);
             for (int i = 0; i < 100; ++i) {
                 output = ApplyPhase(output);
             }
 
-            return $"First 8 digits of result: {output.Take(8).Aggregate((a, b) => a * 10 + b)}";
+            return ("First 8 digits of result: ", output.Take(8).Aggregate((a, b) => a * 10 + b));
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "12482168";
+        public override (string, object) SolvePart2() {
             int offset = _input.Take(7).Aggregate((a, b) => a * 10 + b);
             int fullLength = _input.Length * 10_000;
             int length = fullLength - offset;
@@ -40,7 +42,7 @@ namespace AdventOfCode.Year2019.Day16 {
                 output = ApplyPhaseShortcut(output);
             }
 
-            return $"First 8 digits of result: {output.Take(8).Aggregate((a, b) => a * 10 + b)}";
+            return ("First 8 digits of result: ", output.Take(8).Aggregate((a, b) => a * 10 + b));
         }
 
         private int[] ApplyPhase(int[] input) {

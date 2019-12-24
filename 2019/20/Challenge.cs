@@ -73,9 +73,11 @@ namespace AdventOfCode.Year2019.Day20 {
                    p.y == 2 || p.y == _map.height - 3;
         }
 
-        public override string SolvePart1() => $"Shortest path: {FindShortestPath()} steps";
+        public override string part1Answer => "484";
+        public override (string, object) SolvePart1() => ("Shortest path: {0} steps", FindShortestPath());
         
-        public override string SolvePart2() => $"Shortest path: {FindShortestPathRecursive()} steps";
+        public override string part2Answer => "5754";
+        public override (string, object) SolvePart2() => ("Shortest path: {0} steps", FindShortestPathRecursive());
 
         private int FindShortestPath() {
             int GetH(Point p, Point end) => 0; // No heuristic (Dijsktra's/BFS)

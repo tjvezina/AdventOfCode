@@ -19,7 +19,8 @@ namespace AdventOfCode.Year2015.Day19 {
             _molecule = input.Dequeue();
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "576";
+        public override (string, object) SolvePart1() {
             HashSet<string> subMolecules = new HashSet<string>();
 
             foreach ((string pattern, string replace) in _replacements) {
@@ -30,12 +31,11 @@ namespace AdventOfCode.Year2015.Day19 {
                 }
             }
 
-            return $"Distinct submolecules: {subMolecules.Count}";
+            return ("Distinct submolecules: ", subMolecules.Count);
         }
 
-        public override void InitPart2() { }
-        
-        public override string SolvePart2() {
+        public override string part2Answer => "207";
+        public override (string, object) SolvePart2() {
             int Count(string match) {
                 int count = 0;
                 for (int i = 0; (i = _molecule.IndexOf(match, i)) != -1; ++i, ++count);
@@ -44,7 +44,7 @@ namespace AdventOfCode.Year2015.Day19 {
 
             int steps = _molecule.Count(char.IsUpper) - Count("Rn") - Count("Ar") - 2 * Count("Y") - 1;
 
-            return $"Steps to molecule: {steps}";
+            return ("Steps to molecule: ", steps);
         }
     }
 }

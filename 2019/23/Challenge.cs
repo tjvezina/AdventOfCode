@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day23 {
     public class Challenge : BaseChallenge {
-        public override string SolvePart1() {
+        public override string part1Answer => "24602";
+        public override (string, object) SolvePart1() {
             Network network = new Network(input);
             network.Init();
 
@@ -19,10 +20,11 @@ namespace AdventOfCode.Year2019.Day23 {
                 }
             }
 
-            return $"First packet for address 255: ({packet.x}, {packet.y})";
+            return ($"First packet for address 255: ({packet.x}, {{0}})", packet.y);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "19641";
+        public override (string, object) SolvePart2() {
             HashSet<long> natPackets = new HashSet<long>();
 
             long? duplicatePacket = null;
@@ -42,7 +44,7 @@ namespace AdventOfCode.Year2019.Day23 {
                 network.Update();
             }
 
-            return $"First duplicate NAT packet sent: {duplicatePacket.Value}";
+            return ("First duplicate NAT packet sent: ", duplicatePacket.Value);
         }
     }
 }

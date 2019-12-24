@@ -31,17 +31,19 @@ namespace AdventOfCode.Year2019.Day22 {
             }
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "4684";
+        public override (string, object) SolvePart1() {
             const long DECK_SIZE = 10_007;
 
             BigInteger card = 2019;
             foreach (Technique technique in _techniques) {
                 card = technique.Apply(card, DECK_SIZE);
             }
-            return $"Final card position: {card}";
+            return ("Final card position: ", card);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "452290953297";
+        public override (string, object) SolvePart2() {
             const long DECK_SIZE  = 119_315_717_514_047;
             const long ITERATIONS = 101_741_582_076_661;
 
@@ -60,7 +62,7 @@ namespace AdventOfCode.Year2019.Day22 {
 
             BigInteger card = (finalData.offset + (finalData.increment * 2020)) % DECK_SIZE;
 
-            return $"Card 2020 after {ITERATIONS} shuffles: {card}";
+            return ($"Card 2020 after {ITERATIONS} shuffles:", card);
         }
     }
 }

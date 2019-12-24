@@ -46,25 +46,27 @@ namespace AdventOfCode.Year2019.Day14 {
             _reactionMap = inputSet.Select(Reaction.Parse).ToDictionary(r => r.output.name);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "1037742";
+        public override (string, object) SolvePart1() {
             ModifyAvailable(ORE, INITIAL_ORE);
 
             Create(FUEL, 1);
 
             _orePerFuel = INITIAL_ORE - GetAvailable(ORE);
-            return $"{_orePerFuel} ore required for 1 fuel";
+            return ("{{0}} ore required for 1 fuel", _orePerFuel);
         }
         
         public override void InitPart2() {
             _available.Clear();
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "1572358";
+        public override (string, object) SolvePart2() {
             ModifyAvailable(ORE, INITIAL_ORE);
             
             while (Create(FUEL, Math.Max(1, GetAvailable(ORE) / _orePerFuel)));
 
-            return $"{_available[FUEL]} fuel created from {INITIAL_ORE} ore";
+            return ($"{{0}} fuel created from {INITIAL_ORE} ore", _available[FUEL]);
         }
 
         private bool Consume(string element, long amount) {

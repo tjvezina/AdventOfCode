@@ -43,7 +43,8 @@ namespace AdventOfCode.Year2019.Day10 {
             }
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "282";
+        public override (string, object) SolvePart1() {
             int maxVisible = 0;
             Point bestPos = new Point(-1, -1);
             for (int y = 0; y < _height; ++y) {
@@ -55,10 +56,11 @@ namespace AdventOfCode.Year2019.Day10 {
                 }
             }
             _stationPos = bestPos;
-            return $"Max visible asteroids: {maxVisible} {_stationPos}";
+            return ($"Max visible asteroids: {{0}} {_stationPos}", maxVisible);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "1008";
+        public override (string, object) SolvePart2() {
             const int ASTEROID_NUM = 200;
 
             List<Asteroid> asteroids = new List<Asteroid>();
@@ -77,7 +79,7 @@ namespace AdventOfCode.Year2019.Day10 {
             asteroids.Sort((a, b) => a.angle.CompareTo(b.angle));
 
             Point outputPos = asteroids[ASTEROID_NUM-1].position;
-            return $"#{ASTEROID_NUM} = {outputPos} -> {outputPos.x * 100 + outputPos.y}";
+            return ($"#{ASTEROID_NUM} = {outputPos} -> {{0}}", outputPos.x * 100 + outputPos.y);
         }
 
         private int CountVisible(Point p1) {

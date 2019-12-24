@@ -27,9 +27,11 @@ namespace AdventOfCode.Year2019.Day03 {
             _wireB = ParseWireInput(inputSet[1]);
         }
 
-        public override string SolvePart1() => $"Nearest intersection is {FindClosestIntersection()} units from origin.";
+        public override string part1Answer => "1519";
+        public override (string, object) SolvePart1() => ("Nearest intersection is {0} units from origin.", FindClosestIntersection());
         
-        public override string SolvePart2() => $"Shortest intersection is {FindShortestIntersection()} units along wires.";
+        public override string part2Answer => "14358";
+        public override (string, object) SolvePart2() => ("Shortest intersection is {0} units along wires.", FindShortestIntersection());
 
         private Wire ParseWireInput(string input) {
             Wire wire = new Wire();

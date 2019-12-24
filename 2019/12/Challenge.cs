@@ -47,17 +47,19 @@ namespace AdventOfCode.Year2019.Day12 {
             _initialBodyPositions = _bodies.Select(b => b.position).ToList();
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "6849";
+        public override (string, object) SolvePart1() {
             for (int i = 0; i < 1000; ++i) {
                 UpdateVelocities();
                 UpdatePositions();
             }
 
             int totalEnergy = _bodies.Sum(b => b.totalEnergy);
-            return $"Total energy: {totalEnergy}";
+            return ("Total energy: ", totalEnergy);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "356658899375688";
+        public override (string, object) SolvePart2() {
             long[] cycleLengths = new long[3];
 
             // Each axis is independent; brute-force simulate to determine how long each takes to repeat
@@ -68,7 +70,7 @@ namespace AdventOfCode.Year2019.Day12 {
             // Find the LCM of all 3 axes; the total number of steps before all bodies are back where they started
             long totalSteps = MathUtil.LCM(cycleLengths[0], MathUtil.LCM(cycleLengths[1], cycleLengths[2]));
 
-            return $"System cycle length: {totalSteps}";
+            return ("System cycle length: ", totalSteps);
         }
 
         private void UpdateVelocities() {

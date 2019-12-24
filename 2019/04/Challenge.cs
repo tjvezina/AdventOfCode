@@ -8,16 +8,18 @@ namespace AdventOfCode.Year2019.Day04 {
         private const int RANGE_MIN = 146810;
         private const int RANGE_MAX = 612564;
 
-        public override string SolvePart1() {
+        public override string part1Answer => "1748";
+        public override (string, object) SolvePart1() {
             int matchCount = Enumerable.Range(RANGE_MIN, RANGE_MAX - RANGE_MIN).Count(MatchesRuleSet1);
 
-            return $"Valid passwords (rule set 1): {matchCount}";
+            return ("Valid passwords (rule set 1): ", matchCount);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "1180";
+        public override (string, object) SolvePart2() {
             int matchCount = Enumerable.Range(RANGE_MIN, RANGE_MAX - RANGE_MIN).Count(MatchesRuleSet2);
 
-            return $"Valid passwords (rule set 2): {matchCount}";
+            return ("Valid passwords (rule set 2): ", matchCount);
         }
 
         private bool MatchesRuleSet1(int password) => IsMatch(password, allow3Consecutive:true);

@@ -28,12 +28,14 @@ namespace AdventOfCode.Year2015.Day02 {
             _boxes = inputSet.Select(data => new Box(data));
         }
 
-        public override string SolvePart1() {
-            return $"Wrapping paper needed: {_boxes.Sum(b => b.surfaceArea + b.smallestSideArea)}";
+        public override string part1Answer => "1586300";
+        public override (string, object) SolvePart1() {
+            return ("Wrapping paper needed: ", _boxes.Sum(b => b.surfaceArea + b.smallestSideArea));
         }
         
-        public override string SolvePart2() {
-            return $"Ribbon needed: {_boxes.Sum(b => b.smallestSidePerim + b.volume)}";
+        public override string part2Answer => "3737498";
+        public override (string, object) SolvePart2() {
+            return ("Ribbon needed: ", _boxes.Sum(b => b.smallestSidePerim + b.volume));
         }
     }
 }

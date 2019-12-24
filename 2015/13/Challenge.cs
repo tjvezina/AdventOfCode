@@ -16,22 +16,24 @@ namespace AdventOfCode.Year2015.Day13 {
 
         public override void InitPart1() => Reset();
 
-        public override string SolvePart1() {
+        public override string part1Answer => "709";
+        public override (string, object) SolvePart1() {
             BuildHappyMatrix();
             FindBestOrder();
 
             string orderStr = _bestOrder.Select(i => $"{i}").Aggregate((a, b) => $"{a},{b}");
-            return $"Max happiness: {_maxHappiness} ({orderStr})";
+            return ($"Max happiness: {{0}} ({orderStr})", _maxHappiness);
         }
 
         public override void InitPart2() => Reset();
         
-        public override string SolvePart2() {
+        public override string part2Answer => "668";
+        public override (string, object) SolvePart2() {
             BuildHappyMatrix(includeSelf:true);
             FindBestOrder();
 
             string orderStr = _bestOrder.Select(i => $"{i}").Aggregate((a, b) => $"{a},{b}");
-            return $"Max happiness: {_maxHappiness} ({orderStr})";
+            return ($"Max happiness: {{0}} ({orderStr})", _maxHappiness);
         }
 
         private void BuildHappyMatrix(bool includeSelf = false) {

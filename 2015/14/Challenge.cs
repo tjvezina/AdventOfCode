@@ -19,11 +19,13 @@ namespace AdventOfCode.Year2015.Day14 {
             }
         }
 
-        public override string SolvePart1() {
-            return $"Furthest dist: {_reindeer.Max(r => r.GetDistance(RACE_DURATION))}";
+        public override string part1Answer => "2640";
+        public override (string, object) SolvePart1() {
+            return ("Furthest dist: ", _reindeer.Max(r => r.GetDistance(RACE_DURATION)));
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "1102";
+        public override (string, object) SolvePart2() {
             List<int> distances = new List<int>(new int[_reindeer.Count]);
             List<int> scores = new List<int>(new int[_reindeer.Count]);
 
@@ -45,7 +47,7 @@ namespace AdventOfCode.Year2015.Day14 {
                 }
             }
 
-            return $"Winning score: {scores.Max()}";
+            return ("Winning score: ", scores.Max());
         }
     }
 }

@@ -8,9 +8,11 @@ namespace AdventOfCode.Year2015.Day04 {
      public class Challenge : BaseChallenge {
         private const string KEY = "ckczppom";
 
-        public override string SolvePart1() => $"Desired input: {FindInput("00000")}";
+        public override string part1Answer => "117946";
+        public override (string, object) SolvePart1() => ("Desired input: ", FindInput("00000"));
         
-        public override string SolvePart2() => $"Desired input: {FindInput("000000")}";
+        public override string part2Answer => "3938038";
+        public override (string, object) SolvePart2() => ("Desired input: ", FindInput("000000"));
 
         private int FindInput(string target) {
             for (int i = 1; i < int.MaxValue; ++i) {

@@ -19,14 +19,15 @@ namespace AdventOfCode.Year2019.Day05 {
             _intCode.Load(input);
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "10987514";
+        public override (string, object) SolvePart1() {
             _input = INPUT_TEST;
             _intCode.Execute();
             int output = _outputs.SingleOrDefault(o => o != 0);
             if (output != 0) {
-                return $"{output}";
+                return ("Final test output: ", output);
             }
-            return "At least one system failed, check outputs for more info";
+            throw new Exception("At least one system failed, check outputs for more info");
         }
         
         public override void InitPart2() {
@@ -34,10 +35,11 @@ namespace AdventOfCode.Year2019.Day05 {
             _outputs.Clear();
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "14195011";
+        public override (string, object) SolvePart2() {
             _input = INPUT_RUN;
             _intCode.Execute();
-            return $"{_outputs.Single(o => o != 0)}";
+            return ("Final output: ", _outputs.Single(o => o != 0));
         }
 
         private int HandleOnInput() {

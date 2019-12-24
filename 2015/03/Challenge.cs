@@ -8,7 +8,8 @@ namespace AdventOfCode.Year2015.Day03 {
             SpaceUtil.system = CoordSystem.YUp;
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "2081";
+        public override (string, object) SolvePart1() {
             Point pos = Point.zero;
             Dictionary<Point, int> presentMap = new Dictionary<Point, int>();
             presentMap.Add(pos, 1);
@@ -28,10 +29,11 @@ namespace AdventOfCode.Year2015.Day03 {
                 ++presentMap[pos];
             }
 
-            return $"Total houses visited: {presentMap.Count}";
+            return ("Total houses visited: ", presentMap.Count);
         }
         
-        public override string SolvePart2() {
+        public override string part2Answer => "2341";
+        public override (string, object) SolvePart2() {
             Point posA = Point.zero;
             Point posB = Point.zero;
             Dictionary<Point, int> presentMap = new Dictionary<Point, int>();
@@ -62,7 +64,7 @@ namespace AdventOfCode.Year2015.Day03 {
                 ++presentMap[newPos];
             }
 
-            return $"Total houses visited: {presentMap.Count}";
+            return ("Total houses visited: ", presentMap.Count);
         }
     }
 }

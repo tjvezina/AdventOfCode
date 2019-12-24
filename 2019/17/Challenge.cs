@@ -25,7 +25,8 @@ namespace AdventOfCode.Year2019.Day17 {
             _intCodeMemory = input;
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "3936";
+        public override (string, object) SolvePart1() {
             List<char> map = new List<char>();
 
             IntCode intCode = new IntCode(_intCodeMemory);
@@ -39,17 +40,28 @@ namespace AdventOfCode.Year2019.Day17 {
                 alignParams += (intersection.x * intersection.y);
             }
 
-            return $"Sum of alignment parameters: {alignParams}";
+            return ("Sum of alignment parameters: ", alignParams);
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "785733";
+        public override (string, object) SolvePart2() {
             BuildActionsList();
             DefineBotFunctions();
+
+            long finalOutput = 0;
+
+            void HandleOnOutput(long output) {
+                if (output > char.MaxValue) {
+                    finalOutput = output;
+                } else {
+                    Console.Write((char)output);
+                }
+            }
 
             Dictionary<int, long> substitutions = new Dictionary<int, long> { { 0, 2 } };
             IntCode intCode = new IntCode(_intCodeMemory, substitutions);
             intCode.Begin();
-            intCode.OnOutput += (o) => { if (o > char.MaxValue) Console.WriteLine($"Output: {o}"); };
+            intCode.OnOutput += HandleOnOutput;
 
             IEnumerable<char> inputBuffer = _mainRoutine.Append('\n');
 
@@ -63,7 +75,7 @@ namespace AdventOfCode.Year2019.Day17 {
             Queue<char> input = new Queue<char>(inputBuffer);
             while (input.Count > 0) intCode.Input((long)input.Dequeue());
 
-            return null;
+            return ("Final output: ", finalOutput);
         }
 
         private void HandleOnOutput(long output) => _output.Add((char)output);

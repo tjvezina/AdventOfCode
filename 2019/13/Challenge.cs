@@ -10,14 +10,16 @@ namespace AdventOfCode.Year2019.Day13 {
             _intCodeMemory = input;
         }
 
-        public override string SolvePart1() {
-            new Arcade(_intCodeMemory);
-            return null;
+        public override string part1Answer => "452";
+        public override (string, object) SolvePart1() {
+            Arcade arcade = new Arcade(_intCodeMemory);
+            return ("{0} blocks on screen", arcade.blockCount);
         }
         
-        public override string SolvePart2() {
-            new Arcade(_intCodeMemory, insertQuarters:true);
-            return null;
+        public override string part2Answer => "21415";
+        public override (string, object) SolvePart2() {
+            Arcade arcade = new Arcade(_intCodeMemory, insertQuarters:true);
+            return ("Final score: ", arcade.score);
         }
     }
 }

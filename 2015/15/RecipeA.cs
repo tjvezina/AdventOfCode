@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day15 {
-    public class RecipeA : AbstractRecipe {
-        public RecipeA() {
+    public class RecipePart1 : Recipe {
+        public RecipePart1() {
             for (int i = 0; i < _quantities.Length; ++i) {
                 _quantities[i] = QUANTITY / _ingredients.Count;
             }
@@ -12,9 +12,9 @@ namespace AdventOfCode.Year2015.Day15 {
 
         public override void MaximizeScore() {
             while (TryImprove()) {
-                int score = CalculateScore(_quantities);
+                bestScore = CalculateScore(_quantities);
                 string ingredients = _quantities.Select(i => $"{i}").Aggregate((a, b) => $"{a} {b}");
-                Console.WriteLine($"Improved: {ingredients} = {score}");
+                Console.WriteLine($"Improved: {ingredients} = {bestScore}");
             }
 
             Console.WriteLine("Unable to further improve recipe.");

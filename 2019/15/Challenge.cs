@@ -10,13 +10,15 @@ namespace AdventOfCode.Year2019.Day15 {
             SpaceUtil.system = CoordSystem.YUp;
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "374";
+        public override (string, object) SolvePart1() {
             _bot = new RepairBot(input);
-            return $"Oxygen system is {_bot.goalDist} steps away at {_bot.goalPos.Value}.";
+            return ($"Oxygen system is {{0}} steps away at {_bot.goalPos.Value}.", _bot.goalDist);
         }
         
-        public override string SolvePart2() {
-            return $"It will take {_bot.timeToFill} minutes to fill the region with oxygen.";
+        public override string part2Answer => "482";
+        public override (string, object) SolvePart2() {
+            return ("It will take {0} minutes to fill the region with oxygen.", _bot.timeToFill);
         }
     }
 }

@@ -34,13 +34,15 @@ namespace AdventOfCode.Year2015.Day16 {
             }
         }
 
-        public override string SolvePart1() {
+        public override string part1Answer => "40";
+        public override (string, object) SolvePart1() {
             PropType GetPropType(string prop) => PropType.Equal;
 
-            return $"Matching aunt Sue found: #{FindSue(GetPropType)}";
+            return ("Matching aunt Sue found: #", FindSue(GetPropType));
         }
 
-        public override string SolvePart2() {
+        public override string part2Answer => "241";
+        public override (string, object) SolvePart2() {
             PropType GetPropType(string prop) {
                 return prop switch {
                     "cats" => PropType.Greater,
@@ -51,7 +53,7 @@ namespace AdventOfCode.Year2015.Day16 {
                 };
             }
 
-            return $"Matching aunt Sue found: #{FindSue(GetPropType)}";
+            return ("Matching aunt Sue found: #", FindSue(GetPropType));
         }
         
         private int FindSue(Func<string, PropType> getPropType) {

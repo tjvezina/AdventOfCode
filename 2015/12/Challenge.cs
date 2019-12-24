@@ -11,12 +11,14 @@ namespace AdventOfCode.Year2015.Day12 {
             _root = JSON.Load(input);
         }
 
-        public override string SolvePart1() {
-            return $"Sum of all numbers: {SumNumbers(_root)}";
+        public override string part1Answer => "119433";
+        public override (string, object) SolvePart1() {
+            return ("Sum of all numbers: ", SumNumbers(_root));
         }
         
-        public override string SolvePart2() {
-            return $"Sum of all numbers: {SumNumbers(_root, excludeRed:true)}";
+        public override string part2Answer => "68466";
+        public override (string, object) SolvePart2() {
+            return ("Sum of all numbers: ", SumNumbers(_root, excludeRed:true));
         }
 
         private int SumNumbers(Variant variant, bool excludeRed = false) {

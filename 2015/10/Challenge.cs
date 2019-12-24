@@ -16,21 +16,25 @@ namespace AdventOfCode.Year2015.Day10 {
             _elementInput[86] = 1; // Element #87 (index 86) is equivalent to the input string 1113122113
         }
 
-        public override string SolvePart1() {
-            PrintIteration(40);
-            return null;
+        public override string part1Answer => "360154";
+        public override (string, object) SolvePart1() {
+            const int ITERATION = 40;
+            return ($"Iteration {ITERATION}: ", GetIterationLength(ITERATION));
         }
         
-        public override string SolvePart2() {
-            PrintIteration(50);
-            PrintIteration(1000);
-            PrintIteration(1000000);
-            return null;
+        public override string part2Answer => "5103798";
+        public override (string, object) SolvePart2() {
+            const int ITERATION = 50;
+
+            void PrintIter(int iter) => Console.WriteLine($"Iteration {iter:N0}: {GetIterationLength(iter)}");
+
+            // Some huge values, just for fun
+            PrintIter(1_000);
+            PrintIter(1_000_000);
+
+            return ($"Iteration {ITERATION}: ", GetIterationLength(ITERATION));
         }
 
-        private void PrintIteration(int iter) {
-            ulong iterLength = _dna.GetIterationLength(_elementInput, iter);
-            Console.WriteLine($"Iter {iter:N0}: {iterLength}");
-    }
+        private ulong GetIterationLength(int iter) => _dna.GetIterationLength(_elementInput, iter);
     }
 }
