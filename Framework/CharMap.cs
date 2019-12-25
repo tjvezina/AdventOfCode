@@ -35,6 +35,14 @@ namespace AdventOfCode {
             }
         }
 
+        public CharMap(CharMap other) {
+            width = other.width;
+            height = other.height;
+            _map = new char[width, height];
+
+            Array.Copy(other._map, _map, _map.Length);
+        }
+
         public char GetCharOrDefault(Point p) => GetCharOrDefault(p.x, p.y);
         public char GetCharOrDefault(int x, int y) {
             if (x >= 0 && y >= 0 && x < width && y < height) return _map[x, y];
