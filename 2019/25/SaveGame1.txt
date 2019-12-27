@@ -1,0 +1,32 @@
+north
+east
+north
+take loom
+south
+west
+north
+north
+take mutex
+south
+south
+south
+east
+east
+take ornament
+west
+take semiconductor
+west
+west
+west
+south
+east
+north
+take wreath
+south
+take asterisk
+west
+north
+take sand
+north
+take dark matter
+east
