@@ -4,6 +4,9 @@ namespace AdventOfCode {
     public struct Point3 {
         public static readonly Point3 zero  = new Point3(0, 0, 0);
 
+        public static implicit operator Point3(Point p) => new Point3(p.x, p.y, 0);
+        public static explicit operator Point(Point3 p) => new Point(p.x, p.y);
+
         public int x;
         public int y;
         public int z;

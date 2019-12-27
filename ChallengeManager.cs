@@ -32,11 +32,13 @@ namespace AdventOfCode {
             BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\n <<< Advent of Code {challenge.year} Day {challenge.day} >>> ");
+            Console.WriteLine($" <<< Advent of Code {challenge.year} Day {challenge.day} >>> ");
             Console.ForegroundColor = ConsoleColor.Gray;
 
             RunPart(challenge, ChallengePart.Part1);
             RunPart(challenge, ChallengePart.Part2);
+
+            Console.WriteLine();
         }
 
         private static void RunPart(BaseChallenge challenge, ChallengePart part) {
@@ -148,11 +150,12 @@ namespace AdventOfCode {
         }
 
         private static string FormatStackTrace(string stackTrace) {
-            string[] lines = stackTrace.Split(new[] { "\n", "\r\n" }, StringSplitOptions.None);
+            string[] lines = stackTrace.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; ++i) {
-                lines[i] = Regex.Match(lines[i], @" in (.*:line \d+)").Groups[1].Value;
+                Match match = Regex.Match(lines[i], @" in (.*:line \d+)");
+                lines[i] = match.Success ? match.Groups[1].Value : lines[i];
             }
-            return "Stack trace:\n" + lines.Aggregate((a, b) => $"{a}\n{b}");
+            return "Stack trace:\n" + lines.Where(l => !string.IsNullOrWhiteSpace(l)).Aggregate((a, b) => $"{a}\n{b}");
         }
     }
 }

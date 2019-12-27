@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2019.Day24 {
-    public class Challenge : BaseChallenge {
+    public partial class Challenge : BaseChallenge {
         private CharMap _map;
 
         public override void InitPart1() {
@@ -29,11 +29,6 @@ namespace AdventOfCode.Year2019.Day24 {
             return ($"Rating {{0}} repeated at #{repeatIndex} and #{ratings.Count}", lastRating);
         }
         
-        public override string part2Answer => null;
-        public override (string, object) SolvePart2() {
-            return (null, null);
-        }
-
         private void Step() {
             CharMap nextMap = new CharMap(_map);
 
