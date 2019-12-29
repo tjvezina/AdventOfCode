@@ -134,16 +134,18 @@ namespace AdventOfCode {
             double elapsed = _stopwatch.Elapsed.TotalSeconds;
 
             string elapsedStr = elapsed switch {
-                var e when e < 10   => $"{elapsed:0.000}",
-                var e when e < 100  => $"{elapsed:00.00}",
-                var e when e < 1000 => $"{elapsed:000.0}",
-                _                   => ">1000"
+                double e when e < 10   => $"{elapsed:0.000}",
+                double e when e < 100  => $"{elapsed:00.00}",
+                double e when e < 1000 => $"{elapsed:000.0}",
+                _                      => ">1000"
             };
 
             Console.ForegroundColor = elapsed switch {
-                var e when e >= 5.0 => ConsoleColor.DarkRed,
-                var e when e >= 1.0 => ConsoleColor.DarkYellow,
-                _                   => ConsoleColor.DarkGray
+                double e when e >= 10.0 => ConsoleColor.Red,
+                double e when e >= 5.0  => ConsoleColor.DarkRed,
+                double e when e >= 1.0  => ConsoleColor.DarkYellow,
+                double e when e >= 0.25 => ConsoleColor.DarkGreen,
+                _                       => ConsoleColor.DarkGray
             };
 
             Console.Write($"({elapsedStr}s) ");
