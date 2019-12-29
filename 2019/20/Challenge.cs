@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2019.Day20 {
 
             public bool Equals(Node n) => n.pos == pos && n.depth == depth;
             public override bool Equals(object obj) => obj is Node && Equals((Node)obj);
-            public override int GetHashCode() => pos.GetHashCode() << depth;
+            public override int GetHashCode() => (pos.x << 16) + (pos.y << 8) + depth;
             public static bool operator==(Node a, Node b) => a.Equals(b);
             public static bool operator!=(Node a, Node b) => !(a == b);
         }
@@ -97,38 +97,46 @@ namespace AdventOfCode.Year2019.Day20 {
         }
 
         private int FindShortestPathRecursive() {
-            int GetH(Node n, Node end) => n.depth; // No heuristic (Dijkstra's/BFS)
+            Queue<(Point pos, int depth, int dist)> queue = new Queue<(Point, int, int)>();
+            queue.Enqueue((_start, 0, 0));
 
-            bool IsValid(Node node) {
-                switch (_map.GetCharOrDefault(node.pos)) {
-                    case '.':
-                    case '$':
-                        return true;
-                    case 's':
-                    case 'e':
-                        return node.depth == 0;
-                    case '@':
-                        return node.depth > 0;
+            HashSet<Node> visited = new HashSet<Node> { new Node(_start) };
+
+            while (queue.Count > 0) {
+                (Point pos, int depth, int dist) = queue.Dequeue();
+                char c = _map[pos];
+
+                foreach ((int dx, int dy) in new[] { (1, 0), (0, 1), (-1, 0), (0, -1) }) {
+                    Point next = new Point(pos.x + dx, pos.y + dy);
+                    char nextChar = _map[next];
+                    int nextDepth = depth;
+
+                    if (nextChar == 'e' && depth == 0) {
+                        return dist + 1;
+                    }
+
+                    if ((nextChar == '#') || // Walls
+                        (depth == 0 && nextChar == '@') || // Outer portals on top level
+                        (depth == 60 && nextChar == '$') || // Inner portals on bottom level
+                        (depth > 0 && (nextChar == 's' || nextChar == 'e')) // Start/end on inner levels
+                    ) {
+                        continue;
+                    }
+
+                    if (IsPortalID(nextChar)) {
+                        if (c == 's') continue;
+
+                        nextDepth += (c == '$' ? 1 : -1);
+                        next = _portalMap[pos];
+                    }
+
+                    if (visited.Add(new Node(next, nextDepth))) {
+                        queue.Enqueue((next, nextDepth, dist + 1));
+                    }
                 }
-                
-                return false;
             }
 
-            HashSet<Node> GetNeighbors(Node node) {
-                HashSet<Node> neighbors = new HashSet<Node> {
-                    new Node(node.pos + new Point( 1, 0), node.depth),
-                    new Node(node.pos + new Point( 0, 1), node.depth),
-                    new Node(node.pos + new Point(-1, 0), node.depth),
-                    new Node(node.pos + new Point( 0,-1), node.depth)
-                };
-
-                if (_map[node.pos] == '$') neighbors.Add(new Node(_portalMap[node.pos], node.depth + 1));
-                if (_map[node.pos] == '@') neighbors.Add(new Node(_portalMap[node.pos], node.depth - 1));
-
-                return neighbors;
-            }
-
-            return Pathfinder.FindPath(new Node(_start), new Node(_end), IsValid, GetH, GetNeighbors).Count;
+            throw new Exception("Failed to reach end of maze");
         }
     }
 }
