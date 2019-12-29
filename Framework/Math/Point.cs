@@ -34,6 +34,11 @@ namespace AdventOfCode {
             this.y = y;
         }
 
+        public void Deconstruct(out int x, out int y) {
+            x = this.x;
+            y = this.y;
+        }
+
         public static Point operator-(Point a) => new Point(-a.x, -a.y);
         public static Point operator+(Point a, Point b) => new Point(a.x + b.x, a.y + b.y);
         public static Point operator-(Point a, Point b) => a + -b;

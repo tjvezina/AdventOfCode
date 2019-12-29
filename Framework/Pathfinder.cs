@@ -29,7 +29,6 @@ namespace AdventOfCode {
             Func<T, HashSet<T>> getNeighbors,
             out Stack<T> path
         ) {
-            
             HashSet<T> openSet = new HashSet<T> { start };
             Dictionary<T, T> parentMap = new Dictionary<T, T>();
 
