@@ -42,10 +42,7 @@ namespace AdventOfCode {
         }
 
         private static void RunPart(BaseChallenge challenge, ChallengePart part) {
-            DelayedWriter partWriter = new DelayedWriter();
-            Console.SetOut(partWriter);
             (string format, string answer, string expected) = Execute(challenge, part);
-            ConsoleUtil.RestoreDefaultOutput();
 
             Console.Write($"[Part {(part == ChallengePart.Part1 ? 1 : 2)}]");
             Console.ResetColor();
@@ -63,11 +60,6 @@ namespace AdventOfCode {
                 Console.Write(formatParts[1]);
             }
             Console.WriteLine();
-            
-            if (!partWriter.isEmpty) {
-                partWriter.Flush();
-                Console.WriteLine();
-            }
         }
 
         public static void Test(Type type) {
