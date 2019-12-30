@@ -16,7 +16,7 @@ namespace AdventOfCode.Year2019.Day25 {
             }
 #else
             // Collect all items and return to the security room
-            droid.LoadSave(LoadFile("SaveGame1.txt"));
+            droid.LoadSave(LoadFileLines("SaveGame1.txt"));
             // Try every combination of items until the correct weight is found
             droid.TestAllItemCombinations();
 #endif

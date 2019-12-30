@@ -107,13 +107,16 @@ namespace AdventOfCode {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     _stopwatch.Reset();
                 }
-            } catch (TargetInvocationException ex) {
+            } catch (Exception ex) {
                 _stopwatch.Reset();
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.DarkRed;
-                format = ex.InnerException.Message;
+                while (ex.InnerException != null) {
+                    ex = ex.InnerException;
+                }
+                format = ex.Message;
                 if (fullStackTrace) {
-                    format += "\n" + FormatStackTrace(ex.InnerException.StackTrace);
+                    format += "\n" + FormatStackTrace(ex.StackTrace);
                 }
             }
 
@@ -147,7 +150,7 @@ namespace AdventOfCode {
             string[] lines = stackTrace.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; ++i) {
                 Match match = Regex.Match(lines[i], @" in (.*:line \d+)");
-                lines[i] = match.Success ? match.Groups[1].Value : lines[i];
+                lines[i] = "- " + (match.Success ? match.Groups[1].Value : lines[i].Substring(6)); // Remove "   at "
             }
             return "Stack trace:\n" + lines.Where(l => !string.IsNullOrWhiteSpace(l)).Aggregate((a, b) => $"{a}\n{b}");
         }

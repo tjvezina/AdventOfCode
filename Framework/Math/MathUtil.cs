@@ -23,11 +23,7 @@ namespace AdventOfCode {
             a = Math.Abs(a);
             b = Math.Abs(b);
 
-            if (a < b) {
-                long hold = a;
-                a = b;
-                b = hold;
-            }
+            if (a < b) DataUtil.Swap(ref a, ref b);
 
             while (b > 0) {
                 long r = a % b;

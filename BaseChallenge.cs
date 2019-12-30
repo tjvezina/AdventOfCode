@@ -29,7 +29,8 @@ namespace AdventOfCode {
         }
 
         protected string GetFilePath(string fileName) => $"{year}/{day:00}/{fileName}";
-        protected string[] LoadFile(string fileName) => File.ReadAllLines(GetFilePath(fileName));
+        protected string[] LoadFileLines(string fileName) => File.ReadAllLines(GetFilePath(fileName));
+        protected string LoadFile(string fileName) => File.ReadAllText(GetFilePath(fileName));
 
         public virtual void InitPart1() { }
         public abstract (string format, object answer) SolvePart1();

@@ -44,32 +44,12 @@ namespace AdventOfCode.Year2015.Day17 {
                             Console.WriteLine(usedContainers.Select(c => $"{c}").Aggregate((a, b) => $"{a} + {b}"));
                         }
                     }
-                } while (Advance(indices, _containers.Length));
+                } while (DataUtil.NextCombination(indices, _containers.Length));
 
                 if (minimize && combos > 0) break;
             }
 
             return combos;
-        }
-
-        private bool Advance(int[] indices, int count) {
-            int n = indices.Length;
-            int i = n - 1;
-            for (int j = count - 1; i >= 0; --i, --j) {
-                if (indices[i] < j) {
-                    break;
-                }
-            }
-
-            if (i < 0) {
-                return false;
-            }
-
-            for (int j = indices[i] + 1; i < n; ++i, ++j) {
-                indices[i] = j;
-            }
-
-            return true;
         }
     }
 }

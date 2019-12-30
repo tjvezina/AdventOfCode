@@ -28,7 +28,7 @@ namespace AdventOfCode.Year2015.Day16 {
                 _sues.Add(sue);
             }
             
-            foreach (string prop in LoadFile("properties.txt")) {
+            foreach (string prop in LoadFileLines("properties.txt")) {
                 string[] parts = prop.Split(':');
                 _knownProps[parts[0].Trim()] = int.Parse(parts[1].Trim());
             }
