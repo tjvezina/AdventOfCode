@@ -19,6 +19,7 @@ namespace AdventOfCode.Year2015.Day22 {
         public Boss boss;
         public IList<(Spell spell, int turnsLeft)> activeSpells;
         public IList<Spell> spellsCast;
+        public int manaSpent;
 
         public CombatState(Difficulty difficulty) {
             this.difficulty = difficulty;
@@ -36,6 +37,7 @@ namespace AdventOfCode.Year2015.Day22 {
             boss = toCopy.boss.DeepClone();
             activeSpells = toCopy.activeSpells.ToList();
             spellsCast = toCopy.spellsCast.ToList();
+            manaSpent = toCopy.manaSpent;
         }
 
         public CombatState DeepClone() => new CombatState(this);
@@ -54,6 +56,7 @@ namespace AdventOfCode.Year2015.Day22 {
             }
 
             spellsCast.Add(spellToCast);
+            manaSpent += spellToCast.manaCost;
 
             // --- PLAYER TURN ---
             if (difficulty == Difficulty.Hard) {

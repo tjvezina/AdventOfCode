@@ -31,46 +31,44 @@ namespace AdventOfCode.Year2015.Day22 {
         }
 
         private void Play(Difficulty difficulty, out int leastMana) {
-            List<CombatState> victoryStates = new List<CombatState>();
+            CombatState victoryState = null;
 
-            Queue<CombatState> stateQueue = new Queue<CombatState>();
-            stateQueue.Enqueue(new CombatState(difficulty));
+            Comparer<CombatState> stateComparer = Comparer<CombatState>.Create((a, b) => a.manaSpent.CompareTo(b.manaSpent));
+            BinaryMinHeap<CombatState> activeStates = new BinaryMinHeap<CombatState>(stateComparer);
+            activeStates.Insert(new CombatState(difficulty));
 
-            while (stateQueue.TryDequeue(out CombatState prevState)) {
+            while (activeStates.Count > 0) {
+                CombatState prevState = activeStates.Extract();
+
+                if (victoryState != null && victoryState.manaSpent <= prevState.manaSpent) break;
+
                 foreach (Spell spell in Spells) {
-                    Profiler.Start("DeepClone");
+                    if (victoryState != null && victoryState.manaSpent <= prevState.manaSpent + spell.manaCost) {
+                        continue;
+                    }
+
                     CombatState nextState = prevState.DeepClone();
-                    Profiler.Stop();
-                    Profiler.Start("CastSpell");
                     nextState.CastSpell(spell);
-                    Profiler.Stop();
-                    Profiler.Start("Sort");
+
                     switch (nextState.result) {
                         case CombatState.Result.InProgress:
-                            stateQueue.Enqueue(nextState);
+                            activeStates.Insert(nextState);
                             break;
                         case CombatState.Result.Victory:
-                            victoryStates.Add(nextState);
+                            if (victoryState == null || victoryState.manaSpent > nextState.manaSpent) {
+                                victoryState = nextState;
+                            }
                             break;
                     }
-                    Profiler.Stop();
                 }
             }
-            Profiler.PrintResults();
 
-            Debug.Assert(victoryStates.Count > 0, "Failed to find any sequence of spells to defeat the boss!");
+            Debug.Assert(victoryState != null, "Failed to find any sequence of spells to defeat the boss!");
 
             Console.WriteLine($" -- Difficulty {difficulty} -- ");
-            Console.WriteLine($"Victory states: {victoryStates.Count}");
-            IOrderedEnumerable<CombatState> victoryBySpellsCast = victoryStates.OrderBy(s => s.spellsCast.Count);
-            Console.WriteLine($"Least spells to victory: {victoryBySpellsCast.First().spellsCast.Count}");
-            Console.WriteLine($"Most spells to victory: {victoryBySpellsCast.Last().spellsCast.Count}");
 
-            CombatState leastManaVictory = victoryStates.OrderBy(s => s.spellsCast.Sum(s => s.manaCost)).First();
-
-            Console.WriteLine("Least mana victory:");
             CombatState state = new CombatState(difficulty);
-            foreach (Spell spell in leastManaVictory.spellsCast) {
+            foreach (Spell spell in victoryState.spellsCast) {
                 state.CastSpell(spell);
                 Console.Write($"{spell.name,-15}");
                 Console.Write($"Boss: {state.boss.hitPoints,2}  ");
@@ -79,7 +77,7 @@ namespace AdventOfCode.Year2015.Day22 {
                 Console.WriteLine();
             }
 
-            leastMana = leastManaVictory.spellsCast.Sum(s => s.manaCost);
+            leastMana = victoryState.spellsCast.Sum(s => s.manaCost);
         }
     }
 }
