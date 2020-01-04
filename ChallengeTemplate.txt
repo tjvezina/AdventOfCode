@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Year201#.Day## {
+namespace AdventOfCode.Year{0}.Day{1} {
     public class Challenge : BaseChallenge {
         public override void InitPart1() { }
 

@@ -28,7 +28,7 @@ namespace AdventOfCode {
             }
         }
 
-        protected string GetFilePath(string fileName) => $"{year}/{day:00}/{fileName}";
+        protected string GetFilePath(string fileName) => $"{this.GetPath()}/{fileName}";
         protected string[] LoadFileLines(string fileName) => File.ReadAllLines(GetFilePath(fileName));
         protected string LoadFile(string fileName) => File.ReadAllText(GetFilePath(fileName));
 

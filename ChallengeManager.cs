@@ -26,7 +26,25 @@ namespace AdventOfCode {
 
         private static Stopwatch _stopwatch = new Stopwatch();
 
+        public static string GetPath(this BaseChallenge challenge) => GetPath(challenge.year, challenge.day);
+        public static string GetPath(int year, int day) => $"{year}/{day:00}";
+
         public static Type GetType(int year, int day) => Type.GetType($"AdventOfCode.Year{year}.Day{day:00}.Challenge");
+
+        public static void Create(int year, int day) {
+            Debug.Assert(GetType(year, day) == null, $"Challenge {year}.{day} already exists");
+            
+            string path = GetPath(year, day);
+            string filePath = $"{path}/Challenge.cs";
+
+            Debug.Assert(!File.Exists(filePath), $"A challenge file already exists at {filePath}");
+
+            Directory.CreateDirectory(GetPath(year, day));
+            string template = File.ReadAllText("ChallengeTemplate.txt");
+            template = template.Replace("{0}", $"{year}");
+            template = template.Replace("{1}", $"{day:00}");
+            File.WriteAllText(filePath, template);
+        }
 
         public static void Run(Type type) {
             BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);

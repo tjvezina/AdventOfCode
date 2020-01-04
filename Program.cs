@@ -13,11 +13,34 @@ namespace AdventOfCode {
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
         private static void Main(string[] args) {
-            if (args.Length > 0 && args[0] == "test") {
-                TestMode(args.Length > 1 ? args[1] : null);
-            } else {
-                RunMode(args.Length > 0 ? args[0] : null);
+            string arg0 = args.Length > 0 ? args[0] : null;
+            string arg1 = args.Length > 1 ? args[1] : null;
+
+            switch (arg0) {
+                default:
+                    RunMode(arg0);
+                    break;
+                case "create":
+                    CreateNextChallenge(arg1);
+                    break;
+                case "test":
+                    TestMode(arg1);
+                    break;
             }
+        }
+
+        private static void CreateNextChallenge(string yearStr) {
+            if (!int.TryParse(yearStr, out int year)) year = GetDefaultYear();
+
+            int day = 1;
+            while (ChallengeManager.GetType(year, day) != null) ++day;
+
+            if (day > 25) {
+                Console.WriteLine($"All {year} challenges already exist");
+                return;
+            }
+
+            ChallengeManager.Create(year, day);
         }
 
         private static void RunMode(string date) {
