@@ -27,8 +27,6 @@ namespace AdventOfCode.Year2019.Day25 {
         }
         
         public override string part2Answer => "The Sun";
-        public override (string, object) SolvePart2() {
-            return (null, "The Sun");
-        }
+        public override (string, object) SolvePart2() => (null, part2Answer);
     }
 }
