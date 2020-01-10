@@ -8,7 +8,7 @@ namespace AdventOfCode {
         private static Range ALL_DAYS => new Range(1, 25);
 
         // Set to a specific year while working on puzzles from that year, or null for current year
-        private static readonly int? ACTIVE_YEAR = null;
+        private static readonly int? ACTIVE_YEAR = 2016;
         private static int GetDefaultYear() => ACTIVE_YEAR ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
