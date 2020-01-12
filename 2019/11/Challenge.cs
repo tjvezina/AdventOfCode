@@ -21,7 +21,7 @@ namespace AdventOfCode.Year2019.Day11 {
         public override (string, object) SolvePart2() {
             _paintBot.Run(firstTileIsWhite:true);
             _paintBot.PrintResults();
-            return ("Image text: ", "HGEHJHUZ"); // Explicitly return answer, until image-to-text is implemented :)
+            return ("Image text: ", part2Answer); // Explicitly return answer, until image-to-text is implemented :)
         }
     }
 }
