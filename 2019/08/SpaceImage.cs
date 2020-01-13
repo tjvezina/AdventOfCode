@@ -3,6 +3,10 @@ using System.Diagnostics;
 
 namespace AdventOfCode.Year2019.Day08 {
     public class SpaceImage {
+        private const int Black = 0;
+        private const int White = 1;
+        private const int Transparent = 2;
+
         int[,,] _data;
 
         public int width => _data.GetLength(0);
@@ -27,23 +31,22 @@ namespace AdventOfCode.Year2019.Day08 {
             }
         }
 
-        public void Draw() {
+        public bool[,] Flatten() {
+            bool[,] pixels = new bool[width, height];
+
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; ++x) {
-                    int color = 0;
                     for (int z = 0; z < depth; ++z) {
-                        int value = _data[x, y, z];
-                        if (value != 2) {
-                            color = value;
+                        int color = _data[x, y, z];
+                        if (color != Transparent) {
+                            pixels[x, y] = (color == White);
                             break;
                         }
                     }
-                    Console.BackgroundColor = (color == 0 ? ConsoleColor.Black : ConsoleColor.White);
-                    Console.Write("  ");
                 }
-                Console.WriteLine();
             }
-            Console.BackgroundColor = ConsoleColor.Black;
+
+            return pixels;
         }
     }
 }

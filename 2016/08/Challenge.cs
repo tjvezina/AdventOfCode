@@ -31,16 +31,9 @@ namespace AdventOfCode.Year2016.Day08 {
         
         public override string part2Answer => "CFLELOYFCS";
         public override (string, object) SolvePart2() {
-            for (int y = 0; y < Height; y++) {
-                for (int x = 0; x < Width; x++) {
-                    Console.BackgroundColor = (_board[x, y] ? ConsoleColor.White : ConsoleColor.Black);
-                    Console.Write(" ");
-                }
-                Console.ResetColor();
-                Console.WriteLine();
-            }
+            ASCIIArt.Draw(_board, doubleWidth:false);
 
-            return ("Message: ", part2Answer);
+            return ("Message: ", ASCIIArt.ImageToText(_board));
         }
     }
 }

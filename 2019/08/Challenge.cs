@@ -36,8 +36,10 @@ namespace AdventOfCode.Year2019.Day08 {
         
         public override string part2Answer => "FPUAR";
         public override (string, object) SolvePart2() {
-           image.Draw();
-           return ("Image text: ", part2Answer); // Explicitly return answer, until image-to-text is implemented :)
+            bool[,] data = image.Flatten();
+
+           ASCIIArt.Draw(data);
+           return ("Image text: ", ASCIIArt.ImageToText(data));
         }
     }
 }

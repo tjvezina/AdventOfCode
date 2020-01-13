@@ -20,8 +20,10 @@ namespace AdventOfCode.Year2019.Day11 {
         public override string part2Answer => "HGEHJHUZ";
         public override (string, object) SolvePart2() {
             _paintBot.Run(firstTileIsWhite:true);
-            _paintBot.PrintResults();
-            return ("Image text: ", part2Answer); // Explicitly return answer, until image-to-text is implemented :)
+            bool[,] data = _paintBot.GetImage();
+
+            ASCIIArt.Draw(data);
+            return ("Image text: ", ASCIIArt.ImageToText(data));
         }
     }
 }

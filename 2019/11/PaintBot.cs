@@ -72,7 +72,7 @@ namespace AdventOfCode.Year2019.Day11 {
             }
         }
 
-        public void PrintResults() {
+        public bool[,] GetImage() {
             Point min = new Point(int.MaxValue, int.MaxValue);
             Point max = new Point(int.MinValue, int.MinValue);
 
@@ -83,15 +83,17 @@ namespace AdventOfCode.Year2019.Day11 {
                 max.y = Math.Max(max.y, p.y);
             }
 
+            bool[,] pixels = new bool[max.x - min.x + 1, max.y - min.y + 1];
+
             for (int y = max.y; y >= min.y; --y) {
                 for (int x = min.x; x <= max.x; ++x) {
-                    Console.BackgroundColor = (_whiteTiles.Contains(new Point(x, y)) ? ConsoleColor.White : ConsoleColor.Black);
-                    Console.Write("  ");
+                    int xPixel = x - min.x;
+                    int yPixel = max.y - y;
+                    pixels[xPixel, yPixel] = _whiteTiles.Contains(new Point(x, y));
                 }
-                Console.WriteLine();
             }
 
-            Console.BackgroundColor = ConsoleColor.Black;
+            return pixels;
         }
     }
 }
