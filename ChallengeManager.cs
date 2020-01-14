@@ -8,7 +8,36 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode {
     public static class ChallengeManager {
-        private enum ChallengePart { Part1, Part2 }
+        private enum ChallengePart { Part1 = 1, Part2 = 2 }
+
+        private enum ResultStatus {
+            Development, // No answer given; hasn't been started, or isn't complete yet
+            Candidate,   // Answer given, expected answer unknown; to be submitted to AoC
+            WrongAnswer, // Given answer does not match expected
+            Success,     // Given answer matches expected
+            Exception    // Unhandled exception during execution
+        }
+
+        private struct Results {
+            public ResultStatus status;
+            public string givenAnswer;
+            public string message;
+
+            public void SetStatusColor() {
+                Console.ResetColor();
+                if (status == ResultStatus.Exception) {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                }
+                Console.ForegroundColor = status switch {
+                    ResultStatus.Development => ConsoleColor.DarkGray,
+                    ResultStatus.Candidate   => ConsoleColor.Cyan,
+                    ResultStatus.WrongAnswer => ConsoleColor.Red,
+                    ResultStatus.Success     => ConsoleColor.Green,
+                    ResultStatus.Exception   => ConsoleColor.Black,
+                    _ => throw new Exception($"Unhandled result status: {status}")
+                };
+            }
+        }
 
         private static readonly Type ChallengeType = typeof(BaseChallenge);
         private static readonly Dictionary<ChallengePart, MethodInfo> InitMethods = new Dictionary<ChallengePart, MethodInfo> {
@@ -51,7 +80,7 @@ namespace AdventOfCode {
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($" <<< Advent of Code {challenge.year} Day {challenge.day} >>> ");
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ResetColor();
 
             RunPart(challenge, ChallengePart.Part1);
             RunPart(challenge, ChallengePart.Part2);
@@ -60,22 +89,23 @@ namespace AdventOfCode {
         }
 
         private static void RunPart(BaseChallenge challenge, ChallengePart part) {
-            (string format, string answer, string expected) = Execute(challenge, part);
+            Results results = Execute(challenge, part);
 
-            Console.Write($"[Part {(part == ChallengePart.Part1 ? 1 : 2)}]");
+            results.SetStatusColor();
+            Console.Write($"[Part {(int)part}]");
             Console.ResetColor();
             Console.Write(" ");
 
             string answerStr = string.Empty;
-            string[] formatParts = (format ?? string.Empty).Split("{0}");
-            if (formatParts.Length > 0) {
-                Console.Write(formatParts[0]);
+            string[] messageParts = (results.message ?? string.Empty).Split("{0}");
+            if (messageParts.Length > 0) {
+                Console.Write(messageParts[0]);
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write(answer);
+            Console.Write(results.givenAnswer);
             Console.ResetColor();
-            if (formatParts.Length > 1) {
-                Console.Write(formatParts[1]);
+            if (messageParts.Length > 1) {
+                Console.Write(messageParts[1]);
             }
             Console.WriteLine();
         }
@@ -88,26 +118,38 @@ namespace AdventOfCode {
         }
 
         private static void TestPart(BaseChallenge challenge, ChallengePart part) {
-            Console.SetOut(new StringWriter());
-            (string format, string answer, string expected) = Execute(challenge, part, fullStackTrace:false);
+            Console.SetOut(new StringWriter()); // Discard all output during part execution
+            Results results = Execute(challenge, part, fullStackTrace:false);
             ConsoleUtil.RestoreDefaultOutput();
 
-            Console.Write($"[{challenge.day:00} {(part == ChallengePart.Part1 ? 'A' : 'B')}]");
+            Console.ForegroundColor = (part == ChallengePart.Part1 ? ConsoleColor.Blue : ConsoleColor.DarkCyan);
+            Console.Write($"{challenge.day:00}-{(int)part} ");
+
+            results.SetStatusColor();
+            switch (results.status) {
+                case ResultStatus.Development:
+                case ResultStatus.Candidate:
+                    Console.Write("WIP ");
+                    break;
+                case ResultStatus.WrongAnswer:
+                case ResultStatus.Exception:
+                    Console.Write("FAIL");
+                    break;
+                case ResultStatus.Success:
+                    Console.Write("PASS");
+                    break;
+            }
             Console.ResetColor();
             Console.Write(" ");
 
             WriteBenchmark();
 
             Console.ResetColor();
-            Console.WriteLine(answer);
+            Console.WriteLine(results.status == ResultStatus.Exception ? results.message : results.givenAnswer);
         }
 
-        private static (string format, string answer, string expected) Execute(
-            BaseChallenge challenge,
-            ChallengePart part,
-            bool fullStackTrace = true
-        ) {
-            (string format, string answer) = (null, null);
+        private static Results Execute(BaseChallenge challenge, ChallengePart part, bool fullStackTrace = true) {
+            Results data = new Results();
             string expected = (string)AnswerProps[part].GetValue(challenge);
 
             try {
@@ -115,30 +157,28 @@ namespace AdventOfCode {
                 InitMethods[part].Invoke(challenge, null);
                 ValueTuple<string, object> result = (ValueTuple<string, object>)SolveMethods[part].Invoke(challenge, null);
                 _stopwatch.Stop();
-                format = result.Item1;
-                answer = result.Item2?.ToString();
+                data.message = result.Item1;
+                data.givenAnswer = result.Item2?.ToString();
 
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 if (!string.IsNullOrEmpty(expected)) {
-                    Console.ForegroundColor = (answer == expected ? ConsoleColor.Green : ConsoleColor.Red);
-                } else if (string.IsNullOrEmpty(answer)) {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    _stopwatch.Reset();
+                    data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
+                } else if (!string.IsNullOrEmpty(data.givenAnswer)) {
+                    data.status = ResultStatus.Candidate;
+                } else {
+                    data.status = ResultStatus.Development;
                 }
             } catch (Exception ex) {
                 _stopwatch.Reset();
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                while (ex.InnerException != null) {
-                    ex = ex.InnerException;
-                }
-                format = ex.Message;
+                data.status = ResultStatus.Exception;
+                while (ex.InnerException != null) ex = ex.InnerException;
+
+                data.message = ex.Message;
                 if (fullStackTrace) {
-                    format += "\n" + FormatStackTrace(ex.StackTrace);
+                    data.message += "\n" + FormatStackTrace(ex.StackTrace);
                 }
             }
 
-            return (format, answer, expected);
+            return data;
         }
 
         private static void WriteBenchmark() {

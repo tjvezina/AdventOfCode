@@ -44,7 +44,7 @@ namespace AdventOfCode {
         }
 
         private static void RunMode(string date) {
-            Type type = (date == null ? GetMostRecentChallenge() : GetChallengeTypeForDate(date));
+            Type type = (date == null ? GetMostRecentChallengeType() : GetChallengeTypeForDate(date));
 
             if (type != null) {
                 ChallengeManager.Run(type);
@@ -53,7 +53,7 @@ namespace AdventOfCode {
 
         private static void TestMode(string date) {
             if (date == null) {
-                ChallengeManager.Test(GetMostRecentChallenge());
+                TestDay(GetDefaultYear(), GetMostRecentChallengeDay());
                 return;
             }
 
@@ -101,9 +101,8 @@ namespace AdventOfCode {
             return type;
         }
 
-        private static Type GetMostRecentChallenge() {
+        private static Type GetMostRecentChallengeType() {
             int year = GetDefaultYear();
-
             for (int day = GetDefaultDay(); day >= 1; --day) {
                 Type type = ChallengeManager.GetType(year, day);
                 if (type != null) return type;
@@ -111,6 +110,17 @@ namespace AdventOfCode {
 
             Console.WriteLine($"No challenges found in {year}");
             return null;
+        }
+
+        private static int GetMostRecentChallengeDay() {
+            int year = GetDefaultYear();
+            for (int day = GetDefaultDay(); day >= 1; --day) {
+                Type type = ChallengeManager.GetType(year, day);
+                if (type != null) return day;
+            }
+
+            Console.WriteLine($"No challenges found in {year}");
+            return 0;
         }
 
         private static void TestAll() => TestRange(AllYears, AllDays);
