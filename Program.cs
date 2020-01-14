@@ -3,13 +3,13 @@ using System.IO;
 
 namespace AdventOfCode {
     public static class Program {
-        private const int FIRST_YEAR = 2015;
-        private static Range ALL_YEARS => new Range(FIRST_YEAR, DateTime.Now.Year);
-        private static Range ALL_DAYS => new Range(1, 25);
+        private const int FirstYear = 2015;
+        private static Range AllYears => new Range(FirstYear, DateTime.Now.Year);
+        private static Range AllDays => new Range(1, 25);
 
         // Set to a specific year while working on puzzles from that year, or null for current year
-        private static readonly int? ACTIVE_YEAR = 2016;
-        private static int GetDefaultYear() => ACTIVE_YEAR ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
+        private static readonly int? ActiveYear = 2016;
+        private static int GetDefaultYear() => ActiveYear ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
         private static void Main(string[] args) {
@@ -113,8 +113,8 @@ namespace AdventOfCode {
             return null;
         }
 
-        private static void TestAll() => TestRange(ALL_YEARS, ALL_DAYS);
-        private static void TestYear(int year) => TestRange(new Range(year, year), ALL_DAYS);
+        private static void TestAll() => TestRange(AllYears, AllDays);
+        private static void TestYear(int year) => TestRange(new Range(year, year), AllDays);
         private static void TestDay(int year, int day) => TestRange(new Range(year, year), new Range(day, day));
         private static void TestRange(Range years, Range days) {
             bool wasYearHeaderDrawn;

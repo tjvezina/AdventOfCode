@@ -5,8 +5,8 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019.Day17 {
      public class Challenge : BaseChallenge {
-        private const int MAX_BOT_FUNC_LENGTH = 20;
-        private const int MAX_ACTIONS_PER_FUNC = (MAX_BOT_FUNC_LENGTH + 1) / 4;
+        private const int MaxBotFuncLength = 20;
+        private const int MaxActionsPerFunc = (MaxBotFuncLength + 1) / 4;
 
         private string _intCodeMemory;
 
@@ -163,9 +163,9 @@ namespace AdventOfCode.Year2019.Day17 {
             string c = null;
 
             void TestAllPatterns() {
-                for (int lenA = MAX_ACTIONS_PER_FUNC; lenA > 0; --lenA) {
-                    for (int lenB = MAX_ACTIONS_PER_FUNC; lenB > 0; --lenB) {
-                        for (int lenC = MAX_ACTIONS_PER_FUNC; lenC > 0; --lenC) {
+                for (int lenA = MaxActionsPerFunc; lenA > 0; --lenA) {
+                    for (int lenB = MaxActionsPerFunc; lenB > 0; --lenB) {
+                        for (int lenC = MaxActionsPerFunc; lenC > 0; --lenC) {
                             if (TestPatterns(actionIDs, lenA, lenB, lenC, out a, out b, out c)) {
                                 return;
                             }

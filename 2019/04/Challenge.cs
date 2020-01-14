@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day04 {
      public class Challenge : BaseChallenge {
-        private const int DIGITS = 6;
-        private const int RANGE_MIN = 146810;
-        private const int RANGE_MAX = 612564;
+        private const int Digits = 6;
+        private const int RangeMin = 146810;
+        private const int RangeMax = 612564;
 
         public override string part1Answer => "1748";
         public override (string, object) SolvePart1() {
-            int matchCount = Enumerable.Range(RANGE_MIN, RANGE_MAX - RANGE_MIN).Count(MatchesRuleSet1);
+            int matchCount = Enumerable.Range(RangeMin, RangeMax - RangeMin).Count(MatchesRuleSet1);
 
             return ("Valid passwords (rule set 1): ", matchCount);
         }
         
         public override string part2Answer => "1180";
         public override (string, object) SolvePart2() {
-            int matchCount = Enumerable.Range(RANGE_MIN, RANGE_MAX - RANGE_MIN).Count(MatchesRuleSet2);
+            int matchCount = Enumerable.Range(RangeMin, RangeMax - RangeMin).Count(MatchesRuleSet2);
 
             return ("Valid passwords (rule set 2): ", matchCount);
         }
@@ -31,7 +31,7 @@ namespace AdventOfCode.Year2019.Day04 {
             void CheckDouble() => containsDouble |= (doubleCount == 1 || (doubleCount > 1 && allow3Consecutive));
 
             int lastDigit = password % 10;
-            for (int i = 1; i < DIGITS; ++i) {
+            for (int i = 1; i < Digits; ++i) {
                 password /= 10;
                 int nextDigit = password % 10;
                 

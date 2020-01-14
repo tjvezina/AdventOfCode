@@ -10,13 +10,13 @@ namespace AdventOfCode.Year2019.Day06 {
             public Body parent;
         }
 
-        private const char SEPARATOR = ')';
+        private const char Separator = ')';
 
         private Dictionary<string, Body> _bodyMap = new Dictionary<string, Body>();
 
         public override void InitPart1() {
             foreach (string data in inputSet) {
-                string[] bodies = data.Split(SEPARATOR);
+                string[] bodies = data.Split(Separator);
                 string bodyA = bodies[0];
                 string bodyB = bodies[1];
 

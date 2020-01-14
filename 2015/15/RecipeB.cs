@@ -8,10 +8,10 @@ namespace AdventOfCode.Year2015.Day15 {
 
             bestScore = 0;
 
-            void RecipeLoop(int index = 0, int max = QUANTITY) {
+            void RecipeLoop(int index = 0, int max = Quantity) {
                 if (index == recipe.Length - 1) {
                     recipe[index] = max; // Use up remaining ingredients
-                    if (CalculateCalories(recipe) == CALORIES) {
+                    if (CalculateCalories(recipe) == Calories) {
                         int score = CalculateScore(recipe);
                         if (bestScore < score) {
                             bestScore = score;

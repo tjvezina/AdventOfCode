@@ -2,17 +2,17 @@ using System.Diagnostics;
 
 namespace AdventOfCode.Year2015.Day11 {
     public class Password {
-        public const int LENGTH = 8;
+        public const int Length = 8;
 
         private string _data;
 
         public Password(string data) {
-            Debug.Assert(data.Length == LENGTH, $"Passwords must be {LENGTH} characters long");
+            Debug.Assert(data.Length == Length, $"Passwords must be {Length} characters long");
 
             _data = data;
         }
 
-        public void Increment() => IncrementChar(LENGTH - 1);
+        public void Increment() => IncrementChar(Length - 1);
 
         private void IncrementChar(int index) {
             if (index == -1) {
@@ -34,7 +34,7 @@ namespace AdventOfCode.Year2015.Day11 {
             int straight = 1;
 
             char prev = _data[0];
-            for (int i = 1; i < LENGTH; ++i) {
+            for (int i = 1; i < Length; ++i) {
                 char next = _data[i];
 
                 if (prev + 1 == next) {
@@ -61,7 +61,7 @@ namespace AdventOfCode.Year2015.Day11 {
             int pairs = 0;
 
             char prev = _data[0];
-            for (int i = 1; i < LENGTH; ++i) {
+            for (int i = 1; i < Length; ++i) {
                 char next = _data[i];
 
                 if (prev == next) {
@@ -70,7 +70,7 @@ namespace AdventOfCode.Year2015.Day11 {
                     }
 
                     // Skip this pair (other pairs can't overlap this one)
-                    if (++i < LENGTH) {
+                    if (++i < Length) {
                         next = _data[i];
                     }
                 }

@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2019.Day15 {
             Goal = 2
         }
 
-        private static readonly Dictionary<Direction, long> INPUT_MAP = new Dictionary<Direction, long> {
+        private static readonly Dictionary<Direction, long> InputMap = new Dictionary<Direction, long> {
             { Direction.Up,    1 },
             { Direction.Down,  2 },
             { Direction.Right, 3 },
@@ -77,14 +77,14 @@ namespace AdventOfCode.Year2019.Day15 {
             while (_moves.Count > 1) {
                 direction = _moves.Dequeue();
                 _position += direction;
-                _intCode.Input(INPUT_MAP[direction]);
+                _intCode.Input(InputMap[direction]);
             }
 
             direction = _moves.Dequeue();
             _pendingPosition = _position + direction;
 
             _intCode.OnOutput += HandleUnknownMove;
-            _intCode.Input(INPUT_MAP[direction]);
+            _intCode.Input(InputMap[direction]);
             _intCode.OnOutput -= HandleUnknownMove;
         }
 

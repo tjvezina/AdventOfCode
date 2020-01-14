@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day23 {
     public class Network {
-        private const int COMPUTER_COUNT = 50;
+        private const int ComputerCount = 50;
 
         public event Action<long> OnNATPacketSent;
 
-        private NIC[] _computers = new NIC[COMPUTER_COUNT];
+        private NIC[] _computers = new NIC[ComputerCount];
         private NAT _nat;
 
         public Queue<(int address, Packet packet)> sendQueue = new Queue<(int address, Packet)>();

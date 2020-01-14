@@ -19,7 +19,7 @@ namespace AdventOfCode.Year2019.Day13 {
             Type
         }
 
-        private static readonly Point SCORE_POS = new Point(-1, 0);
+        private static readonly Point ScorePos = new Point(-1, 0);
 
         public State state { get; private set; } = State.PosX;
 
@@ -72,7 +72,7 @@ namespace AdventOfCode.Year2019.Day13 {
                 _nextPos.y = (int)output;
             }
             else if (state == State.Type) {
-                if (_nextPos == SCORE_POS) {
+                if (_nextPos == ScorePos) {
                     score = (int)output;
                 } else {
                     ResizeScreen();

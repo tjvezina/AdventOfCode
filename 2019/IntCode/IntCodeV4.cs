@@ -27,7 +27,7 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
             public Action<Param[]> action;
         }
 
-        private readonly Dictionary<int, Operator> OPERATORS;
+        private readonly Dictionary<int, Operator> Operators;
 
         public event Action<long> OnOutput;
 
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
         private int _relativeBase;
 
         public IntCode(string memory, Dictionary<int, long> substitutions = null) {
-            OPERATORS = new Dictionary<int, Operator> {
+            Operators = new Dictionary<int, Operator> {
                 { 01, new Operator { paramCount = 3, action = OpAdd } },
                 { 02, new Operator { paramCount = 3, action = OpMult } },
                 { 03, new Operator { paramCount = 1, action = OpInput } },
@@ -98,7 +98,7 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
                 int opCode = (int)(opData % 100);
                 opData /= 100;
 
-                Operator op = OPERATORS[opCode];
+                Operator op = Operators[opCode];
 
                 Param[] opParams = new Param[op.paramCount];
                 for (int i = 0; i < op.paramCount; ++i) {

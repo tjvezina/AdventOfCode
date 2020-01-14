@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace AdventOfCode.Year2015.Day04 {
      public class Challenge : BaseChallenge {
-        private const string KEY = "ckczppom";
+        private const string Key = "ckczppom";
         private const int ThreadCount = 2;
 
         private object _lockObj = new object();
@@ -30,7 +30,7 @@ namespace AdventOfCode.Year2015.Day04 {
 
         private int FindInput(Func<byte[], bool> isMatch) {
             for (int i = 1; i < int.MaxValue; ++i) {
-                string input = KEY + i;
+                string input = Key + i;
                 if (isMatch(CalculateMD5Hash(input))) {
                     return i;
                 }
@@ -55,7 +55,7 @@ namespace AdventOfCode.Year2015.Day04 {
 
         private void ThreadFindInput(Func<byte[], bool> isMatch, int start) {
             for (int i = start; i < int.MaxValue; i += ThreadCount) {
-                string input = KEY + i;
+                string input = Key + i;
                 if (isMatch(CalculateMD5Hash(input))) {
                     lock (_lockObj) {
                         _targetInput = i;

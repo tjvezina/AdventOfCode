@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day16 {
      public class Challenge : BaseChallenge {
-        private static readonly int[] PATTERN = new[] { 0, 1, 0, -1 };
+        private static readonly int[] Pattern = new[] { 0, 1, 0, -1 };
 
         private int[] _input;
 
@@ -48,7 +48,7 @@ namespace AdventOfCode.Year2019.Day16 {
         private int[] ApplyPhase(int[] input) {
             int[] output = new int[input.Length];
 
-            int GetPatternValue(int iOut, int iIn) => PATTERN[((iIn + 1) / (iOut + 1)) % PATTERN.Length];
+            int GetPatternValue(int iOut, int iIn) => Pattern[((iIn + 1) / (iOut + 1)) % Pattern.Length];
 
             for (int iOut = 0; iOut < output.Length; ++iOut) {
                 int sum = 0;

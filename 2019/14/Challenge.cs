@@ -34,9 +34,9 @@ namespace AdventOfCode.Year2019.Day14 {
 
         private class ElementMap : Dictionary<string, long> { }
 
-        private const string ORE = "ORE";
-        private const string FUEL = "FUEL";
-        private const long INITIAL_ORE = 1_000_000_000_000;
+        private const string Ore = "ORE";
+        private const string Fuel = "FUEL";
+        private const long InitialOre = 1_000_000_000_000;
 
         private Dictionary<string, Reaction> _reactionMap = new Dictionary<string, Reaction>();
         private ElementMap _available = new ElementMap();
@@ -48,11 +48,11 @@ namespace AdventOfCode.Year2019.Day14 {
 
         public override string part1Answer => "1037742";
         public override (string, object) SolvePart1() {
-            ModifyAvailable(ORE, INITIAL_ORE);
+            ModifyAvailable(Ore, InitialOre);
 
-            Create(FUEL, 1);
+            Create(Fuel, 1);
 
-            _orePerFuel = INITIAL_ORE - GetAvailable(ORE);
+            _orePerFuel = InitialOre - GetAvailable(Ore);
             return ("{{0}} ore required for 1 fuel", _orePerFuel);
         }
         
@@ -62,11 +62,11 @@ namespace AdventOfCode.Year2019.Day14 {
 
         public override string part2Answer => "1572358";
         public override (string, object) SolvePart2() {
-            ModifyAvailable(ORE, INITIAL_ORE);
+            ModifyAvailable(Ore, InitialOre);
             
-            while (Create(FUEL, Math.Max(1, GetAvailable(ORE) / _orePerFuel)));
+            while (Create(Fuel, Math.Max(1, GetAvailable(Ore) / _orePerFuel)));
 
-            return ($"{{0}} fuel created from {INITIAL_ORE} ore", _available[FUEL]);
+            return ($"{{0}} fuel created from {InitialOre} ore", _available[Fuel]);
         }
 
         private bool Consume(string element, long amount) {

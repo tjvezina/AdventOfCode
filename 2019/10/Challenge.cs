@@ -61,7 +61,7 @@ namespace AdventOfCode.Year2019.Day10 {
         
         public override string part2Answer => "1008";
         public override (string, object) SolvePart2() {
-            const int ASTEROID_NUM = 200;
+            const int AsteroidNum = 200;
 
             List<Asteroid> asteroids = new List<Asteroid>();
             for (int y = 0; y < _height; ++y) {
@@ -78,8 +78,8 @@ namespace AdventOfCode.Year2019.Day10 {
             
             asteroids.Sort((a, b) => a.angle.CompareTo(b.angle));
 
-            Point outputPos = asteroids[ASTEROID_NUM-1].position;
-            return ($"#{ASTEROID_NUM} = {outputPos} -> {{0}}", outputPos.x * 100 + outputPos.y);
+            Point outputPos = asteroids[AsteroidNum-1].position;
+            return ($"#{AsteroidNum} = {outputPos} -> {{0}}", outputPos.x * 100 + outputPos.y);
         }
 
         private int CountVisible(Point p1) {

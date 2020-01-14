@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day05 {
      public class Challenge : BaseChallenge {
-        private static readonly char[] VOWELS = new char[] { 'a', 'e', 'i', 'o', 'u' };
-        private static readonly List<string> BAD_STRINGS = new List<string> { "ab", "cd", "pq", "xy" };
+        private static readonly char[] Vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
+        private static readonly List<string> BadStrings = new List<string> { "ab", "cd", "pq", "xy" };
 
         public override string part1Answer => "236";
         public override (string, object) SolvePart1() => ("Nice strings (rule set A): ", inputSet.Count(IsNiceRuleSetA));
@@ -15,9 +15,9 @@ namespace AdventOfCode.Year2015.Day05 {
 
         private bool IsNiceRuleSetA(string str) {
             // If the string contains any of the bad strings, it is naughty
-            if (BAD_STRINGS.Any(s => str.Contains(s))) return false;
+            if (BadStrings.Any(s => str.Contains(s))) return false;
             // If the string contains less than 3 vowels, it is naughty
-            if (VOWELS.Sum(v => str.Count(c => c == v)) < 3) return false;
+            if (Vowels.Sum(v => str.Count(c => c == v)) < 3) return false;
 
             char lastChar = str[0];
             for (int i = 1; i < str.Length; ++i) {

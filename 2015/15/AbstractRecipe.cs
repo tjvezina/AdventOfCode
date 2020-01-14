@@ -5,7 +5,7 @@ using System.Linq;
 namespace AdventOfCode.Year2015.Day15 {
     public abstract class Recipe {
         protected class Ingredient {
-            public const int PROPERTY_COUNT = 4;
+            public const int PropertyCount = 4;
 
             public string name { get; }
             public int[] properties { get; }
@@ -14,13 +14,13 @@ namespace AdventOfCode.Year2015.Day15 {
             public Ingredient(string name, int[] properties, int calories) {
                 this.name = name;
                 this.calories = calories;
-                this.properties = new int[PROPERTY_COUNT];
+                this.properties = new int[PropertyCount];
                 properties.CopyTo(this.properties, 0);
             }
         }
 
-        public const int QUANTITY = 100;
-        public const int CALORIES = 500;
+        public const int Quantity = 100;
+        public const int Calories = 500;
 
         public int bestScore { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace AdventOfCode.Year2015.Day15 {
                 string[] propData = parts[1].Split(',');
                 int GetProperty(int index) => int.Parse(propData[index].Split(' ')[2]);
 
-                int[] properties = new int[Ingredient.PROPERTY_COUNT];
+                int[] properties = new int[Ingredient.PropertyCount];
                 for (int i = 0; i < properties.Length; ++i) {
                     properties[i] = GetProperty(i);
                 }
@@ -50,7 +50,7 @@ namespace AdventOfCode.Year2015.Day15 {
         public int GetScore() => CalculateScore(_quantities);
 
         protected int CalculateScore(int[] quantities) {
-            List<int> propScores = new List<int>(new int[Ingredient.PROPERTY_COUNT]);
+            List<int> propScores = new List<int>(new int[Ingredient.PropertyCount]);
 
             for (int p = 0; p < propScores.Count; ++p) {
                 for (int i = 0; i < _ingredients.Count; i++) {

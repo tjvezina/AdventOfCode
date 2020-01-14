@@ -5,8 +5,8 @@ using AdventOfCode.Year2019.IntCodeV2;
 
 namespace AdventOfCode.Year2019.Day05 {
      public class Challenge : BaseChallenge {
-        public const int INPUT_TEST = 1;
-        public const int INPUT_RUN = 5;
+        public const int InputTest = 1;
+        public const int InputRun = 5;
 
         private IntCode _intCode;
         private int _input;
@@ -21,7 +21,7 @@ namespace AdventOfCode.Year2019.Day05 {
 
         public override string part1Answer => "10987514";
         public override (string, object) SolvePart1() {
-            _input = INPUT_TEST;
+            _input = InputTest;
             _intCode.Execute();
             int output = _outputs.SingleOrDefault(o => o != 0);
             if (output != 0) {
@@ -37,7 +37,7 @@ namespace AdventOfCode.Year2019.Day05 {
 
         public override string part2Answer => "14195011";
         public override (string, object) SolvePart2() {
-            _input = INPUT_RUN;
+            _input = InputRun;
             _intCode.Execute();
             return ("Final output: ", _outputs.Single(o => o != 0));
         }

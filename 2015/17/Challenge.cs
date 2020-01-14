@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day17 {
      public class Challenge : BaseChallenge {
-        private const int TOTAL = 150;
+        private const int Total = 150;
 
         private int[] _containers;
 
@@ -37,7 +37,7 @@ namespace AdventOfCode.Year2015.Day17 {
                 do {
                     IEnumerable<int> usedContainers = indices.Select(i => _containers[i]);
 
-                    if (usedContainers.Sum() == TOTAL) {
+                    if (usedContainers.Sum() == Total) {
                         ++combos;
 
                         if (write) {

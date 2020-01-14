@@ -12,12 +12,12 @@ namespace AdventOfCode.Year2019.Day07 {
 
         public override string part1Answer => "20413";
         public override (string, object) SolvePart1() {
-            return TestAllPermutations(Enumerable.Range(0, AmplifierManager.AMP_COUNT).ToArray());
+            return TestAllPermutations(Enumerable.Range(0, AmplifierManager.AmpCount).ToArray());
         }
         
         public override string part2Answer => "3321777";
         public override (string, object) SolvePart2() {
-            return TestAllPermutations(Enumerable.Range(5, AmplifierManager.AMP_COUNT).ToArray());
+            return TestAllPermutations(Enumerable.Range(5, AmplifierManager.AmpCount).ToArray());
         }
 
         private (string format, int bestOutput) TestAllPermutations(int[] _phase) {

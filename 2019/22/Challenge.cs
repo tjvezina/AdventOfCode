@@ -33,21 +33,21 @@ namespace AdventOfCode.Year2019.Day22 {
 
         public override string part1Answer => "4684";
         public override (string, object) SolvePart1() {
-            const long DECK_SIZE = 10_007;
+            const long DeckSize = 10_007;
 
             BigInteger card = 2019;
             foreach (Technique technique in _techniques) {
-                card = technique.Apply(card, DECK_SIZE);
+                card = technique.Apply(card, DeckSize);
             }
             return ("Final card position: ", card);
         }
         
         public override string part2Answer => "452290953297";
         public override (string, object) SolvePart2() {
-            const long DECK_SIZE  = 119_315_717_514_047;
-            const long ITERATIONS = 101_741_582_076_661;
+            const long DeckSize  = 119_315_717_514_047;
+            const long Iterations = 101_741_582_076_661;
 
-            DeckData passData = new DeckData(DECK_SIZE);
+            DeckData passData = new DeckData(DeckSize);
 
             // Determine the result of a single shuffle pass on the deck state
             foreach (Technique technique in _techniques) {
@@ -55,14 +55,14 @@ namespace AdventOfCode.Year2019.Day22 {
             }
 
             // Calculate the result of applying the shuffle many times
-            DeckData finalData = new DeckData(DECK_SIZE);
-            finalData.increment = MathUtil.ModPower(passData.increment, ITERATIONS, DECK_SIZE);
+            DeckData finalData = new DeckData(DeckSize);
+            finalData.increment = MathUtil.ModPower(passData.increment, Iterations, DeckSize);
             finalData.offset = (passData.offset * (1 - finalData.increment) *
-                               MathUtil.ModPower(1 - passData.increment, DECK_SIZE - 2, DECK_SIZE)) % DECK_SIZE;
+                               MathUtil.ModPower(1 - passData.increment, DeckSize - 2, DeckSize)) % DeckSize;
 
-            BigInteger card = (finalData.offset + (finalData.increment * 2020)) % DECK_SIZE;
+            BigInteger card = (finalData.offset + (finalData.increment * 2020)) % DeckSize;
 
-            return ($"Card 2020 after {ITERATIONS} shuffles:", card);
+            return ($"Card 2020 after {Iterations} shuffles:", card);
         }
     }
 }

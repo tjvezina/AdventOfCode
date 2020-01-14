@@ -2,9 +2,9 @@ using System;
 
 namespace AdventOfCode.Year2015.Day06 {
     public class LightBoard {
-        public const int SIZE = 1000;
+        public const int Size = 1000;
 
-        private int[,] _grid = new int[SIZE, SIZE];
+        private int[,] _grid = new int[Size, Size];
 
         private Func<int, int> turnOn;
         private Func<int, int> turnOff;
@@ -19,8 +19,8 @@ namespace AdventOfCode.Year2015.Day06 {
         public int Brightness {
             get {
                 int brightness = 0;
-                for (int x = 0; x < SIZE; ++x) {
-                    for (int y = 0; y < SIZE; ++y) {
+                for (int x = 0; x < Size; ++x) {
+                    for (int y = 0; y < Size; ++y) {
                         brightness += _grid[x, y];
                     }
                 }

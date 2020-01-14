@@ -5,9 +5,9 @@ namespace AdventOfCode.Year2015.Day15 {
     public class RecipePart1 : Recipe {
         public RecipePart1() {
             for (int i = 0; i < _quantities.Length; ++i) {
-                _quantities[i] = QUANTITY / _ingredients.Count;
+                _quantities[i] = Quantity / _ingredients.Count;
             }
-            _quantities[0] += QUANTITY % _ingredients.Count; // Drop leftovers in the first ingredient
+            _quantities[0] += Quantity % _ingredients.Count; // Drop leftovers in the first ingredient
         }
 
         public override void MaximizeScore() {

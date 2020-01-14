@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2019.Day24 {
             private bool[,,] _buffer;
 
             public BugMap(string[] inputSet) {
-                _size = new Point3(GRID_SIZE, GRID_SIZE, STEPS + 3);
+                _size = new Point3(GridSize, GridSize, Steps + 3);
                 _mid = _size / 2;
                 _map = new bool[_size.x, _size.y, _size.z];
                 _buffer = new bool[_size.x, _size.y, _size.z];
@@ -38,8 +38,8 @@ namespace AdventOfCode.Year2019.Day24 {
             }
         }
 
-        private const int GRID_SIZE = 5;
-        private const int STEPS = 200;
+        private const int GridSize = 5;
+        private const int Steps = 200;
 
         private Dictionary<Point, HashSet<Point3>> neighborMap;
 
@@ -53,20 +53,20 @@ namespace AdventOfCode.Year2019.Day24 {
 
         public override string part2Answer => "1928";
         public override (string, object) SolvePart2() {
-            for (int i = 0; i < STEPS; ++i) {
+            for (int i = 0; i < Steps; ++i) {
                 Step3D();
             }
 
             int bugCount = 0;
-            for (int z = -STEPS / 2; z <= STEPS / 2; ++z) {
-                for (int y = -GRID_SIZE / 2; y <= GRID_SIZE / 2; ++y) {
-                    for (int x = -GRID_SIZE / 2; x <= GRID_SIZE / 2; ++x) {
+            for (int z = -Steps / 2; z <= Steps / 2; ++z) {
+                for (int y = -GridSize / 2; y <= GridSize / 2; ++y) {
+                    for (int x = -GridSize / 2; x <= GridSize / 2; ++x) {
                         if (_map3D[x, y, z]) ++bugCount;
                     }
                 }
             }
 
-            return ($"Total bugs after {STEPS} minutes: ", bugCount);
+            return ($"Total bugs after {Steps} minutes: ", bugCount);
         }
 
         private void BuildNeighborMap() {
@@ -108,9 +108,9 @@ namespace AdventOfCode.Year2019.Day24 {
         }
 
         private void Step3D() {
-            for (int z = -STEPS / 2; z <= STEPS / 2; ++z) {
-                for (int y = -GRID_SIZE / 2; y <= GRID_SIZE / 2; ++y) {
-                    for (int x = -GRID_SIZE / 2; x <= GRID_SIZE / 2; ++x) {
+            for (int z = -Steps / 2; z <= Steps / 2; ++z) {
+                for (int y = -GridSize / 2; y <= GridSize / 2; ++y) {
+                    for (int x = -GridSize / 2; x <= GridSize / 2; ++x) {
                         if (x == 0 && y == 0) continue;
                         Point3 p = new Point3(x, y, z);
                         int bugNeighbors = neighborMap[(Point)p].Select(n => _map3D[p + n]).Count(b => b);

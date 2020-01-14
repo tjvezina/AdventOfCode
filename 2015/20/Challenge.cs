@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day20 {
     public class Challenge : BaseChallenge {
-        private const int TARGET = 29_000_000;
-        private const int HOUSE_LIMIT = 50; // Max houses/elf
+        private const int Target = 29_000_000;
+        private const int HouseLimit = 50; // Max houses/elf
 
         public override string part1Answer => "665280";
         public override (string, object) SolvePart1() {
             for (int i = 1; ; ++i) {
-                if (CountPresents(i) >= TARGET) {
+                if (CountPresents(i) >= Target) {
                     return ("House ", i);
                 }
             }
@@ -19,7 +19,7 @@ namespace AdventOfCode.Year2015.Day20 {
         public override string part2Answer => "705600";
         public override (string, object) SolvePart2() {
             for (int i = 1; ; ++i) {
-                if (CountPresentsLimited(i) >= TARGET) {
+                if (CountPresentsLimited(i) >= Target) {
                     return ("House ", i);
                 }
             }
@@ -40,7 +40,7 @@ namespace AdventOfCode.Year2015.Day20 {
 
         private int CountPresentsLimited(int h) {
             int p = 0;
-            int min = (int)Math.Ceiling((double)h / HOUSE_LIMIT);
+            int min = (int)Math.Ceiling((double)h / HouseLimit);
             for (int i = 1; i <= Math.Sqrt(h); ++i) {
                 if (h % i == 0) {
                     int j = h / i;

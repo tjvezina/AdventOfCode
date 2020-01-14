@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day14 {
      public class Challenge : BaseChallenge {
-        private const int RACE_DURATION = 2503;
+        private const int RaceDuration = 2503;
 
         private List<Reindeer> _reindeer = new List<Reindeer>();
 
@@ -21,7 +21,7 @@ namespace AdventOfCode.Year2015.Day14 {
 
         public override string part1Answer => "2640";
         public override (string, object) SolvePart1() {
-            return ("Furthest dist: ", _reindeer.Max(r => r.GetDistance(RACE_DURATION)));
+            return ("Furthest dist: ", _reindeer.Max(r => r.GetDistance(RaceDuration)));
         }
         
         public override string part2Answer => "1102";
@@ -29,7 +29,7 @@ namespace AdventOfCode.Year2015.Day14 {
             List<int> distances = new List<int>(new int[_reindeer.Count]);
             List<int> scores = new List<int>(new int[_reindeer.Count]);
 
-            for (int t = 1; t <= RACE_DURATION; ++t) {
+            for (int t = 1; t <= RaceDuration; ++t) {
                 // Calculate distances for the next second of the race
                 for (int i = 0; i < _reindeer.Count; ++i) {
                     Reindeer r = _reindeer[i];

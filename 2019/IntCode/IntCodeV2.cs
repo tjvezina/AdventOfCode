@@ -26,7 +26,7 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
             public Action<Param[]> action;
         }
 
-        private const char SEPARATOR = ',';
+        private const char Separator = ',';
 
         private readonly Dictionary<int, Instruction> s_Instructions;
 
@@ -64,7 +64,7 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
         public void Load(string input) {
             Debug.Assert(_state == State.Uninitialized, "Code has already been loaded!");
 
-            _memory = input.Split(SEPARATOR).Select(int.Parse).ToList();
+            _memory = input.Split(Separator).Select(int.Parse).ToList();
             _initialMemory = new List<int>(_memory);
             _state = State.Loaded;
         }

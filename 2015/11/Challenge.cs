@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day11 {
      public class Challenge : BaseChallenge {
-        private const string INPUT = "vzbxkghb";
+        private const string Input = "vzbxkghb";
 
-        private Password _password = new Password(INPUT);
+        private Password _password = new Password(Input);
 
         public override string part1Answer => "vzbxxyzz";
         public override (string, object) SolvePart1() {
