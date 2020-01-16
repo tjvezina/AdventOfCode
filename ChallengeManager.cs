@@ -155,10 +155,11 @@ namespace AdventOfCode {
             try {
                 _stopwatch.Restart();
                 InitMethods[part].Invoke(challenge, null);
-                ValueTuple<string, object> result = (ValueTuple<string, object>)SolveMethods[part].Invoke(challenge, null);
+                (string message, object answer) = ((string, object))SolveMethods[part].Invoke(challenge, null);
                 _stopwatch.Stop();
-                data.message = result.Item1;
-                data.givenAnswer = result.Item2?.ToString();
+
+                data.message = message;
+                data.givenAnswer = answer?.ToString();
 
                 if (!string.IsNullOrEmpty(expected)) {
                     data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
@@ -170,7 +171,8 @@ namespace AdventOfCode {
             } catch (Exception ex) {
                 _stopwatch.Reset();
                 data.status = ResultStatus.Exception;
-                while (ex.InnerException != null) ex = ex.InnerException;
+                
+                while (ex.InnerException != null) ex = ex.InnerException; // Skip Invoke() and nested exceptions
 
                 data.message = ex.Message;
                 if (fullStackTrace) {
