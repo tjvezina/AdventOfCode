@@ -13,6 +13,10 @@ namespace AdventOfCode {
         public static int Wrap(int value, int a, int b) => Mod(value - a, b - a) + a;
         public static long Wrap(long value, long a, long b) => Mod(value - a, b - a) + a;
 
+        public static int FloorTo(int value, int multiple) => (int)Math.Floor((decimal)value / multiple) * multiple;
+        public static int RoundTo(int value, int multiple) => (int)Math.Round((decimal)value / multiple) * multiple;
+        public static int CeilingTo(int value, int multiple) => (int)Math.Ceiling((decimal)value / multiple) * multiple;
+
         // Lowest common multiple
         public static int LCM(int a, int b) => (a * b) / GCD(a, b);
         public static long LCM(long a, long b) => (a * b) / GCD(a, b);

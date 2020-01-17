@@ -96,7 +96,9 @@ namespace AdventOfCode {
             Console.ResetColor();
             Console.Write(" ");
 
-            string answerStr = string.Empty;
+            WriteBenchmark();
+
+            Console.ResetColor();
             string[] messageParts = (results.message ?? string.Empty).Split("{0}");
             if (messageParts.Length > 0) {
                 Console.Write(messageParts[0]);
