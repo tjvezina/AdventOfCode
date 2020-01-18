@@ -109,9 +109,7 @@ namespace AdventOfCode.Year2016.Day05 {
                     buffer[iFirst + iInput] = (byte)('0' + value % 10);
                 }
 
-                for (int j = 0; j < iInput / 2; j++) {
-                    DataUtil.Swap(ref buffer[iFirst + j], ref buffer[iFirst + iInput - 1 - j]);
-                }
+                buffer.Reverse(iFirst, iInput);
 
                 // Handle the one's place
                 buffer[iFirst + iInput] = (byte)'0';

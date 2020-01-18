@@ -9,17 +9,18 @@ namespace AdventOfCode {
             b = hold;
         }
 
-        public static void Reverse<T>(this IList<T> array, int start = 0) => Reverse<T>(array, start, array.Count - start);
-        public static void Reverse<T>(this IList<T> array, int start, int count) {
-            Debug.Assert(0 <= start && start < array.Count, "Start index is out of range");
-            Debug.Assert(count <= array.Count - start, "Reverse count is out of range");
-            T[] reverse = new T[count];
-            for (int i = 0; i < reverse.Length; ++i) {
-                reverse[i] = array[start + i];
-            }
+        public static void Swap<T>(this T[] array, int iA, int iB) {
+            T hold = array[iA];
+            array[iA] = array[iB];
+            array[iB] = hold;
+        }
+
+        public static void Reverse<T>(this T[] array) => Reverse(array, 0, array.Length);
+        public static void Reverse<T>(this T[] array, int start) => Reverse(array, start, array.Length - start);
+        public static void Reverse<T>(this T[] array, int start, int count) {
             int end = start + count - 1;
-            for (int i = 0; i < reverse.Length; ++i) {
-                array[end - i] = reverse[i];
+            for (int i = 0; i < count / 2; i++) {
+                array.Swap(start + i, end - i);
             }
         }
 
@@ -31,7 +32,7 @@ namespace AdventOfCode {
         public static bool NextPermutation(int[] order) {
             // Find greatest index x, where order[x] < order[x+1]
             int x = -1;
-            for (int i = order.Length - 2; i>= 0; --i) {
+            for (int i = order.Length - 2; i >= 0; --i) {
                 if (order[i] < order[i+1]) {
                     x = i;
                     break;
@@ -53,7 +54,7 @@ namespace AdventOfCode {
             }
             
             // Swap order[x] and order[y]
-            Swap(ref order[x], ref order[y]);
+            order.Swap(x, y);
 
             // Reverse elements from order[x+1]..order[n-1]
             order.Reverse(x + 1);
