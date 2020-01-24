@@ -1,8 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace AdventOfCode {
-    public class CharMap {
+    public class CharMap : IEnumerable<(int x, int y, char c)> {
         private char[,] _map;
         public int width { get; }
         public int height { get; }
@@ -57,7 +58,8 @@ namespace AdventOfCode {
             }
         }
 
-        public IEnumerable<(int x, int y, char c)> Enumerate() {
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<(int x, int y, char c)> GetEnumerator() {
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; ++x) {
                     yield return (x, y, _map[x, y]);

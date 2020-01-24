@@ -17,10 +17,10 @@ namespace AdventOfCode.Year2016.Day03 {
         private int[][] _sides;
 
         public override void InitPart1() {
-            _sides = new int[inputSet.Length][];
+            _sides = new int[inputArray.Length][];
 
-            for (int y = 0; y < inputSet.Length; y++) {
-                string line = inputSet[y];
+            for (int y = 0; y < inputArray.Length; y++) {
+                string line = inputArray[y];
                 _sides[y] = Regex.Matches(line, @"\d+").Select(m => int.Parse(m.Value)).ToArray();
             }
         }

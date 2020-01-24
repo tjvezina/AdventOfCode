@@ -38,7 +38,7 @@ namespace AdventOfCode.Year2019.Day12 {
         private List<AxisData> _axisData;
 
         public override void InitPart1() {
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 string[] parts = data.Split(',');
                 Point3 pos = new Point3(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
                 _bodies.Add(new Body { position = pos });

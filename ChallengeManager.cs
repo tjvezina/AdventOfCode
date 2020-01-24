@@ -152,7 +152,6 @@ namespace AdventOfCode {
 
         private static Results Execute(BaseChallenge challenge, ChallengePart part, bool fullStackTrace = true) {
             Results data = new Results();
-            string expected = (string)AnswerProps[part].GetValue(challenge);
 
             try {
                 _stopwatch.Restart();
@@ -163,16 +162,18 @@ namespace AdventOfCode {
                 data.message = message;
                 data.givenAnswer = answer?.ToString();
 
+                string expected = (string)AnswerProps[part].GetValue(challenge);
                 if (!string.IsNullOrEmpty(expected)) {
                     data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
                 } else if (!string.IsNullOrEmpty(data.givenAnswer)) {
                     data.status = ResultStatus.Candidate;
                 } else {
                     data.status = ResultStatus.Development;
+                    _stopwatch.Reset();
                 }
             } catch (Exception ex) {
-                _stopwatch.Reset();
                 data.status = ResultStatus.Exception;
+                _stopwatch.Reset();
                 
                 while (ex.InnerException != null) ex = ex.InnerException; // Skip Invoke() and nested exceptions
 

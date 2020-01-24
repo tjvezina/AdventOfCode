@@ -30,7 +30,7 @@ namespace AdventOfCode.Year2019.Day20 {
 
         public override void InitPart1() {
             SpaceUtil.system = CoordSystem.YDown;
-            _map = new CharMap(inputSet);
+            _map = new CharMap(inputArray);
 
             Dictionary<string, (Point a, Point b)> portals = new Dictionary<string, (Point, Point)>();
 
@@ -58,7 +58,7 @@ namespace AdventOfCode.Year2019.Day20 {
                 }
             }
 
-            foreach ((int x, int y, char c) in _map.Enumerate()) {
+            foreach ((int x, int y, char c) in _map) {
                 if (IsPortalID(c)) {
                     CheckPortal(c, new Point(x, y), Direction.Right);
                     CheckPortal(c, new Point(x, y), Direction.Down);

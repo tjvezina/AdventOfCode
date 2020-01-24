@@ -37,10 +37,10 @@ namespace AdventOfCode.Year2015.Day13 {
         }
 
         private void BuildHappyMatrix(bool includeSelf = false) {
-            List<string> guests = inputSet.Select(l => l.Substring(0, l.IndexOf(' '))).Distinct().ToList();
+            List<string> guests = inputArray.Select(l => l.Substring(0, l.IndexOf(' '))).Distinct().ToList();
             _happyMatrix = new MatrixInt(guests.Count + (includeSelf ? 1 : 0));
 
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 string[] parts = data.Split(' ');
                 string guestA = parts[0];
                 string guestB = parts[parts.Length - 1];

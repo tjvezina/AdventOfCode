@@ -9,7 +9,7 @@ namespace AdventOfCode.Year2015.Day14 {
         private List<Reindeer> _reindeer = new List<Reindeer>();
 
         public override void InitPart1() {
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 string[] parts = data.Split(' ');
                 int speed = int.Parse(parts[3]);
                 int flyTime = int.Parse(parts[6]);

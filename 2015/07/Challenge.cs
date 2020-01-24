@@ -26,7 +26,7 @@ namespace AdventOfCode.Year2015.Day07 {
         private UInt16 _part1Output;
 
         public override void InitPart1() {
-            foreach (string instruction in inputSet) {
+            foreach (string instruction in inputArray) {
                 string[] parts = instruction.Split(" -> ", StringSplitOptions.None);
                 string[] opData = parts[0].Split(' ');
                 string outputWire = parts[1];

@@ -22,11 +22,11 @@ namespace AdventOfCode.Year2016.Day06 {
         }
 
         private string GetMessage(Func<char[], char> charSelector) {
-            int messageLength = inputSet[0].Length;
+            int messageLength = inputArray[0].Length;
             
             char[][] characters = new char[messageLength][];
             for (int i = 0; i < messageLength; i++) {
-                characters[i] = inputSet.Select(input => input[i]).ToArray();
+                characters[i] = inputArray.Select(input => input[i]).ToArray();
             }
 
             char[] message = characters.Select(charSelector).ToArray();

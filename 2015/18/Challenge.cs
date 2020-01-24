@@ -6,7 +6,7 @@ namespace AdventOfCode.Year2015.Day18 {
      public class Challenge : BaseChallenge {
         public override string part1Answer => "814";
         public override (string, object) SolvePart1() {
-            LightBoard board = new LightBoard(inputSet);
+            LightBoard board = new LightBoard(inputArray);
 
             for (int i = 0; i < 100; ++i) {
                 board.Update();
@@ -17,7 +17,7 @@ namespace AdventOfCode.Year2015.Day18 {
         
         public override string part2Answer => "924";
         public override (string, object) SolvePart2() {
-            LightBoard board = new LightBoard(inputSet, cornersAlwaysOn:true);
+            LightBoard board = new LightBoard(inputArray, cornersAlwaysOn:true);
 
             for (int i = 0; i < 100; ++i) {
                 board.Update();

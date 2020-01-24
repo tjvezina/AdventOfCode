@@ -23,8 +23,8 @@ namespace AdventOfCode.Year2019.Day03 {
 
         public override void InitPart1() {
             SpaceUtil.system = CoordSystem.YUp;
-            _wireA = ParseWireInput(inputSet[0]);
-            _wireB = ParseWireInput(inputSet[1]);
+            _wireA = ParseWireInput(inputArray[0]);
+            _wireB = ParseWireInput(inputArray[1]);
         }
 
         public override string part1Answer => "1519";

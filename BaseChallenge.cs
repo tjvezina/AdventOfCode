@@ -12,7 +12,7 @@ namespace AdventOfCode {
         public abstract string part1Answer { get; }
         public abstract string part2Answer { get; }
 
-        protected string[] inputSet { get; }
+        protected string[] inputArray { get; }
         protected string input { get; }
 
         protected BaseChallenge() {
@@ -23,8 +23,8 @@ namespace AdventOfCode {
 
             string inputFilePath = GetFilePath("input.txt");
             if (File.Exists(inputFilePath)) {
-                inputSet = File.ReadAllLines(inputFilePath);
-                input = inputSet[0];
+                inputArray = File.ReadAllLines(inputFilePath);
+                input = inputArray[0];
             }
         }
 

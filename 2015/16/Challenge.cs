@@ -18,7 +18,7 @@ namespace AdventOfCode.Year2015.Day16 {
         private Dictionary<string, int> _knownProps = new Dictionary<string, int>();
 
         public override void InitPart1() {
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 Sue sue = new Sue();
                 int splitIndex = data.IndexOf(':');
                 foreach (string prop in data.Substring(splitIndex + 1).Split(',')) {

@@ -25,7 +25,7 @@ namespace AdventOfCode.Year2015.Day02 {
         private IEnumerable<Box> _boxes;
 
         public override void InitPart1() {
-            _boxes = inputSet.Select(data => new Box(data));
+            _boxes = inputArray.Select(data => new Box(data));
         }
 
         public override string part1Answer => "1586300";

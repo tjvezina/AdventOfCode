@@ -14,8 +14,8 @@ namespace AdventOfCode.Year2016.Day10 {
         private OutputNode[] _outputs;
 
         public override void InitPart1() {
-            string[] inputNodeData = inputSet.Where(i => i.StartsWith("value")).ToArray();
-            string[] botNodeData = inputSet.Where(i => i.StartsWith("bot")).ToArray();
+            string[] inputNodeData = inputArray.Where(i => i.StartsWith("value")).ToArray();
+            string[] botNodeData = inputArray.Where(i => i.StartsWith("bot")).ToArray();
 
             _bots = Enumerable.Range(0, botNodeData.Length).Select(i => new BotNode(i)).ToArray();
             _outputs = Enumerable.Range(0, inputNodeData.Length).Select(i => new OutputNode()).ToArray();

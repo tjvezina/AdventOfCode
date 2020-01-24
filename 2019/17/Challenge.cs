@@ -103,7 +103,7 @@ namespace AdventOfCode.Year2019.Day17 {
         }
 
         private IEnumerable<Point> GetIntersections() {
-            foreach ((int x, int y, char c) in _map.Enumerate()) {
+            foreach ((int x, int y, char c) in _map) {
                 Point p = new Point(x, y);
                 // Checking a point + 3 sides is sufficient to confirm intersection
                 if (IsPath(p) && IsPath(p + Direction.Up) && IsPath(p + Direction.Down) & IsPath(p + Direction.Left)) {

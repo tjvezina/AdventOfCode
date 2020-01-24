@@ -5,7 +5,7 @@ using System.Linq;
 namespace AdventOfCode.Year2015.Day15 {
      public class Challenge : BaseChallenge {
         public override void InitPart1() {
-            Recipe.Init(inputSet);
+            Recipe.Init(inputArray);
         }
 
         public override string part1Answer => "21367368";

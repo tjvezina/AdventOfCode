@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2016.Day04 {
     public class Challenge : BaseChallenge {
         private List<Room> _rooms;
 
-        public override void InitPart1() => _rooms = inputSet.Select(i => new Room(i)).Where(r => r.isValid).ToList();
+        public override void InitPart1() => _rooms = inputArray.Select(i => new Room(i)).Where(r => r.isValid).ToList();
 
         public override string part1Answer => "158835";
         public override (string, object) SolvePart1() {

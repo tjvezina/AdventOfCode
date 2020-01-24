@@ -21,12 +21,12 @@ namespace AdventOfCode.Year2019.Day10 {
         private Point _stationPos;
 
         public override void InitPart1() {
-            _width = inputSet[0].Length;
-            _height = inputSet.Length;
+            _width = inputArray[0].Length;
+            _height = inputArray.Length;
             _map = new int?[_width, _height];
             
             for (int y = 0; y < _height; ++y) {
-                string line = inputSet[y];
+                string line = inputArray[y];
                 for (int x = 0; x < _width; ++x) {
                     if (line[x] == '#') {
                         _map[x, y] = 0;

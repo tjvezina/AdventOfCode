@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2015.Day09 {
         private int _bestDist = int.MaxValue;
 
         public override void InitPart1() {
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 string[] elements = data.Split(' ');
 
                 string cityA = elements[0];

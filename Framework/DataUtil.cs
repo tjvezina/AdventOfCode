@@ -63,15 +63,15 @@ namespace AdventOfCode {
         }
 
         /// <summary>
-        /// Determines the next combination of items in a set, where the first combination is the first X items, and
-        /// the final combination is the last X items. For example, if you have a set of 4 items and want combinations
+        /// Determines the next combination of items in a list, where the first combination is the first X items, and
+        /// the final combination is the last X items. For example, if you have a list of 4 items and want combinations
         /// of 2, the sequence of combinations is [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3].
         /// </summary>
         /// <returns>False if the combo given is already the final combination, i.e. nothing was changed.</returns>
-        public static bool NextCombination(int[] combo, int setLength) {
+        public static bool NextCombination(int[] combo, int listLength) {
             int n = combo.Length;
             int i = n - 1;
-            for (int j = setLength - 1; i >= 0; --i, --j) {
+            for (int j = listLength - 1; i >= 0; --i, --j) {
                 if (combo[i] < j) {
                     break;
                 }
@@ -89,10 +89,10 @@ namespace AdventOfCode {
         }
 
         /// <summary>
-        /// Determines and returns all possible combinations of comboCount items in the given set.
+        /// Determines and returns all possible combinations of comboCount items in the given list.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> set, int comboCount) {
-            Debug.Assert(comboCount <= set.Count, "Cannot create combinations with more items than the set contains");
+        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, int comboCount) {
+            if (comboCount > list.Count) yield break;
 
             int[] combo = new int[comboCount];
             for (int i = 0; i < combo.Length; ++i) {
@@ -102,20 +102,20 @@ namespace AdventOfCode {
             do {
                 T[] items = new T[comboCount];
                 for (int i = 0; i < combo.Length; ++i) {
-                    items[i] = set[combo[i]];
+                    items[i] = list[combo[i]];
                 }
                 yield return items;
-            } while (NextCombination(combo, set.Count));
+            } while (NextCombination(combo, list.Count));
         }
 
         /// <summary>
-        /// Determines and returns all possible combinations of items in the given set containing a number of items
+        /// Determines and returns all possible combinations of items in the given list containing a number of items
         /// within the given range. For example, if the range [1, 3] is given, all combinations of 1, 2, or 3 items
         /// will be returned.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> set, Range comboCountRange) {
-            for (int i = comboCountRange.min; i <= comboCountRange.max; ++i) {
-                foreach (T[] items in GetAllCombinations(set, i)) {
+        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, Range comboCountRange) {
+            foreach (int comboCount in comboCountRange) {
+                foreach (T[] items in GetAllCombinations(list, comboCount)) {
                     yield return items;
                 }
             }

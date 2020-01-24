@@ -8,7 +8,7 @@ namespace AdventOfCode.Year2019.Day24 {
 
         public override void InitPart1() {
             SpaceUtil.system = CoordSystem.YDown;
-            _map = new CharMap(inputSet);
+            _map = new CharMap(inputArray);
         }
 
         public override string part1Answer => "1113073";

@@ -8,7 +8,7 @@ namespace AdventOfCode.Year2015.Day19 {
         private List<KeyValuePair<string, string>> _replacements = new List<KeyValuePair<string, string>>();
 
         public override void InitPart1() {
-            Queue<string> input = new Queue<string>(inputSet);
+            Queue<string> input = new Queue<string>(inputArray);
 
             string data;
             while (!string.IsNullOrEmpty(data = input.Dequeue())) {

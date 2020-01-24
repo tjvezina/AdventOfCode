@@ -42,7 +42,7 @@ namespace AdventOfCode.Year2015.Day06 {
         private IEnumerable<Instruction> _instructions;
 
         public override void InitPart1() {
-            _instructions = inputSet.Select(i => new Instruction(i));
+            _instructions = inputArray.Select(i => new Instruction(i));
         }
 
         public override string part1Answer => "377891";

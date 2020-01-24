@@ -6,15 +6,15 @@ namespace AdventOfCode.Year2015.Day08 {
      public class Challenge : BaseChallenge {
         public override string part1Answer => "1333";
         public override (string, object) SolvePart1() {
-            int totalChars = inputSet.Sum(s => s.Length);
-            int visibleChars = inputSet.Sum(GetCharCount);
+            int totalChars = inputArray.Sum(s => s.Length);
+            int visibleChars = inputArray.Sum(GetCharCount);
             return ("Non-visible characters: ", totalChars - visibleChars);
         }
         
         public override string part2Answer => "2046";
         public override (string, object) SolvePart2() {
-            int totalChars = inputSet.Sum(s => s.Length);
-            int escapeChars = inputSet.Sum(GetEscapedCount);
+            int totalChars = inputArray.Sum(s => s.Length);
+            int escapeChars = inputArray.Sum(GetEscapedCount);
             return ("New escape char count: ", escapeChars - totalChars);
         }
 

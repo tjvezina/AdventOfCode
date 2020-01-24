@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AdventOfCode {
-    public struct Range {
+    public struct Range : IEnumerable<int> {
         public int a;
         public int b;
         
@@ -20,5 +22,13 @@ namespace AdventOfCode {
         public bool Contains(int value) => (min <= value && value <= max);
         
         public int Wrap(int value) => MathUtil.Wrap(value, a, b);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<int> GetEnumerator() {
+            int sign = (a <= b ? 1 : -1);
+            for (int i = 0; i < size; i++) {
+                yield return a + (i * sign);
+            }
+        }
     }
 }

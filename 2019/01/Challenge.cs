@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2019.Day01 {
         private IEnumerable<int> _massList;
 
         public override void InitPart1() {
-            _massList = inputSet.Select(int.Parse);
+            _massList = inputArray.Select(int.Parse);
         }
 
         public override string part1Answer => "3323874";

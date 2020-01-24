@@ -8,7 +8,7 @@ namespace AdventOfCode.Year2015.Day24 {
         private int[] _packages;
 
         public override void InitPart1() {
-            _packages = inputSet.Select(int.Parse).ToArray();
+            _packages = inputArray.Select(int.Parse).ToArray();
         }
 
         public override string part1Answer => "10723906903";

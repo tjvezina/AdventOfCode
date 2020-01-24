@@ -46,7 +46,7 @@ namespace AdventOfCode.Year2019.Day24 {
         private BugMap _map3D;
 
         public override void InitPart2() {
-            _map3D = new BugMap(inputSet);
+            _map3D = new BugMap(inputArray);
 
             BuildNeighborMap();
         }

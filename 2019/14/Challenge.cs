@@ -43,7 +43,7 @@ namespace AdventOfCode.Year2019.Day14 {
         private long _orePerFuel;
 
         public override void InitPart1() {
-            _reactionMap = inputSet.Select(Reaction.Parse).ToDictionary(r => r.output.name);
+            _reactionMap = inputArray.Select(Reaction.Parse).ToDictionary(r => r.output.name);
         }
 
         public override string part1Answer => "1037742";

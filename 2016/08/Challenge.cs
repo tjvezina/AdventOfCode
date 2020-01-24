@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2016.Day08 {
 
         private IEnumerable<Operation> _operations;
         
-        public override void InitPart1() => _operations = inputSet.Select(Operation.Parse);
+        public override void InitPart1() => _operations = inputArray.Select(Operation.Parse);
 
         public override string part1Answer => "106";
         public override (string, object) SolvePart1() {

@@ -8,10 +8,10 @@ namespace AdventOfCode.Year2015.Day05 {
         private static readonly List<string> BadStrings = new List<string> { "ab", "cd", "pq", "xy" };
 
         public override string part1Answer => "236";
-        public override (string, object) SolvePart1() => ("Nice strings (rule set A): ", inputSet.Count(IsNiceRuleSetA));
+        public override (string, object) SolvePart1() => ("Nice strings (rule set A): ", inputArray.Count(IsNiceRuleSetA));
         
         public override string part2Answer => "51";
-        public override (string, object) SolvePart2() => ("Nice strings (rule set B): ", inputSet.Count(IsNiceRuleSetB));
+        public override (string, object) SolvePart2() => ("Nice strings (rule set B): ", inputArray.Count(IsNiceRuleSetB));
 
         private bool IsNiceRuleSetA(string str) {
             // If the string contains any of the bad strings, it is naughty

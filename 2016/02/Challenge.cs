@@ -22,7 +22,7 @@ namespace AdventOfCode.Year2016.Day02 {
                 };
             }
 
-            _instructions = inputSet.Select(i => i.Select(ToDirection).ToArray()).ToArray();
+            _instructions = inputArray.Select(i => i.Select(ToDirection).ToArray()).ToArray();
         }
 
         public override string part1Answer => "56983";

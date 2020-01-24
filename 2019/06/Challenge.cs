@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2019.Day06 {
         private Dictionary<string, Body> _bodyMap = new Dictionary<string, Body>();
 
         public override void InitPart1() {
-            foreach (string data in inputSet) {
+            foreach (string data in inputArray) {
                 string[] bodies = data.Split(Separator);
                 string bodyA = bodies[0];
                 string bodyB = bodies[1];

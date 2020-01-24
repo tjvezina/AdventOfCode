@@ -9,9 +9,9 @@ namespace AdventOfCode.Year2015.Day17 {
         private int[] _containers;
 
         public override void InitPart1() {
-            _containers = new int[inputSet.Length];
-            for (int i = 0; i < inputSet.Length; ++i) {
-                _containers[i] = int.Parse(inputSet[i]);
+            _containers = new int[inputArray.Length];
+            for (int i = 0; i < inputArray.Length; ++i) {
+                _containers[i] = int.Parse(inputArray[i]);
             }
         }
 

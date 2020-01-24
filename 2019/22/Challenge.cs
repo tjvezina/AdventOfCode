@@ -9,7 +9,7 @@ namespace AdventOfCode.Year2019.Day22 {
         private List<Technique> _techniques = new List<Technique>();
 
         public override void InitPart1() {
-            foreach (string input in inputSet) {
+            foreach (string input in inputArray) {
                 if (input == "deal into new stack") {
                     _techniques.Add(new ReverseTechnique());
                     continue;

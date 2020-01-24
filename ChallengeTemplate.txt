@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year{0}.Day{1} {
     public class Challenge : BaseChallenge {

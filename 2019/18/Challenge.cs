@@ -20,7 +20,7 @@ namespace AdventOfCode.Year2019.Day18 {
         public override void InitPart1() {
             SpaceUtil.system = CoordSystem.YDown;
 
-            _map = new CharMap(inputSet);
+            _map = new CharMap(inputArray);
         }
 
         public override string part1Answer => "5406";
@@ -38,7 +38,7 @@ namespace AdventOfCode.Year2019.Day18 {
 
         private void UpdateMap() {
             Point start = Point.zero;
-            foreach ((int x, int y, char c) in _map.Enumerate()) {
+            foreach ((int x, int y, char c) in _map) {
                 if (IsStart(c)) {
                     start = new Point(x, y);
                     break;
@@ -56,7 +56,7 @@ namespace AdventOfCode.Year2019.Day18 {
 
         private void BuildGraph() {
             _nodeMap.Clear();
-            foreach ((int x, int y, char c) in _map.Enumerate()) {
+            foreach ((int x, int y, char c) in _map) {
                 if (IsKey(c) || IsStart(c)) {
                     _nodeMap[c] = BuildNodeData(new Point(x, y));
                 }

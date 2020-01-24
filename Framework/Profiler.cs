@@ -27,7 +27,7 @@ namespace AdventOfCode {
             }
         }
 
-        public static void PrintResults() {
+        public static void FlushResults() {
             foreach ((string eventName, List<long> results) in _resultsMap) {
                 int count = results.Count();
                 long average = (long)results.Average();

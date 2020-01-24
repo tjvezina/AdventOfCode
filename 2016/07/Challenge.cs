@@ -14,10 +14,10 @@ namespace AdventOfCode.Year2016.Day07 {
         public override void InitPart1() { }
 
         public override string part1Answer => "110";
-        public override (string, object) SolvePart1() => ("IP's with TLS support: ", inputSet.Count(SupportsTLS));
+        public override (string, object) SolvePart1() => ("IP's with TLS support: ", inputArray.Count(SupportsTLS));
         
         public override string part2Answer => "242";
-        public override (string, object) SolvePart2() => ("IP's with SSL support: ", inputSet.Count(SupportsSSL));
+        public override (string, object) SolvePart2() => ("IP's with SSL support: ", inputArray.Count(SupportsSSL));
 
         private bool SupportsTLS(string ip) {
             return Regex.IsMatch(ip, PatternABBA) &&
