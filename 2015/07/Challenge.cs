@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode.Year2015.Day07 {
      public class Challenge : BaseChallenge {
@@ -22,11 +21,11 @@ namespace AdventOfCode.Year2015.Day07 {
             public override string ToString() => $"{operandA} {type} {operandB} = {value}";
         }
 
-        private static Dictionary<string, WireOp> _wireMap = new Dictionary<string, WireOp>();
+        private readonly Dictionary<string, WireOp> _wireMap = new Dictionary<string, WireOp>();
         private UInt16 _part1Output;
 
-        public override void InitPart1() {
-            foreach (string instruction in inputArray) {
+        public Challenge() {
+            foreach (string instruction in inputList) {
                 string[] parts = instruction.Split(" -> ", StringSplitOptions.None);
                 string[] opData = parts[0].Split(' ');
                 string outputWire = parts[1];
@@ -57,20 +56,20 @@ namespace AdventOfCode.Year2015.Day07 {
             }
         }
 
-        public override string part1Answer => "3176";
-        public override (string, object) SolvePart1() {
-            _part1Output = Resolve("a");
-            return ("Wire \"a\" output: ", _part1Output);
-        }
-        
-        public override void InitPart2() {
+        public override void Reset() {
             foreach (WireOp op in _wireMap.Values) {
                 op.value = null;
             }
         }
 
-        public override string part2Answer => "14710";
-        public override (string, object) SolvePart2() {
+        public override string part1ExpectedAnswer => "3176";
+        public override (string message, object answer) SolvePart1() {
+            _part1Output = Resolve("a");
+            return ("Wire \"a\" output: ", _part1Output);
+        }
+        
+        public override string part2ExpectedAnswer => "14710";
+        public override (string message, object answer) SolvePart2() {
             // Sub the original output from wire A for the input of wire B, then resolve again
             _wireMap["b"].operandA = $"{_part1Output}";
             return ("Wire \"a\" output (round 2): ", Resolve("a"));

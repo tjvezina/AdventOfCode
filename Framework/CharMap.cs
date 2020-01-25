@@ -29,8 +29,8 @@ namespace AdventOfCode {
             width = input[0].Length;
             _map = new char[width, height];
 
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     _map[x, y] = input[y][x];
                 }
             }
@@ -51,8 +51,8 @@ namespace AdventOfCode {
         }
 
         public IEnumerable<char> GetElements() {
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     yield return _map[x, y];
                 }
             }
@@ -60,16 +60,16 @@ namespace AdventOfCode {
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public IEnumerator<(int x, int y, char c)> GetEnumerator() {
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     yield return (x, y, _map[x, y]);
                 }
             }
         }
 
         public void Draw() {
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     Console.Write(_map[x, y]);
                 }
                 Console.WriteLine();

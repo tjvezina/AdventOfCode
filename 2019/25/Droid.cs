@@ -46,7 +46,7 @@ namespace AdventOfCode.Year2019.Day25 {
                     Input($"drop {item}");
                 }
                 int mask = 1;
-                for (int i = 0; i < items.Length; ++i) {
+                for (int i = 0; i < items.Length; i++) {
                     if ((itemMask & mask) != 0) {
                         Input($"take {items[i]}");
                     }

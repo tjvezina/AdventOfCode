@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AdventOfCode.Year2019.Day18 {
@@ -8,29 +6,27 @@ namespace AdventOfCode.Year2019.Day18 {
         private class NodeData : Dictionary<char, (int, string)> { }
         private class RouteData : Dictionary<(string, string), int> { }
 
+        public override CoordSystem? coordSystem => CoordSystem.YDown;
+
         private bool IsWall(char c) => c == '#';
         private bool IsStart(char c) => "@1234".Contains(c);
         private bool IsKey(char c) => c >= 'a' && c <= 'z';
         private bool IsDoor(char c) => c >= 'A' && c <= 'Z';
 
-        private CharMap _map;
+        private readonly CharMap _map;
 
         private Dictionary<char, NodeData> _nodeMap = new Dictionary<char, NodeData>();
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YDown;
+        public Challenge() => _map = new CharMap(inputList.ToArray());
 
-            _map = new CharMap(inputArray);
-        }
-
-        public override string part1Answer => "5406";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "5406";
+        public override (string message, object answer) SolvePart1() {
             BuildGraph();
             return ("Shortest path to all keys: ", FindShortestPath());
         }
 
-        public override string part2Answer => "1938";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1938";
+        public override (string message, object answer) SolvePart2() {
             UpdateMap();
             BuildGraph();
             return ("Shortest path to all keys: ", FindShortestPath());
@@ -99,11 +95,11 @@ namespace AdventOfCode.Year2019.Day18 {
             IEnumerable<char> allKeys = _nodeMap.Keys.Except(allStarts);
 
             RouteData data = new RouteData { { (allStarts, string.Empty), 0 } };
-            for (int i = 0; i < allKeys.Count(); ++i) {
+            for (int i = 0; i < allKeys.Count(); i++) {
                 RouteData nextData = new RouteData();
                 foreach (((string starts, string keys), int dist) in data) {
                     foreach (char end in allKeys.Where(k => !keys.Contains(k))) {
-                        for (int s = 0; s < starts.Length; ++s) {
+                        for (int s = 0; s < starts.Length; s++) {
                             char start = starts[s];
                             NodeData node = _nodeMap[start];
                             if (!node.ContainsKey(end)) continue;

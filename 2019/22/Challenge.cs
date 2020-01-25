@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 
@@ -8,8 +7,8 @@ namespace AdventOfCode.Year2019.Day22 {
     public class Challenge : BaseChallenge {
         private List<Technique> _techniques = new List<Technique>();
 
-        public override void InitPart1() {
-            foreach (string input in inputArray) {
+        public Challenge() {
+            foreach (string input in inputList) {
                 if (input == "deal into new stack") {
                     _techniques.Add(new ReverseTechnique());
                     continue;
@@ -31,8 +30,8 @@ namespace AdventOfCode.Year2019.Day22 {
             }
         }
 
-        public override string part1Answer => "4684";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "4684";
+        public override (string message, object answer) SolvePart1() {
             const long DeckSize = 10_007;
 
             BigInteger card = 2019;
@@ -42,8 +41,8 @@ namespace AdventOfCode.Year2019.Day22 {
             return ("Final card position: ", card);
         }
         
-        public override string part2Answer => "452290953297";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "452290953297";
+        public override (string message, object answer) SolvePart2() {
             const long DeckSize  = 119_315_717_514_047;
             const long Iterations = 101_741_582_076_661;
 

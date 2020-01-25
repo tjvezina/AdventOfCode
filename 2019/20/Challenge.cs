@@ -20,6 +20,8 @@ namespace AdventOfCode.Year2019.Day20 {
             public static bool operator!=(Node a, Node b) => !(a == b);
         }
 
+        public override CoordSystem? coordSystem => CoordSystem.YDown;
+
         private CharMap _map;
 
         private Point _start;
@@ -28,9 +30,8 @@ namespace AdventOfCode.Year2019.Day20 {
 
         private bool IsPortalID(char c) => c >= 'A' && c <= 'Z';
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YDown;
-            _map = new CharMap(inputArray);
+        public Challenge() {
+            _map = new CharMap(inputList.ToArray());
 
             Dictionary<string, (Point a, Point b)> portals = new Dictionary<string, (Point, Point)>();
 
@@ -73,11 +74,15 @@ namespace AdventOfCode.Year2019.Day20 {
                    p.y == 2 || p.y == _map.height - 3;
         }
 
-        public override string part1Answer => "484";
-        public override (string, object) SolvePart1() => ("Shortest path: {0} steps", FindShortestPath());
+        public override string part1ExpectedAnswer => "484";
+        public override (string message, object answer) SolvePart1() {
+            return ("Shortest path: {0} steps", FindShortestPath());
+        }
         
-        public override string part2Answer => "5754";
-        public override (string, object) SolvePart2() => ("Shortest path: {0} steps", FindShortestPathRecursive());
+        public override string part2ExpectedAnswer => "5754";
+        public override (string message, object answer) SolvePart2() {
+            return ("Shortest path: {0} steps", FindShortestPathRecursive());
+        }
 
         private int FindShortestPath() {
             int GetH(Point p, Point end) => 0; // No heuristic (Dijsktra's/BFS)

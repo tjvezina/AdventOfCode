@@ -18,20 +18,25 @@ namespace AdventOfCode.Year2019.Day03 {
             public List<Step> verticalSteps = new List<Step>();
         }
 
-        private Wire _wireA;
-        private Wire _wireB;
+        public override CoordSystem? coordSystem => CoordSystem.YUp;
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YUp;
-            _wireA = ParseWireInput(inputArray[0]);
-            _wireB = ParseWireInput(inputArray[1]);
+        private readonly Wire _wireA;
+        private readonly Wire _wireB;
+
+        public Challenge() {
+            _wireA = ParseWireInput(inputList[0]);
+            _wireB = ParseWireInput(inputList[1]);
         }
 
-        public override string part1Answer => "1519";
-        public override (string, object) SolvePart1() => ("Nearest intersection is {0} units from origin.", FindClosestIntersection());
+        public override string part1ExpectedAnswer => "1519";
+        public override (string message, object answer) SolvePart1() {
+            return ("Nearest intersection is {0} units from origin.", FindClosestIntersection());
+        }
         
-        public override string part2Answer => "14358";
-        public override (string, object) SolvePart2() => ("Shortest intersection is {0} units along wires.", FindShortestIntersection());
+        public override string part2ExpectedAnswer => "14358";
+        public override (string message, object answer) SolvePart2() {
+            return ("Shortest intersection is {0} units along wires.", FindShortestIntersection());
+        }
 
         private Wire ParseWireInput(string input) {
             Wire wire = new Wire();

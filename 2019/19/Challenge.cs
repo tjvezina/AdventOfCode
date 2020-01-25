@@ -10,21 +10,20 @@ namespace AdventOfCode.Year2019.Day19 {
             Pulled = 1
         }
 
-        private IntCode _intCode;
+        public override CoordSystem? coordSystem => CoordSystem.YDown;
+
+        private readonly IntCode _intCode;
         private int _pulledCount = 0;
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YDown;
-            _intCode = new IntCode(input);
-        }
+        public Challenge() => _intCode = new IntCode(inputList[0]);
 
-        public override string part1Answer => "215";
-        public override (string, object) SolvePart1() {
-            for (int y = 0; y < 50; ++y) {
-                for (int x = 0; x < 50; ++x) {
+        public override string part1ExpectedAnswer => "215";
+        public override (string message, object answer) SolvePart1() {
+            for (int y = 0; y < 50; y++) {
+                for (int x = 0; x < 50; x++) {
                     char c = '.';
                     if (IsPointPulled(x, y)) {
-                        ++_pulledCount;
+                        _pulledCount++;
                         c = '#';
                     }
                     Console.Write(c);
@@ -35,8 +34,8 @@ namespace AdventOfCode.Year2019.Day19 {
             return ("Drone was pulled from {0} locations", _pulledCount);
         }
 
-        public override string part2Answer => "7720975";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "7720975";
+        public override (string message, object answer) SolvePart2() {
             Point p = new Point(100, 100);
             List<Direction> moves = new List<Direction>();
 

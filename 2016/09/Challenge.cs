@@ -7,14 +7,18 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2016.Day09 {
     public class Challenge : BaseChallenge {
-        public override string part1Answer => "97714";
-        public override (string, object) SolvePart1() {
-            return ("Decompressed length: ", GetDecompressedLength(input));
+        private readonly string _input;
+
+        public Challenge() => _input = inputList[0];
+
+        public override string part1ExpectedAnswer => "97714";
+        public override (string message, object answer) SolvePart1() {
+            return ("Decompressed length: ", GetDecompressedLength(_input));
         }
         
-        public override string part2Answer => "10762972461";
-        public override (string, object) SolvePart2() {
-            return ("Decompressed length (recursive): ", GetDecompressedLength(input, recursive:true));
+        public override string part2ExpectedAnswer => "10762972461";
+        public override (string message, object answer) SolvePart2() {
+            return ("Decompressed length (recursive): ", GetDecompressedLength(_input, recursive:true));
         }
 
         private long GetDecompressedLength(string compressed, bool recursive = false) {

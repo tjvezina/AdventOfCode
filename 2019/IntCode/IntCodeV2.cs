@@ -85,7 +85,7 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
                 Instruction instruction = s_Instructions[opCode];
 
                 Param[] opParams = new Param[instruction.paramCount];
-                for (int i = 0; i < instruction.paramCount; ++i) {
+                for (int i = 0; i < instruction.paramCount; i++) {
                     ParamMode paramMode = (ParamMode)(opData % 10);
                     opData /= 10;
 

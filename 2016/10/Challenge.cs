@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -13,9 +11,9 @@ namespace AdventOfCode.Year2016.Day10 {
         private BotNode[] _bots;
         private OutputNode[] _outputs;
 
-        public override void InitPart1() {
-            string[] inputNodeData = inputArray.Where(i => i.StartsWith("value")).ToArray();
-            string[] botNodeData = inputArray.Where(i => i.StartsWith("bot")).ToArray();
+        public Challenge() {
+            string[] inputNodeData = inputList.Where(i => i.StartsWith("value")).ToArray();
+            string[] botNodeData = inputList.Where(i => i.StartsWith("bot")).ToArray();
 
             _bots = Enumerable.Range(0, botNodeData.Length).Select(i => new BotNode(i)).ToArray();
             _outputs = Enumerable.Range(0, inputNodeData.Length).Select(i => new OutputNode()).ToArray();
@@ -43,8 +41,8 @@ namespace AdventOfCode.Year2016.Day10 {
             _inputs = inputNodeData.Select(ParseInputNode).ToArray();
         }
 
-        public override string part1Answer => "98";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "98";
+        public override (string message, object answer) SolvePart1() {
             Queue<INode> _openSet = new Queue<INode>(_inputs);
 
             void GiveChip(IOutputNode output, int chip) {
@@ -70,9 +68,10 @@ namespace AdventOfCode.Year2016.Day10 {
             return ("Bot {0} compares 17 & 61 microchips.", answerBot.number);
         }
         
-        public override string part2Answer => "4042";
-        public override (string, object) SolvePart2() {
-            return ("Product of first 3 outputs: ", _outputs.Take(3).Select(o => o.chip).Aggregate((a, b) => a * b));
+        public override string part2ExpectedAnswer => "4042";
+        public override (string message, object answer) SolvePart2() {
+            int product = _outputs.Take(3).Select(o => o.chip).Aggregate((a, b) => a * b);
+            return ("Product of first 3 outputs: ", product);
         }
     }
 }

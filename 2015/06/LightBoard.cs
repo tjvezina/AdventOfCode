@@ -19,8 +19,8 @@ namespace AdventOfCode.Year2015.Day06 {
         public int Brightness {
             get {
                 int brightness = 0;
-                for (int x = 0; x < Size; ++x) {
-                    for (int y = 0; y < Size; ++y) {
+                for (int x = 0; x < Size; x++) {
+                    for (int y = 0; y < Size; y++) {
                         brightness += _grid[x, y];
                     }
                 }
@@ -29,24 +29,24 @@ namespace AdventOfCode.Year2015.Day06 {
         }
 
         public void TurnOn(Point a, Point b) {
-            for (int x = a.x; x <= b.x; ++x) {
-                for (int y = a.y; y <= b.y; ++y) {
+            for (int x = a.x; x <= b.x; x++) {
+                for (int y = a.y; y <= b.y; y++) {
                     _grid[x, y] = turnOn(_grid[x, y]);
                 }
             }
         }
 
         public void TurnOff(Point a, Point b) {
-            for (int x = a.x; x <= b.x; ++x) {
-                for (int y = a.y; y <= b.y; ++y) {
+            for (int x = a.x; x <= b.x; x++) {
+                for (int y = a.y; y <= b.y; y++) {
                     _grid[x, y] = turnOff(_grid[x, y]);
                 }
             }
         }
 
         public void Toggle(Point a, Point b) {
-            for (int x = a.x; x <= b.x; ++x) {
-                for (int y = a.y; y <= b.y; ++y) {
+            for (int x = a.x; x <= b.x; x++) {
+                for (int y = a.y; y <= b.y; y++) {
                     _grid[x, y] = toggle(_grid[x, y]);
                 }
             }

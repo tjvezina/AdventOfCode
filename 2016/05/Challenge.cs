@@ -18,10 +18,9 @@ namespace AdventOfCode.Year2016.Day05 {
         private int _part1Target = int.MaxValue;
         private int _part2Target = int.MaxValue;
 
-        public override void InitPart1() => StartThreads();
-
-        public override string part1Answer => "2414BC77";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "2414BC77";
+        public override (string message, object answer) SolvePart1() {
+            StartThreads();
             WaitForPart1Values();
 
             string password;
@@ -33,8 +32,8 @@ namespace AdventOfCode.Year2016.Day05 {
             return ("Password: ", password);
         }
         
-        public override string part2Answer => "437E60FC";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "437E60FC";
+        public override (string message, object answer) SolvePart2() {
             WaitForPart2Values();
 
             char[] password = new char[PasswordLength];
@@ -113,7 +112,7 @@ namespace AdventOfCode.Year2016.Day05 {
 
                 // Handle the one's place
                 buffer[iFirst + iInput] = (byte)'0';
-                ++iInput;
+                iInput++;
 
                 for (int j = 0; j < 10; j++) {
                     byte[] hash = md5.ComputeHash(buffer, 0, iFirst + iInput);

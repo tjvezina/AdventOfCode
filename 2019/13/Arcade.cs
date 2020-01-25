@@ -57,8 +57,8 @@ namespace AdventOfCode.Year2019.Day13 {
         }
 
         private void RunDiagnosticCheck() {
-            for (int y = 0; y < _screen.GetLength(1); ++y) {
-                for (int x = 0; x < _screen.GetLength(0); ++x) {
+            for (int y = 0; y < _screen.GetLength(1); y++) {
+                for (int x = 0; x < _screen.GetLength(0); x++) {
                     blockCount += (_screen[x, y] == Tile.Block ? 1 : 0);
                 }
             }
@@ -95,8 +95,8 @@ namespace AdventOfCode.Year2019.Day13 {
 
             Tile[,] newScreen = new Tile[width, height];
 
-            for (int y = 0; y < _screen.GetLength(1); ++y) {
-                for (int x = 0; x < _screen.GetLength(0); ++x) {
+            for (int y = 0; y < _screen.GetLength(1); y++) {
+                for (int x = 0; x < _screen.GetLength(0); x++) {
                     newScreen[x, y] = _screen[x, y];
                 }
             }

@@ -5,20 +5,18 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day24 {
     public class Challenge : BaseChallenge {
-        private int[] _packages;
+        private readonly int[] _packages;
 
-        public override void InitPart1() {
-            _packages = inputArray.Select(int.Parse).ToArray();
-        }
+        public Challenge() => _packages = inputList.Select(int.Parse).ToArray();
 
-        public override string part1Answer => "10723906903";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "10723906903";
+        public override (string message, object answer) SolvePart1() {
             List<int[]> groups = FindBestGroups(groupCount:3);
             return ("Quantum entanglement of first group: ", GetQuantumEntanglement(groups[0]));
         }
         
-        public override string part2Answer => "74850409";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "74850409";
+        public override (string message, object answer) SolvePart2() {
             // Try some other counts, just for fun
             FindBestGroups(groupCount:6);
             //FindBestGroups(groupCount:8); // 8 is possible, but slow
@@ -74,7 +72,7 @@ namespace AdventOfCode.Year2015.Day24 {
             Debug.Assert(groups.Count == groupCount, "Failed to find secondary groups to match the first");
 
             Console.WriteLine($" -- {groupCount} Groups -- ");
-            for (int i = 0; i < groups.Count; ++i) {
+            for (int i = 0; i < groups.Count; i++) {
                 Console.WriteLine($"Group {i+1}: {groups[i].OrderBy(p => p).Select(p => $"{p}").Aggregate((a, b) => $"{a} {b}")}");
             }
 

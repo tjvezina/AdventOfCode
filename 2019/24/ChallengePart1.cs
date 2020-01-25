@@ -1,18 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2019.Day24 {
     public partial class Challenge : BaseChallenge {
+        public override CoordSystem? coordSystem => CoordSystem.YDown;
+
         private CharMap _map;
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YDown;
-            _map = new CharMap(inputArray);
-        }
+        public Challenge() => _map = new CharMap(inputList.ToArray());
 
-        public override string part1Answer => "1113073";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "1113073";
+        public override (string message, object answer) SolvePart1() {
             HashSet<int> ratings = new HashSet<int>();
 
             int lastRating;
@@ -23,7 +21,7 @@ namespace AdventOfCode.Year2019.Day24 {
             int repeatIndex = 0;
             foreach (int rating in ratings) {
                 if (rating == lastRating) break;
-                ++repeatIndex;
+                repeatIndex++;
             }
 
             return ($"Rating {{0}} repeated at #{repeatIndex} and #{ratings.Count}", lastRating);
@@ -32,8 +30,8 @@ namespace AdventOfCode.Year2019.Day24 {
         private void Step() {
             CharMap nextMap = new CharMap(_map);
 
-            for (int y = 0; y < _map.height; ++y) {
-                for (int x = 0; x < _map.width; ++x) {
+            for (int y = 0; y < _map.height; y++) {
+                for (int x = 0; x < _map.width; x++) {
                     Point p = new Point(x, y);
                     int bugNeighbors = EnumUtil.GetValues<Direction>().Select(d => p + d).Count(IsBug);
 
@@ -51,10 +49,10 @@ namespace AdventOfCode.Year2019.Day24 {
         private int CalculateBiodiversityRating() {
             int rating = 0;
 
-            for (int y = _map.height - 1; y >= 0; --y) {
-                for (int x = _map.width - 1; x >= 0; --x) {
+            for (int y = _map.height - 1; y >= 0; y--) {
+                for (int x = _map.width - 1; x >= 0; x--) {
                     rating <<= 1;
-                    if (_map[x, y] == '#') ++rating;
+                    if (_map[x, y] == '#') rating++;
                 }
             }
 

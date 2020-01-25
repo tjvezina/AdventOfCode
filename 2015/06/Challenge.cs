@@ -39,14 +39,12 @@ namespace AdventOfCode.Year2015.Day06 {
             }
         }
 
-        private IEnumerable<Instruction> _instructions;
+        private readonly IReadOnlyList<Instruction> _instructions;
 
-        public override void InitPart1() {
-            _instructions = inputArray.Select(i => new Instruction(i));
-        }
+        public Challenge() => _instructions = inputList.Select(i => new Instruction(i)).ToList();
 
-        public override string part1Answer => "377891";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "377891";
+        public override (string message, object answer) SolvePart1() {
             LightBoard board = new LightBoard(
                 turnOn:(x) => 1,
                 turnOff:(x) => 0,
@@ -56,8 +54,8 @@ namespace AdventOfCode.Year2015.Day06 {
             return ("Lit lights: ", RunInstructions(board));
         }
         
-        public override string part2Answer => "14110788";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "14110788";
+        public override (string message, object answer) SolvePart2() {
             LightBoard board = new LightBoard(
                 turnOn:(x) => x + 1,
                 turnOff:(x) => Math.Max(0, x - 1),

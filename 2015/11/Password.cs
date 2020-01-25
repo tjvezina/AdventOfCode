@@ -34,7 +34,7 @@ namespace AdventOfCode.Year2015.Day11 {
             int straight = 1;
 
             char prev = _data[0];
-            for (int i = 1; i < Length; ++i) {
+            for (int i = 1; i < Length; i++) {
                 char next = _data[i];
 
                 if (prev + 1 == next) {
@@ -61,7 +61,7 @@ namespace AdventOfCode.Year2015.Day11 {
             int pairs = 0;
 
             char prev = _data[0];
-            for (int i = 1; i < Length; ++i) {
+            for (int i = 1; i < Length; i++) {
                 char next = _data[i];
 
                 if (prev == next) {

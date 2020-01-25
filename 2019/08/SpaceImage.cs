@@ -22,9 +22,9 @@ namespace AdventOfCode.Year2019.Day08 {
             _data = new int[width, height, depth];
 
             int index = 0;
-            for (int z = 0; z < depth; ++z) {
-                for (int y = 0; y < height; ++y) {
-                    for (int x = 0; x < width; ++x) {
+            for (int z = 0; z < depth; z++) {
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
                         _data[x, y, z] = rawData[index++] - '0'; // Char digit to int
                     }
                 }
@@ -34,9 +34,9 @@ namespace AdventOfCode.Year2019.Day08 {
         public bool[,] Flatten() {
             bool[,] pixels = new bool[width, height];
 
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
-                    for (int z = 0; z < depth; ++z) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    for (int z = 0; z < depth; z++) {
                         int color = _data[x, y, z];
                         if (color != Transparent) {
                             pixels[x, y] = (color == White);

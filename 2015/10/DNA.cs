@@ -20,7 +20,7 @@ namespace AdventOfCode.Year2015.Day10 {
             Dictionary<string, Element> elementMap = new Dictionary<string, Element>();
 
             string[][] ruleSet = new string[dna.Length][];
-            for (int i = 0; i < dna.Length; ++i) {
+            for (int i = 0; i < dna.Length; i++) {
                 string[] parts = dna[i].Split('=');
                 string elementName = parts[0];
                 string[] subElements = parts[1].Split('.');
@@ -45,9 +45,9 @@ namespace AdventOfCode.Year2015.Day10 {
                 }
             }
 
-            for (int i = 0; i < ruleSet.Length; ++i) {
+            for (int i = 0; i < ruleSet.Length; i++) {
                 foreach (int subIndex in ruleSet[i].Select(e => elementMap[e].index)) {
-                    ++_dna[subIndex, i];
+                    _dna[subIndex, i]++;
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace AdventOfCode.Year2015.Day10 {
 
             ulong length = 0;
 
-            for (int i = 0; i < elementCounts.Length; ++i) {
+            for (int i = 0; i < elementCounts.Length; i++) {
                 int count = elementCounts[i];
 
                 if (count > 0) {

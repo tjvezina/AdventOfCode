@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day08 {
-     public class Challenge : BaseChallenge {
-        public override string part1Answer => "1333";
-        public override (string, object) SolvePart1() {
-            int totalChars = inputArray.Sum(s => s.Length);
-            int visibleChars = inputArray.Sum(GetCharCount);
+    public class Challenge : BaseChallenge {
+        public override string part1ExpectedAnswer => "1333";
+        public override (string message, object answer) SolvePart1() {
+            int totalChars = inputList.Sum(s => s.Length);
+            int visibleChars = inputList.Sum(GetCharCount);
             return ("Non-visible characters: ", totalChars - visibleChars);
         }
         
-        public override string part2Answer => "2046";
-        public override (string, object) SolvePart2() {
-            int totalChars = inputArray.Sum(s => s.Length);
-            int escapeChars = inputArray.Sum(GetEscapedCount);
+        public override string part2ExpectedAnswer => "2046";
+        public override (string message, object answer) SolvePart2() {
+            int totalChars = inputList.Sum(s => s.Length);
+            int escapeChars = inputList.Sum(GetEscapedCount);
             return ("New escape char count: ", escapeChars - totalChars);
         }
 
@@ -41,7 +39,7 @@ namespace AdventOfCode.Year2015.Day08 {
         }
 
         private int GetEscapedCount(string str) {
-            for (int i = str.Length - 1; i >= 0; --i) {
+            for (int i = str.Length - 1; i >= 0; i--) {
                 if (str[i] == '\"' || str[i] == '\\') {
                     str = str.Substring(0, i) + "\\" + str.Substring(i);
                 }

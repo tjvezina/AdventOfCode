@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2019.Day07 {
      public class Challenge : BaseChallenge {
-        private AmplifierManager _ampManager;
+        private readonly AmplifierManager _ampManager;
 
-        public override void InitPart1() {
-            _ampManager = new AmplifierManager(input);
-        }
+        public Challenge() => _ampManager = new AmplifierManager(inputList[0]);
 
-        public override string part1Answer => "20413";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "20413";
+        public override (string message, object answer) SolvePart1() {
             return TestAllPermutations(Enumerable.Range(0, AmplifierManager.AmpCount).ToArray());
         }
         
-        public override string part2Answer => "3321777";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "3321777";
+        public override (string message, object answer) SolvePart2() {
             return TestAllPermutations(Enumerable.Range(5, AmplifierManager.AmpCount).ToArray());
         }
 

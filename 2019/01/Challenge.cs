@@ -4,20 +4,18 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day01 {
      public class Challenge : BaseChallenge {
-        private IEnumerable<int> _massList;
+        private readonly IEnumerable<int> _massList;
 
-        public override void InitPart1() {
-            _massList = inputArray.Select(int.Parse);
-        }
+        public Challenge() => _massList = inputList.Select(int.Parse);
 
-        public override string part1Answer => "3323874";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "3323874";
+        public override (string message, object answer) SolvePart1() {
             int fuelCost = _massList.Select(GetFuelCost).Sum();
             return ("Total fuel cost: ", fuelCost);
         }
         
-        public override string part2Answer => "4982961";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "4982961";
+        public override (string message, object answer) SolvePart2() {
             int fuelCost = _massList.Select(GetFuelCostRecursive).Sum();
             return ("Total fuel cost (including fuel itself): ", fuelCost);
         }

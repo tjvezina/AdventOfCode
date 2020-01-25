@@ -4,7 +4,7 @@ using System.Linq;
 namespace AdventOfCode.Year2015.Day15 {
     public class RecipePart1 : Recipe {
         public RecipePart1() {
-            for (int i = 0; i < _quantities.Length; ++i) {
+            for (int i = 0; i < _quantities.Length; i++) {
                 _quantities[i] = Quantity / _ingredients.Count;
             }
             _quantities[0] += Quantity % _ingredients.Count; // Drop leftovers in the first ingredient
@@ -26,16 +26,16 @@ namespace AdventOfCode.Year2015.Day15 {
             
             void Reset() => _quantities.CopyTo(nextRecipe, 0);
 
-            for (int i = 0; i < _quantities.Length; ++i) {
-                for (int j = 0; j < _quantities.Length; ++j) {
+            for (int i = 0; i < _quantities.Length; i++) {
+                for (int j = 0; j < _quantities.Length; j++) {
                     if (i == j) continue;
 
                     Reset();
                     
                     if (nextRecipe[i] == 100 || nextRecipe[j] == 0) continue;
 
-                    ++nextRecipe[i];
-                    --nextRecipe[j];
+                    nextRecipe[i]++;
+                    nextRecipe[j]--;
 
                     int score = CalculateScore(nextRecipe);
                     if (score > baseScore) {

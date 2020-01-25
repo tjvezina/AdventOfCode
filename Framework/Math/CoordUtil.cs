@@ -2,20 +2,19 @@ using System;
 
 namespace AdventOfCode {
     public enum CoordSystem {
-        YUp,  // Positive X = right, positive Y = up
-        YDown // Positive X = right, positive Y = down
+        YUp,  // X+ = right, Y+ = up
+        YDown // X+ = right, Y+ = down
     }
 
-    public static class SpaceUtil {
-        private static CoordSystem? _system;
-        public static CoordSystem system {
-            private get {
-                if (_system == null) {
-                    throw new Exception($"{nameof(CoordSystem)} must be set before using {nameof(SpaceUtil)} functions");
+    public static class CoordUtil {
+        public static CoordSystem? system;
+        private static CoordSystem _system {
+            get {
+                if (system == null) {
+                    throw new Exception($"{nameof(CoordSystem)} must be set before using {nameof(CoordUtil)} functions");
                 }
-                return _system.Value;
+                return system.Value;
             }
-            set => _system = value;
         }
 
         public static Point ToPoint(this Direction dir) {
@@ -27,13 +26,13 @@ namespace AdventOfCode {
                 case Direction.Down:  p = new Point( 0,-1); break;
             }
 
-            if (system == CoordSystem.YDown) p.y *= -1;
+            if (_system == CoordSystem.YDown) p.y *= -1;
 
             return p;
         }
 
         public static Direction ToDirection(this Point p) {
-            if (system == CoordSystem.YDown) p.y *= -1;
+            if (_system == CoordSystem.YDown) p.y *= -1;
 
             if (p == new Point( 1, 0)) return Direction.Right;
             if (p == new Point(-1, 0)) return Direction.Left;
@@ -46,7 +45,7 @@ namespace AdventOfCode {
         public static Point Rotate90(this Point p) => new Point(-p.y, p.x);
         public static Point Rotate270(this Point p) => new Point(p.y, -p.x);
 
-        public static Point RotateCW(this Point p) => (system == CoordSystem.YUp ? Rotate270(p) : Rotate90(p));
-        public static Point RotateCCW(this Point p) => (system == CoordSystem.YUp ? Rotate90(p) : Rotate270(p));
+        public static Point RotateCW(this Point p) => (_system == CoordSystem.YUp ? Rotate270(p) : Rotate90(p));
+        public static Point RotateCCW(this Point p) => (_system == CoordSystem.YUp ? Rotate90(p) : Rotate270(p));
     }
 }

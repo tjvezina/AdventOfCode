@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode.Year2019.Day10 {
      public class Challenge : BaseChallenge {
@@ -20,22 +19,22 @@ namespace AdventOfCode.Year2019.Day10 {
 
         private Point _stationPos;
 
-        public override void InitPart1() {
-            _width = inputArray[0].Length;
-            _height = inputArray.Length;
+        public Challenge() {
+            _width = inputList[0].Length;
+            _height = inputList.Count;
             _map = new int?[_width, _height];
             
-            for (int y = 0; y < _height; ++y) {
-                string line = inputArray[y];
-                for (int x = 0; x < _width; ++x) {
+            for (int y = 0; y < _height; y++) {
+                string line = inputList[y];
+                for (int x = 0; x < _width; x++) {
                     if (line[x] == '#') {
                         _map[x, y] = 0;
                     }
                 }
             }
 
-            for (int y = 0; y < _height; ++y) {
-                for (int x = 0; x < _width; ++x) {
+            for (int y = 0; y < _height; y++) {
+                for (int x = 0; x < _width; x++) {
                     if (_map[x, y] != null) {
                         _map[x, y] = CountVisible(new Point(x, y));
                     }
@@ -43,12 +42,12 @@ namespace AdventOfCode.Year2019.Day10 {
             }
         }
 
-        public override string part1Answer => "282";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "282";
+        public override (string message, object answer) SolvePart1() {
             int maxVisible = 0;
             Point bestPos = new Point(-1, -1);
-            for (int y = 0; y < _height; ++y) {
-                for (int x = 0; x < _width; ++x) {
+            for (int y = 0; y < _height; y++) {
+                for (int x = 0; x < _width; x++) {
                     if (_map[x, y] != null && _map[x, y].Value > maxVisible) {
                         maxVisible = _map[x, y].Value;
                         bestPos = new Point(x, y);
@@ -59,13 +58,13 @@ namespace AdventOfCode.Year2019.Day10 {
             return ($"Max visible asteroids: {{0}} {_stationPos}", maxVisible);
         }
         
-        public override string part2Answer => "1008";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1008";
+        public override (string message, object answer) SolvePart2() {
             const int AsteroidNum = 200;
 
             List<Asteroid> asteroids = new List<Asteroid>();
-            for (int y = 0; y < _height; ++y) {
-                for (int x = 0; x < _width; ++x) {
+            for (int y = 0; y < _height; y++) {
+                for (int x = 0; x < _width; x++) {
                     Point pos = new Point(x, y);
                     if (_map[x, y] == null || _stationPos == pos) continue;
 
@@ -84,12 +83,12 @@ namespace AdventOfCode.Year2019.Day10 {
 
         private int CountVisible(Point p1) {
             int visible = 0;
-            for (int y = 0; y < _height; ++y) {
-                for (int x = 0; x < _width; ++x) {
+            for (int y = 0; y < _height; y++) {
+                for (int x = 0; x < _width; x++) {
                     Point p2 = new Point(x, y);
                     if (_map[x, y] == null || p1 == p2) continue;
 
-                    if (CanSee(p1, p2)) ++visible;
+                    if (CanSee(p1, p2)) visible++;
                 }
             }
             return visible;
@@ -101,7 +100,7 @@ namespace AdventOfCode.Year2019.Day10 {
 
             Point step = d / gcd;
             Point p3 = p1;
-            for (int i = 1; i < gcd; ++i) {
+            for (int i = 1; i < gcd; i++) {
                 p3 += step;
                 if (_map[p3.x, p3.y] != null) return false;
             }

@@ -6,8 +6,8 @@ namespace AdventOfCode {
         public static MatrixInt Identity(int size) {
             MatrixInt m = new MatrixInt(size, size);
 
-            for (int r = 0; r < size; ++r) {
-                for (int c = 0; c < size; ++c) {
+            for (int r = 0; r < size; r++) {
+                for (int c = 0; c < size; c++) {
                     m[r, c] = (r == c ? 1 : 0);
                 }
             }
@@ -18,7 +18,7 @@ namespace AdventOfCode {
         public static implicit operator MatrixInt(int[] vector) {
             MatrixInt m = new MatrixInt(vector.Length, 1);
 
-            for (int i = 0; i < vector.Length; ++i) {
+            for (int i = 0; i < vector.Length; i++) {
                 m[i, 0] = vector[i];
             }
 
@@ -30,7 +30,7 @@ namespace AdventOfCode {
 
             int[] v = new int[matrix.rows];
 
-            for (int i = 0; i < matrix.rows; ++i) {
+            for (int i = 0; i < matrix.rows; i++) {
                 v[i] = matrix[i, 0];
             }
 
@@ -42,9 +42,9 @@ namespace AdventOfCode {
 
             MatrixInt c = new MatrixInt(a.rows, b.cols);
 
-            for (int row = 0; row < c.rows; ++row) {
-                for (int col = 0; col < c.cols; ++col) {
-                    for (int i = 0; i < a.cols; ++i) {
+            for (int row = 0; row < c.rows; row++) {
+                for (int col = 0; col < c.cols; col++) {
+                    for (int i = 0; i < a.cols; i++) {
                         c[row, col] += a[row, i] * b[i, col];
                     }
                 }
@@ -86,8 +86,8 @@ namespace AdventOfCode {
         public MatrixInt(int[,] data) {
             _matrix = new int[data.GetLength(0), data.GetLength(1)];
 
-            for (int r = 0; r < rows; ++r) {
-                for (int c = 0; c < cols; ++c) {
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
                     _matrix[r, c] = data[r, c];
                 }
             }
@@ -95,8 +95,8 @@ namespace AdventOfCode {
 
         public override string ToString() {
             int digits = 1;
-            for (int r = 0; r < rows; ++r) {
-                for (int c = 0; c < cols; ++c) {
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
                     digits = Math.Max(digits, (int)Math.Log10(_matrix[r, c]) + 1);
                 }
             }
@@ -104,9 +104,9 @@ namespace AdventOfCode {
 
             string output = string.Empty;
 
-            for (int r = 0; r < rows; ++r) {
+            for (int r = 0; r < rows; r++) {
                 output += (rows == 0 ? "[" : (r == 0 ? "┌" : (r == rows - 1 ? "└" : "|")));
-                for (int c = 0; c < cols; ++c) {
+                for (int c = 0; c < cols; c++) {
                     output += string.Format(format, _matrix[r, c]) + (c == cols - 1 ? "" : ",");
                 }
                 output += (rows == 0 ? "]" : (r == 0 ? "┐" : (r == rows - 1 ? "┘" : "|"))) + "\n";

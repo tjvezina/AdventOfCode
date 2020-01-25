@@ -8,15 +8,15 @@ namespace AdventOfCode.Year2019.Day04 {
         private const int RangeMin = 146810;
         private const int RangeMax = 612564;
 
-        public override string part1Answer => "1748";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "1748";
+        public override (string message, object answer) SolvePart1() {
             int matchCount = Enumerable.Range(RangeMin, RangeMax - RangeMin).Count(MatchesRuleSet1);
 
             return ("Valid passwords (rule set 1): ", matchCount);
         }
         
-        public override string part2Answer => "1180";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1180";
+        public override (string message, object answer) SolvePart2() {
             int matchCount = Enumerable.Range(RangeMin, RangeMax - RangeMin).Count(MatchesRuleSet2);
 
             return ("Valid passwords (rule set 2): ", matchCount);
@@ -31,14 +31,14 @@ namespace AdventOfCode.Year2019.Day04 {
             void CheckDouble() => containsDouble |= (doubleCount == 1 || (doubleCount > 1 && allow3Consecutive));
 
             int lastDigit = password % 10;
-            for (int i = 1; i < Digits; ++i) {
+            for (int i = 1; i < Digits; i++) {
                 password /= 10;
                 int nextDigit = password % 10;
                 
                 if (nextDigit > lastDigit) return false;
 
                 if (nextDigit == lastDigit) {
-                    ++doubleCount;
+                    doubleCount++;
                 } else {
                     CheckDouble();
                     doubleCount = 0;

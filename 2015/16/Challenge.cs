@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode.Year2015.Day16 {
      public class Challenge : BaseChallenge {
@@ -17,8 +16,8 @@ namespace AdventOfCode.Year2015.Day16 {
         private List<Sue> _sues = new List<Sue>();
         private Dictionary<string, int> _knownProps = new Dictionary<string, int>();
 
-        public override void InitPart1() {
-            foreach (string data in inputArray) {
+        public Challenge() {
+            foreach (string data in inputList) {
                 Sue sue = new Sue();
                 int splitIndex = data.IndexOf(':');
                 foreach (string prop in data.Substring(splitIndex + 1).Split(',')) {
@@ -34,15 +33,15 @@ namespace AdventOfCode.Year2015.Day16 {
             }
         }
 
-        public override string part1Answer => "40";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "40";
+        public override (string message, object answer) SolvePart1() {
             PropType GetPropType(string prop) => PropType.Equal;
 
             return ("Matching aunt Sue found: #", FindSue(GetPropType));
         }
 
-        public override string part2Answer => "241";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "241";
+        public override (string message, object answer) SolvePart2() {
             PropType GetPropType(string prop) {
                 return prop switch {
                     "cats" => PropType.Greater,
@@ -58,7 +57,7 @@ namespace AdventOfCode.Year2015.Day16 {
         
         private int FindSue(Func<string, PropType> getPropType) {
             int sueIndex = -1;
-            for (int i = 0; i < _sues.Count; ++i) {
+            for (int i = 0; i < _sues.Count; i++) {
                 Sue sue = _sues[i];
                 bool isMatch = true;
                 foreach ((string prop, int value) in sue.properties) {

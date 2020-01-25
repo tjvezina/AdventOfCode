@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace AdventOfCode.Year2015.Day15 {
      public class Challenge : BaseChallenge {
-        public override void InitPart1() {
-            Recipe.Init(inputArray);
-        }
+        public Challenge() => Recipe.Init(inputList);
 
-        public override string part1Answer => "21367368";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "21367368";
+        public override (string message, object answer) SolvePart1() {
             Recipe recipe = new RecipePart1();
             recipe.MaximizeScore();
             return ("Best recipe score: ", recipe.bestScore);
         }
         
-        public override string part2Answer => "1766400";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1766400";
+        public override (string message, object answer) SolvePart2() {
             Recipe recipe = new RecipePart2();
             recipe.MaximizeScore();
             return ("Best recipe score: ", recipe.bestScore);

@@ -6,45 +6,37 @@ namespace AdventOfCode.Year2015.Day17 {
      public class Challenge : BaseChallenge {
         private const int Total = 150;
 
-        private int[] _containers;
+        private readonly IReadOnlyList<int> _containers;
 
-        public override void InitPart1() {
-            _containers = new int[inputArray.Length];
-            for (int i = 0; i < inputArray.Length; ++i) {
-                _containers[i] = int.Parse(inputArray[i]);
-            }
-        }
+        public Challenge() => _containers = inputList.Select(int.Parse).ToList();
 
-        public override string part1Answer => "4372";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "4372";
+        public override (string message, object answer) SolvePart1() {
             return ("Valid combinations: ", CountCombinations(write:false));
         }
         
-        public override string part2Answer => "4";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "4";
+        public override (string message, object answer) SolvePart2() {
             return ("Valid combinations: ", CountCombinations(write:true, minimize:true));
         }
 
         private int CountCombinations(bool write, bool minimize = false) {
             int combos = 0;
 
-            for (int n = 1; n <= _containers.Length; ++n) {
-                int[] indices = new int[n];
-                for (int i = 0; i < n; ++i) {
-                    indices[i] = i;
-                }
+            for (int n = 1; n <= _containers.Count; n++) {
+                int[] indices = Enumerable.Range(0, n).ToArray();
 
                 do {
                     IEnumerable<int> usedContainers = indices.Select(i => _containers[i]);
 
                     if (usedContainers.Sum() == Total) {
-                        ++combos;
+                        combos++;
 
                         if (write) {
                             Console.WriteLine(usedContainers.Select(c => $"{c}").Aggregate((a, b) => $"{a} + {b}"));
                         }
                     }
-                } while (DataUtil.NextCombination(indices, _containers.Length));
+                } while (DataUtil.NextCombination(indices, _containers.Count));
 
                 if (minimize && combos > 0) break;
             }

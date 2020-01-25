@@ -26,7 +26,7 @@ namespace AdventOfCode.Year2015.Day15 {
 
         protected static List<Ingredient> _ingredients = new List<Ingredient>();
 
-        public static void Init(string[] input) {
+        public static void Init(IEnumerable<string> input) {
             foreach (string data in input) {
                 string[] parts = data.Split(':');
                 string name = parts[0];
@@ -35,7 +35,7 @@ namespace AdventOfCode.Year2015.Day15 {
                 int GetProperty(int index) => int.Parse(propData[index].Split(' ')[2]);
 
                 int[] properties = new int[Ingredient.PropertyCount];
-                for (int i = 0; i < properties.Length; ++i) {
+                for (int i = 0; i < properties.Length; i++) {
                     properties[i] = GetProperty(i);
                 }
 
@@ -52,7 +52,7 @@ namespace AdventOfCode.Year2015.Day15 {
         protected int CalculateScore(int[] quantities) {
             List<int> propScores = new List<int>(new int[Ingredient.PropertyCount]);
 
-            for (int p = 0; p < propScores.Count; ++p) {
+            for (int p = 0; p < propScores.Count; p++) {
                 for (int i = 0; i < _ingredients.Count; i++) {
                     propScores[p] += (_ingredients[i].properties[p] * quantities[i]);
                 }
@@ -66,7 +66,7 @@ namespace AdventOfCode.Year2015.Day15 {
         protected int CalculateCalories(int[] quantities) {
             int calories = 0;
 
-            for (int i = 0; i < _ingredients.Count; ++i) {
+            for (int i = 0; i < _ingredients.Count; i++) {
                 calories += (_ingredients[i].calories * quantities[i]);
             }
 

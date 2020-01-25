@@ -85,8 +85,8 @@ namespace AdventOfCode.Year2019.Day11 {
 
             bool[,] pixels = new bool[max.x - min.x + 1, max.y - min.y + 1];
 
-            for (int y = max.y; y >= min.y; --y) {
-                for (int x = min.x; x <= max.x; ++x) {
+            for (int y = max.y; y >= min.y; y--) {
+                for (int x = min.x; x <= max.x; x++) {
                     int xPixel = x - min.x;
                     int yPixel = max.y - y;
                     pixels[xPixel, yPixel] = _whiteTiles.Contains(new Point(x, y));

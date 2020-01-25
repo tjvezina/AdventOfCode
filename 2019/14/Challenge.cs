@@ -38,16 +38,16 @@ namespace AdventOfCode.Year2019.Day14 {
         private const string Fuel = "FUEL";
         private const long InitialOre = 1_000_000_000_000;
 
-        private Dictionary<string, Reaction> _reactionMap = new Dictionary<string, Reaction>();
+        private readonly Dictionary<string, Reaction> _reactionMap = new Dictionary<string, Reaction>();
         private ElementMap _available = new ElementMap();
         private long _orePerFuel;
 
-        public override void InitPart1() {
-            _reactionMap = inputArray.Select(Reaction.Parse).ToDictionary(r => r.output.name);
-        }
+        public Challenge() => _reactionMap = inputList.Select(Reaction.Parse).ToDictionary(r => r.output.name);
 
-        public override string part1Answer => "1037742";
-        public override (string, object) SolvePart1() {
+        public override void Reset() => _available.Clear();
+
+        public override string part1ExpectedAnswer => "1037742";
+        public override (string message, object answer) SolvePart1() {
             ModifyAvailable(Ore, InitialOre);
 
             Create(Fuel, 1);
@@ -56,12 +56,8 @@ namespace AdventOfCode.Year2019.Day14 {
             return ("{{0}} ore required for 1 fuel", _orePerFuel);
         }
         
-        public override void InitPart2() {
-            _available.Clear();
-        }
-
-        public override string part2Answer => "1572358";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1572358";
+        public override (string message, object answer) SolvePart2() {
             ModifyAvailable(Ore, InitialOre);
             
             while (Create(Fuel, Math.Max(1, GetAvailable(Ore) / _orePerFuel)));

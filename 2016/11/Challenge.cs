@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -16,8 +15,8 @@ namespace AdventOfCode.Year2016.Day11 {
         private List<int> _microchipFloors;
         private List<int> _generatorFloors;
 
-        public override void InitPart1() {
-            MatchCollection elementMatches = Regex.Matches(inputArray.Aggregate((a, b) => a + b), PatternGenerator);
+        public Challenge() {
+            MatchCollection elementMatches = Regex.Matches(inputList.Aggregate((a, b) => a + b), PatternGenerator);
             List<string> elements = elementMatches.Select(m => m.Groups[1].Value).ToList();
             ElementCount = elements.Count;
 
@@ -25,7 +24,7 @@ namespace AdventOfCode.Year2016.Day11 {
             _generatorFloors = new List<int>(new int[ElementCount]);
 
             for (int floor = 0; floor < FloorCount; floor++) {
-                string input = inputArray[floor];
+                string input = inputList[floor];
                 
                 foreach (Match generatorMatch in Regex.Matches(input, PatternGenerator)) {
                     string element = generatorMatch.Groups[1].Value;
@@ -39,15 +38,15 @@ namespace AdventOfCode.Year2016.Day11 {
             }
         }
 
-        public override string part1Answer => "31";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "31";
+        public override (string message, object answer) SolvePart1() {
             State initialState = new State(_microchipFloors, _generatorFloors);
 
             return ("All objects moved to top floor in {0} moves", GetMinimumSteps(initialState));
         }
         
-        public override string part2Answer => "55";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "55";
+        public override (string message, object answer) SolvePart2() {
             // Add new equipment found on first floor
             _microchipFloors.AddRange(new [] { 0, 0 });
             _generatorFloors.AddRange(new [] { 0, 0 });

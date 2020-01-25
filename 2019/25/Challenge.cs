@@ -1,14 +1,11 @@
 // #define MANUAL_SOLVE
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Year2019.Day25 {
     public class Challenge : BaseChallenge {
-        public override string part1Answer => "8912902";
-        public override (string, object) SolvePart1() {
-            Droid droid = new Droid(input);
+        public override string part1ExpectedAnswer => "8912902";
+        public override (string message, object answer) SolvePart1() {
+            Droid droid = new Droid(inputList[0]);
 
 #if MANUAL_SOLVE
             while (!droid.isComplete) {
@@ -26,7 +23,7 @@ namespace AdventOfCode.Year2019.Day25 {
             return ("Airlock password: ", match.Value);
         }
         
-        public override string part2Answer => "The Sun";
-        public override (string, object) SolvePart2() => (null, part2Answer);
+        public override string part2ExpectedAnswer => "The Sun";
+        public override (string message, object answer) SolvePart2() => (null, part2ExpectedAnswer);
     }
 }

@@ -8,7 +8,9 @@ namespace AdventOfCode.Year2019.Day17 {
         private const int MaxBotFuncLength = 20;
         private const int MaxActionsPerFunc = (MaxBotFuncLength + 1) / 4;
 
-        private string _intCodeMemory;
+        public override CoordSystem? coordSystem => CoordSystem.YDown;
+
+        private readonly string _intCodeMemory;
 
         private List<char> _output = new List<char>();
         private CharMap _map;
@@ -20,13 +22,10 @@ namespace AdventOfCode.Year2019.Day17 {
         private char[] _mainRoutine;
         private char[][] _botFuncs;
 
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YDown;
-            _intCodeMemory = input;
-        }
+        public Challenge() => _intCodeMemory = inputList[0];
 
-        public override string part1Answer => "3936";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "3936";
+        public override (string message, object answer) SolvePart1() {
             List<char> map = new List<char>();
 
             IntCode intCode = new IntCode(_intCodeMemory);
@@ -43,8 +42,8 @@ namespace AdventOfCode.Year2019.Day17 {
             return ("Sum of alignment parameters: ", alignParams);
         }
 
-        public override string part2Answer => "785733";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "785733";
+        public override (string message, object answer) SolvePart2() {
             BuildActionsList();
             DefineBotFunctions();
 
@@ -88,8 +87,8 @@ namespace AdventOfCode.Year2019.Day17 {
 
             Point? bot = null;
             List<char> botChars = new List<char> { '>', '<', '^', 'v' }; // Maps to Direction enum values
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
                     _map[x, y] = _output[x + y * (width + 1)];
                     if (bot == null && botChars.Contains(_map[x, y])) {
                         bot = new Point(x, y);
@@ -131,7 +130,7 @@ namespace AdventOfCode.Year2019.Day17 {
 
                 int steps = 0;
                 do {
-                    ++steps;
+                    steps++;
                     pos += nextDir;
                 } while (IsPath(pos + nextDir));
 
@@ -153,7 +152,7 @@ namespace AdventOfCode.Year2019.Day17 {
                 if (!actionToID.ContainsKey(action)) {
                     actionToID[action] = nextID;
                     idToAction[nextID] = action.ToString();
-                    ++nextID;
+                    nextID++;
                 }
                 actionIDs += actionToID[action];
             }
@@ -163,9 +162,9 @@ namespace AdventOfCode.Year2019.Day17 {
             string c = null;
 
             void TestAllPatterns() {
-                for (int lenA = MaxActionsPerFunc; lenA > 0; --lenA) {
-                    for (int lenB = MaxActionsPerFunc; lenB > 0; --lenB) {
-                        for (int lenC = MaxActionsPerFunc; lenC > 0; --lenC) {
+                for (int lenA = MaxActionsPerFunc; lenA > 0; lenA--) {
+                    for (int lenB = MaxActionsPerFunc; lenB > 0; lenB--) {
+                        for (int lenC = MaxActionsPerFunc; lenC > 0; lenC--) {
                             if (TestPatterns(actionIDs, lenA, lenB, lenC, out a, out b, out c)) {
                                 return;
                             }
@@ -227,7 +226,7 @@ namespace AdventOfCode.Year2019.Day17 {
             int count = 0;
             int i = 0;
             while ((i = input.IndexOf(pattern, i)) > 0) {
-                ++count;
+                count++;
                 i += pattern.Length;
             }
             return count;

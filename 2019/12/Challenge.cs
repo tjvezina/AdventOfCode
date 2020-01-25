@@ -33,12 +33,12 @@ namespace AdventOfCode.Year2019.Day12 {
             public void UpdatePosition() => pos += vel;
         }
 
-        private List<Body> _bodies = new List<Body>();
-        private List<Point3> _initialBodyPositions = new List<Point3>();
+        private readonly List<Body> _bodies = new List<Body>();
+        private readonly List<Point3> _initialBodyPositions = new List<Point3>();
         private List<AxisData> _axisData;
 
-        public override void InitPart1() {
-            foreach (string data in inputArray) {
+        public Challenge() {
+            foreach (string data in inputList) {
                 string[] parts = data.Split(',');
                 Point3 pos = new Point3(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2]));
                 _bodies.Add(new Body { position = pos });
@@ -47,9 +47,9 @@ namespace AdventOfCode.Year2019.Day12 {
             _initialBodyPositions = _bodies.Select(b => b.position).ToList();
         }
 
-        public override string part1Answer => "6849";
-        public override (string, object) SolvePart1() {
-            for (int i = 0; i < 1000; ++i) {
+        public override string part1ExpectedAnswer => "6849";
+        public override (string message, object answer) SolvePart1() {
+            for (int i = 0; i < 1000; i++) {
                 UpdateVelocities();
                 UpdatePositions();
             }
@@ -58,12 +58,12 @@ namespace AdventOfCode.Year2019.Day12 {
             return ("Total energy: ", totalEnergy);
         }
         
-        public override string part2Answer => "356658899375688";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "356658899375688";
+        public override (string message, object answer) SolvePart2() {
             long[] cycleLengths = new long[3];
 
             // Each axis is independent; brute-force simulate to determine how long each takes to repeat
-            for (int axis = 0; axis < 3; ++axis) {
+            for (int axis = 0; axis < 3; axis++) {
                 cycleLengths[axis] = CalculateCycleLength(axis);
             }
 
@@ -74,10 +74,10 @@ namespace AdventOfCode.Year2019.Day12 {
         }
 
         private void UpdateVelocities() {
-            for (int i = 0; i < _bodies.Count; ++i) {
+            for (int i = 0; i < _bodies.Count; i++) {
                 Body body = _bodies[i];
                 Point3 newVelocity = Point3.zero;
-                for (int a = 0; a < 3; ++a) {
+                for (int a = 0; a < 3; a++) {
                     newVelocity[a] = _bodies.Select(b => b.position[a] - body.position[a])
                                             .Sum(d => d == 0 ? 0 : d / Math.Abs(d));
                 }
@@ -87,7 +87,7 @@ namespace AdventOfCode.Year2019.Day12 {
         }
 
         private void UpdatePositions() {
-            for (int i = 0; i < _bodies.Count; ++i) {
+            for (int i = 0; i < _bodies.Count; i++) {
                 Body body = _bodies[i];
                 body.position += body.velocity;
                 _bodies[i] = body;
@@ -103,7 +103,7 @@ namespace AdventOfCode.Year2019.Day12 {
             do {
                 _axisData.ForEach(d => d.UpdateVelocity(_axisData));
                 _axisData.ForEach(d => d.UpdatePosition());
-                ++cycle;
+                cycle++;
             } while (!HasLooped());
 
             return cycle;

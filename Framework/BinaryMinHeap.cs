@@ -45,7 +45,7 @@ namespace AdventOfCode
             data[0] = data[iLast];
             data.RemoveAt(iLast);
 
-            --iLast;
+            iLast--;
             int iParent = 0;
             while (true) {
                 // Left child
@@ -59,7 +59,7 @@ namespace AdventOfCode
                 }
 
                 // Right child
-                ++iChild;
+                iChild++;
                 if (iChild > iLast) break;
 
                 if (_comparer.Compare(data[iParent], data[iChild]) > 0) {

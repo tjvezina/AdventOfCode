@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,13 +8,11 @@ namespace AdventOfCode.Year2016.Day07 {
         private const string PatternHypernet = @"(?=[^\[]*\])";
         private const string PatternSupernet = @"(?![^\[]*\])";
 
-        public override void InitPart1() { }
-
-        public override string part1Answer => "110";
-        public override (string, object) SolvePart1() => ("IP's with TLS support: ", inputArray.Count(SupportsTLS));
+        public override string part1ExpectedAnswer => "110";
+        public override (string message, object answer) SolvePart1() => ("IP's with TLS support: ", inputList.Count(SupportsTLS));
         
-        public override string part2Answer => "242";
-        public override (string, object) SolvePart2() => ("IP's with SSL support: ", inputArray.Count(SupportsSSL));
+        public override string part2ExpectedAnswer => "242";
+        public override (string message, object answer) SolvePart2() => ("IP's with SSL support: ", inputList.Count(SupportsSSL));
 
         private bool SupportsTLS(string ip) {
             return Regex.IsMatch(ip, PatternABBA) &&

@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode.Year2015.Day03 {
      public class Challenge : BaseChallenge {
-        public override void InitPart1() {
-            SpaceUtil.system = CoordSystem.YUp;
-        }
+        public override CoordSystem? coordSystem => CoordSystem.YUp;
 
-        public override string part1Answer => "2081";
-        public override (string, object) SolvePart1() {
+        private readonly string _input;
+
+        public Challenge() => _input = inputList[0];
+
+        public override string part1ExpectedAnswer => "2081";
+        public override (string message, object answer) SolvePart1() {
             Point pos = Point.zero;
             Dictionary<Point, int> presentMap = new Dictionary<Point, int>();
             presentMap.Add(pos, 1);
 
-            foreach (char dir in input) {
+            foreach (char dir in _input) {
                 switch (dir) {
                     case '>': pos += Direction.Right; break;
                     case '<': pos += Direction.Left;  break;
@@ -26,28 +27,28 @@ namespace AdventOfCode.Year2015.Day03 {
 
                 if (!presentMap.ContainsKey(pos)) presentMap[pos] = 0;
 
-                ++presentMap[pos];
+                presentMap[pos]++;
             }
 
             return ("Total houses visited: ", presentMap.Count);
         }
         
-        public override string part2Answer => "2341";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "2341";
+        public override (string message, object answer) SolvePart2() {
             Point posA = Point.zero;
             Point posB = Point.zero;
             Dictionary<Point, int> presentMap = new Dictionary<Point, int>();
             presentMap.Add(posA, 2); // Both start at first house
 
-            for (int i = 0; i < input.Length; ++i) {
+            for (int i = 0; i < _input.Length; i++) {
                 Point move;
-                switch (input[i]) {
+                switch (_input[i]) {
                     case '>': move = Direction.Right; break;
                     case '<': move = Direction.Left;  break;
                     case '^': move = Direction.Up;    break;
                     case 'v': move = Direction.Down;  break;
                     default:
-                        throw new Exception("Unknown direction: " + input[i]);
+                        throw new Exception("Unknown direction: " + _input[i]);
                 }
 
                 Point newPos;
@@ -61,7 +62,7 @@ namespace AdventOfCode.Year2015.Day03 {
 
                 if (!presentMap.ContainsKey(newPos)) presentMap[newPos] = 0;
 
-                ++presentMap[newPos];
+                presentMap[newPos]++;
             }
 
             return ("Total houses visited: ", presentMap.Count);

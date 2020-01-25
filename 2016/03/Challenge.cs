@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -14,29 +12,26 @@ namespace AdventOfCode.Year2016.Day03 {
             public Triangle(IEnumerable<int> sides) => this.sides = sides.OrderBy(s => s).ToArray();
         }
 
-        private int[][] _sides;
+        private readonly int[][] _sides;
 
-        public override void InitPart1() {
-            _sides = new int[inputArray.Length][];
+        public Challenge() {
+            int[] ReadSides(string line) => Regex.Matches(line, @"\d+").Select(m => int.Parse(m.Value)).ToArray();
 
-            for (int y = 0; y < inputArray.Length; y++) {
-                string line = inputArray[y];
-                _sides[y] = Regex.Matches(line, @"\d+").Select(m => int.Parse(m.Value)).ToArray();
-            }
+            _sides = inputList.Select(ReadSides).ToArray();
         }
 
-        public override string part1Answer => "1050";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "1050";
+        public override (string message, object answer) SolvePart1() {
             int validCount = _sides.Select(s => new Triangle(s)).Count(t => t.isValid);
             return ("{0} valid triangles", validCount);
         }
         
-        public override string part2Answer => "1921";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1921";
+        public override (string message, object answer) SolvePart2() {
             List<Triangle> triangles = new List<Triangle>();
 
             for (int y = 0; y < _sides.Length; y += 3) {
-                for (int x = 0; x < _sides[y].Length; ++x) {
+                for (int x = 0; x < _sides[y].Length; x++) {
                     triangles.Add(new Triangle(Enumerable.Range(0, 3).Select(y2 => _sides[y + y2][x])));
                 }
             }

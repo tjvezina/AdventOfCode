@@ -101,7 +101,7 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
                 Operator op = Operators[opCode];
 
                 Param[] opParams = new Param[op.paramCount];
-                for (int i = 0; i < op.paramCount; ++i) {
+                for (int i = 0; i < op.paramCount; i++) {
                     ParamMode paramMode = (ParamMode)(opData % 10);
                     opData /= 10;
 

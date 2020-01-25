@@ -14,14 +14,14 @@ namespace AdventOfCode.Year2019.Day23 {
         public Queue<(int address, Packet packet)> sendQueue = new Queue<(int address, Packet)>();
 
         public Network(string intCodeMemory) {
-            for (int i = 0; i < _computers.Length; ++i) {
+            for (int i = 0; i < _computers.Length; i++) {
                 _computers[i] = new NIC(intCodeMemory);
                 _computers[i].OnSend += HandleOnSend;
             }
         }
 
         public void Init(bool createNAT = false) {
-            for (int i = 0; i < _computers.Length; ++i) {
+            for (int i = 0; i < _computers.Length; i++) {
                 _computers[i].Init(i);
             }
 
@@ -43,7 +43,7 @@ namespace AdventOfCode.Year2019.Day23 {
         }
 
         public void Update() {
-            for (int i = 0; i < _computers.Length; ++i) {
+            for (int i = 0; i < _computers.Length; i++) {
                 _computers[i].Update();
             }
 

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AdventOfCode.Year2016.Day08 {
@@ -11,10 +9,10 @@ namespace AdventOfCode.Year2016.Day08 {
 
         private IEnumerable<Operation> _operations;
         
-        public override void InitPart1() => _operations = inputArray.Select(Operation.Parse);
+        public Challenge() => _operations = inputList.Select(Operation.Parse);
 
-        public override string part1Answer => "106";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "106";
+        public override (string message, object answer) SolvePart1() {
             foreach (Operation operation in _operations) {
                 operation.Execute(_board);
             }
@@ -29,8 +27,8 @@ namespace AdventOfCode.Year2016.Day08 {
             return ("Lit pixels: ", litCount);
         }
         
-        public override string part2Answer => "CFLELOYFCS";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "CFLELOYFCS";
+        public override (string message, object answer) SolvePart2() {
             ASCIIArt.Draw(_board, doubleWidth:false);
 
             return ("Message: ", ASCIIArt.ImageToText(_board));

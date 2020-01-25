@@ -1,21 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
-
 namespace AdventOfCode.Year{0}.Day{1} {
     public class Challenge : BaseChallenge {
-        public override void InitPart1() { }
-
-        public override string part1Answer => null;
-        public override (string, object) SolvePart1() {
-            return (null, null);
+        public override string part1ExpectedAnswer => null;
+        public override (string message, object answer) SolvePart1() {
+            return ("", null);
         }
         
-        public override string part2Answer => null;
-        public override (string, object) SolvePart2() {
-            return (null, null);
+        public override string part2ExpectedAnswer => null;
+        public override (string message, object answer) SolvePart2() {
+            return ("", null);
         }
     }
 }

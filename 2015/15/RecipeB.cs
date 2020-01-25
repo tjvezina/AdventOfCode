@@ -21,7 +21,7 @@ namespace AdventOfCode.Year2015.Day15 {
                     return;
                 }
 
-                for (int i = max; i >= 0; --i) {
+                for (int i = max; i >= 0; i--) {
                     recipe[index] = i;
                     RecipeLoop(index + 1, max - i);
                 }

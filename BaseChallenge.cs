@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode {
@@ -9,11 +9,12 @@ namespace AdventOfCode {
         public int year { get; }
         public int day { get; }
 
-        public abstract string part1Answer { get; }
-        public abstract string part2Answer { get; }
+        public abstract string part1ExpectedAnswer { get; }
+        public abstract string part2ExpectedAnswer { get; }
 
-        protected string[] inputArray { get; }
-        protected string input { get; }
+        public virtual CoordSystem? coordSystem => null;
+
+        protected IReadOnlyList<string> inputList { get; }
 
         protected BaseChallenge() {
             Match match = Regex.Match(GetType().FullName, @"AdventOfCode\.Year(\d{4})\.Day(\d{2})\.Challenge");
@@ -23,19 +24,19 @@ namespace AdventOfCode {
 
             string inputFilePath = GetFilePath("input.txt");
             if (File.Exists(inputFilePath)) {
-                inputArray = File.ReadAllLines(inputFilePath);
-                input = inputArray[0];
+                inputList = Array.AsReadOnly(File.ReadAllLines(inputFilePath));
             }
+
+            CoordUtil.system = coordSystem;
         }
 
         protected string GetFilePath(string fileName) => $"{this.GetPath()}/{fileName}";
         protected string[] LoadFileLines(string fileName) => File.ReadAllLines(GetFilePath(fileName));
         protected string LoadFile(string fileName) => File.ReadAllText(GetFilePath(fileName));
 
-        public virtual void InitPart1() { }
-        public abstract (string message, object answer) SolvePart1();
+        public virtual void Reset() { }
 
-        public virtual void InitPart2() { }
+        public abstract (string message, object answer) SolvePart1();
         public abstract (string message, object answer) SolvePart2();
     }
 }

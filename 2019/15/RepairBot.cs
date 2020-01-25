@@ -133,8 +133,8 @@ namespace AdventOfCode.Year2019.Day15 {
             }
 
             ConsoleColor prevBackground = Console.BackgroundColor;
-            for (int y = max.y; y >= min.y; --y) {
-                for (int x = min.x; x <= max.x; ++x) {
+            for (int y = max.y; y >= min.y; y--) {
+                for (int x = min.x; x <= max.x; x++) {
                     Point p = new Point(x, y);
                     ConsoleColor color = ConsoleColor.DarkGray;
                     if (_map.ContainsKey(p)) {

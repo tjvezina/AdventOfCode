@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day02 {
      public class Challenge : BaseChallenge {
         private struct Box {
-            private List<int> _sides;
+            private readonly IReadOnlyList<int> _sides;
 
             public int l => _sides[0];
             public int w => _sides[1];
@@ -16,25 +15,20 @@ namespace AdventOfCode.Year2015.Day02 {
             public int smallestSideArea => _sides[0] * _sides[1];
             public int smallestSidePerim => (2 * _sides[0]) + (2 * _sides[1]);
 
-            public Box(string data) {
-                _sides = data.Split('x').Select(int.Parse).ToList();
-                _sides.Sort();
-            }
+            public Box(string data) => _sides = data.Split('x').Select(int.Parse).OrderBy(x => x).ToList();
         }
 
-        private IEnumerable<Box> _boxes;
+        private readonly IEnumerable<Box> _boxes;
 
-        public override void InitPart1() {
-            _boxes = inputArray.Select(data => new Box(data));
-        }
+        public Challenge() => _boxes = inputList.Select(data => new Box(data));
 
-        public override string part1Answer => "1586300";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "1586300";
+        public override (string message, object answer) SolvePart1() {
             return ("Wrapping paper needed: ", _boxes.Sum(b => b.surfaceArea + b.smallestSideArea));
         }
         
-        public override string part2Answer => "3737498";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "3737498";
+        public override (string message, object answer) SolvePart2() {
             return ("Ribbon needed: ", _boxes.Sum(b => b.smallestSidePerim + b.volume));
         }
     }

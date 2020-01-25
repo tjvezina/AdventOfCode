@@ -98,7 +98,7 @@ namespace AdventOfCode.Year2015.Day22 {
         }
 
         private void ApplyActiveEffects() {
-            for (int i = activeSpells.Count - 1; i >= 0; --i) {
+            for (int i = activeSpells.Count - 1; i >= 0; i--) {
                 (Spell spell, int turnsLeft) = activeSpells[i];
 
                 spell.Apply(this);

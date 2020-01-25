@@ -80,7 +80,7 @@ namespace AdventOfCode.Year2019.IntCodeV1 {
             int[] opParams = new int[3];
 
             // Read and validate the instruction's parameters
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 3; i++) {
                 int opIndex = _memory[address + i + 1];
                 Debug.Assert(opIndex >= 0 && opIndex < Length, $"Instruction failed, index {i} is invalid: {opIndex}");
                 opParams[i] = opIndex;

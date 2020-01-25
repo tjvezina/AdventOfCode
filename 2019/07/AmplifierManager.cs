@@ -9,13 +9,13 @@ namespace AdventOfCode.Year2019.Day07 {
         private List<Amplifier> _amps = new List<Amplifier>();
 
         public AmplifierManager(string intCodeMemory) {
-            for (int i = 0; i < AmpCount; ++i) {
+            for (int i = 0; i < AmpCount; i++) {
                 _amps.Add(new Amplifier(intCodeMemory));
             }
         }
 
         public int Execute(int[] phaseSettings) {
-            for (int i = 0; i < _amps.Count; ++i) {
+            for (int i = 0; i < _amps.Count; i++) {
                 _amps[i].Begin(phaseSettings[i]);
             }
 

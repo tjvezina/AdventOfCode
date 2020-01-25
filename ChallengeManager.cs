@@ -40,17 +40,14 @@ namespace AdventOfCode {
         }
 
         private static readonly Type ChallengeType = typeof(BaseChallenge);
-        private static readonly Dictionary<ChallengePart, MethodInfo> InitMethods = new Dictionary<ChallengePart, MethodInfo> {
-            { ChallengePart.Part1, ChallengeType.GetMethod(nameof(BaseChallenge.InitPart1)) },
-            { ChallengePart.Part2, ChallengeType.GetMethod(nameof(BaseChallenge.InitPart2)) }
-        };
-        private static readonly Dictionary<ChallengePart, MethodInfo> SolveMethods = new Dictionary<ChallengePart, MethodInfo> {
+        private static readonly MethodInfo ResetMethod = ChallengeType.GetMethod(nameof(BaseChallenge.Reset));
+        private static readonly Dictionary<ChallengePart, MethodInfo> SolvePartMethods = new Dictionary<ChallengePart, MethodInfo> {
             { ChallengePart.Part1, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart1)) },
             { ChallengePart.Part2, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart2)) }
         };
-        private static readonly Dictionary<ChallengePart, PropertyInfo> AnswerProps = new Dictionary<ChallengePart, PropertyInfo> {
-            { ChallengePart.Part1, ChallengeType.GetProperty(nameof(BaseChallenge.part1Answer)) },
-            { ChallengePart.Part2, ChallengeType.GetProperty(nameof(BaseChallenge.part2Answer)) }
+        private static readonly Dictionary<ChallengePart, PropertyInfo> ExpectedAnswerProps = new Dictionary<ChallengePart, PropertyInfo> {
+            { ChallengePart.Part1, ChallengeType.GetProperty(nameof(BaseChallenge.part1ExpectedAnswer)) },
+            { ChallengePart.Part2, ChallengeType.GetProperty(nameof(BaseChallenge.part2ExpectedAnswer)) }
         };
 
         private static Stopwatch _stopwatch = new Stopwatch();
@@ -155,14 +152,14 @@ namespace AdventOfCode {
 
             try {
                 _stopwatch.Restart();
-                InitMethods[part].Invoke(challenge, null);
-                (string message, object answer) = ((string, object))SolveMethods[part].Invoke(challenge, null);
+                ResetMethod.Invoke(challenge, null);
+                (string message, object answer) = ((string, object))SolvePartMethods[part].Invoke(challenge, null);
                 _stopwatch.Stop();
 
                 data.message = message;
                 data.givenAnswer = answer?.ToString();
 
-                string expected = (string)AnswerProps[part].GetValue(challenge);
+                string expected = (string)ExpectedAnswerProps[part].GetValue(challenge);
                 if (!string.IsNullOrEmpty(expected)) {
                     data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
                 } else if (!string.IsNullOrEmpty(data.givenAnswer)) {
@@ -211,7 +208,7 @@ namespace AdventOfCode {
 
         private static string FormatStackTrace(string stackTrace) {
             string[] lines = stackTrace.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; ++i) {
+            for (int i = 0; i < lines.Length; i++) {
                 Match match = Regex.Match(lines[i], @" in (.*:line \d+)");
                 lines[i] = "- " + (match.Success ? match.Groups[1].Value : lines[i].Substring(6)); // Remove "   at "
             }

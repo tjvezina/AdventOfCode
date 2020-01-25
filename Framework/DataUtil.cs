@@ -32,7 +32,7 @@ namespace AdventOfCode {
         public static bool NextPermutation(int[] order) {
             // Find greatest index x, where order[x] < order[x+1]
             int x = -1;
-            for (int i = order.Length - 2; i >= 0; --i) {
+            for (int i = order.Length - 2; i >= 0; i--) {
                 if (order[i] < order[i+1]) {
                     x = i;
                     break;
@@ -46,7 +46,7 @@ namespace AdventOfCode {
 
             // Find greatest index y, where order[x] < order[y]
             int y = -1;
-            for (int i = order.Length - 1; i >= x + 1; --i) {
+            for (int i = order.Length - 1; i >= x + 1; i--) {
                 if (order[x] < order[i]) {
                     y = i;
                     break;
@@ -71,7 +71,7 @@ namespace AdventOfCode {
         public static bool NextCombination(int[] combo, int listLength) {
             int n = combo.Length;
             int i = n - 1;
-            for (int j = listLength - 1; i >= 0; --i, --j) {
+            for (int j = listLength - 1; i >= 0; i--, j--) {
                 if (combo[i] < j) {
                     break;
                 }
@@ -81,7 +81,7 @@ namespace AdventOfCode {
                 return false;
             }
 
-            for (int j = combo[i] + 1; i < n; ++i, ++j) {
+            for (int j = combo[i] + 1; i < n; i++, j++) {
                 combo[i] = j;
             }
 
@@ -95,13 +95,13 @@ namespace AdventOfCode {
             if (comboCount > list.Count) yield break;
 
             int[] combo = new int[comboCount];
-            for (int i = 0; i < combo.Length; ++i) {
+            for (int i = 0; i < combo.Length; i++) {
                 combo[i] = i;
             }
 
             do {
                 T[] items = new T[comboCount];
-                for (int i = 0; i < combo.Length; ++i) {
+                for (int i = 0; i < combo.Length; i++) {
                     items[i] = list[combo[i]];
                 }
                 yield return items;

@@ -8,19 +8,19 @@ namespace AdventOfCode.Year2019.Day05 {
         public const int InputTest = 1;
         public const int InputRun = 5;
 
-        private IntCode _intCode;
+        private readonly IntCode _intCode;
         private int _input;
         private List<int> _outputs = new List<int>();
 
-        public override void InitPart1() {
+        public Challenge() {
             _intCode = new IntCode();
             _intCode.OnInput += HandleOnInput;
             _intCode.OnOutput += HandleOnOutput;
-            _intCode.Load(input);
+            _intCode.Load(inputList[0]);
         }
 
-        public override string part1Answer => "10987514";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "10987514";
+        public override (string message, object answer) SolvePart1() {
             _input = InputTest;
             _intCode.Execute();
             int output = _outputs.SingleOrDefault(o => o != 0);
@@ -30,13 +30,11 @@ namespace AdventOfCode.Year2019.Day05 {
             throw new Exception("At least one system failed, check outputs for more info");
         }
         
-        public override void InitPart2() {
+        public override string part2ExpectedAnswer => "14195011";
+        public override (string message, object answer) SolvePart2() {
             _intCode.Reset();
             _outputs.Clear();
-        }
 
-        public override string part2Answer => "14195011";
-        public override (string, object) SolvePart2() {
             _input = InputRun;
             _intCode.Execute();
             return ("Final output: ", _outputs.Single(o => o != 0));

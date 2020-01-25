@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace AdventOfCode.Year2019.Day06 {
      public class Challenge : BaseChallenge {
@@ -12,10 +10,10 @@ namespace AdventOfCode.Year2019.Day06 {
 
         private const char Separator = ')';
 
-        private Dictionary<string, Body> _bodyMap = new Dictionary<string, Body>();
+        private readonly Dictionary<string, Body> _bodyMap = new Dictionary<string, Body>();
 
-        public override void InitPart1() {
-            foreach (string data in inputArray) {
+        public Challenge() {
+            foreach (string data in inputList) {
                 string[] bodies = data.Split(Separator);
                 string bodyA = bodies[0];
                 string bodyB = bodies[1];
@@ -31,14 +29,14 @@ namespace AdventOfCode.Year2019.Day06 {
             }
         }
 
-        public override string part1Answer => "130681";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "130681";
+        public override (string message, object answer) SolvePart1() {
             int orbitTotal = 0;
 
             foreach (Body body in _bodyMap.Values) {
                 Body nextBody = body;
                 while (nextBody.parent != null) {
-                    ++orbitTotal;
+                    orbitTotal++;
                     nextBody = nextBody.parent;
                 }
             }
@@ -46,8 +44,8 @@ namespace AdventOfCode.Year2019.Day06 {
             return ("Total direct + indirect orbits: ", orbitTotal);
         }
         
-        public override string part2Answer => "313";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "313";
+        public override (string message, object answer) SolvePart2() {
             List<Body> myHierarchy = new List<Body>();
             List<Body> santaHierarchy = new List<Body>();
 

@@ -5,17 +5,17 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019.Day21 {
      public class Challenge : BaseChallenge {
-        private IntCode _intCode;
+        private readonly IntCode _intCode;
 
         private long _lastOutput;
 
-        public override void InitPart1() {
-            _intCode = new IntCode(input);
+        public Challenge() {
+            _intCode = new IntCode(inputList[0]);
             _intCode.OnOutput += HandleOutput;
         }
 
-        public override string part1Answer => "19354392";
-        public override (string, object) SolvePart1() {
+        public override string part1ExpectedAnswer => "19354392";
+        public override (string message, object answer) SolvePart1() {
             RunSpringBot(new[] {
                 "NOT A J", // If A is hole
                 "NOT B T",
@@ -29,8 +29,8 @@ namespace AdventOfCode.Year2019.Day21 {
             return ("Dust collected: ", _lastOutput);
         }
         
-        public override string part2Answer => "1139528802";
-        public override (string, object) SolvePart2() {
+        public override string part2ExpectedAnswer => "1139528802";
+        public override (string message, object answer) SolvePart2() {
             RunSpringBot(new[] {
                 "OR E T", // (1) If E is ground (can walk after jump)
                 "OR H T", // (1) Or H is ground (can jump after jump)
