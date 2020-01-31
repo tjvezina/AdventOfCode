@@ -31,8 +31,24 @@ namespace AdventOfCode {
         }
 
         protected string GetFilePath(string fileName) => $"{this.GetPath()}/{fileName}";
-        protected string[] LoadFileLines(string fileName) => File.ReadAllLines(GetFilePath(fileName));
-        protected string LoadFile(string fileName) => File.ReadAllText(GetFilePath(fileName));
+
+        protected string LoadFile(string fileName) {
+            string filePath = GetFilePath(fileName);
+            return (File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty);
+        }
+
+        protected string[] LoadFileLines(string fileName) {
+            string filePath = GetFilePath(fileName);
+            return (File.Exists(filePath) ? File.ReadAllLines(filePath) : new string[0]);
+        }
+
+        protected void SaveFile(string fileName, string contents) {
+            File.WriteAllText(GetFilePath(fileName), contents);
+        }
+
+        protected void SaveFile(string fileName, IEnumerable<string> lines) {
+            File.WriteAllLines(GetFilePath(fileName), lines);
+        }
 
         public virtual void Reset() { }
 
