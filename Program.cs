@@ -1,14 +1,24 @@
 ﻿using System;
-using System.IO;
 
 namespace AdventOfCode {
+    /// <summary>
+    /// USAGE
+    /// dotnet run - run the most recent challenge in the active year
+    /// dotnet run create - create folder structure and challenge file for the next incomplete challenge
+    /// dotnet run test - run the most recent challenge in test mode to validate functionality
+    /// dotnet run test all - run every challenge in test mode chronologically
+    /// NOTES
+    /// Most commands can take an optional date to specify a challenge, in any of these formats:
+    /// dd       (ex. 5)        - December 5th of active year
+    /// yyyy.dd  (ex. 2019.23)  - December 23rd 2019
+    /// </summary>
     public static class Program {
         private const int FirstYear = 2015;
         private static Range AllYears => new Range(FirstYear, DateTime.Now.Year);
         private static Range AllDays => new Range(1, 25);
 
         // Set to a specific year while working on puzzles from that year, or null for current year
-        private static readonly int? ActiveYear = 2016;
+        private static readonly int? ActiveYear = 2020;
         private static int GetDefaultYear() => ActiveYear ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
