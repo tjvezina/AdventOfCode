@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day17 {
-     public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2015.Day17
+{
+     public class Challenge : BaseChallenge
+     {
         private const int Total = 150;
 
         private readonly IReadOnlyList<int> _containers;
@@ -11,28 +13,35 @@ namespace AdventOfCode.Year2015.Day17 {
         public Challenge() => _containers = inputList.Select(int.Parse).ToList();
 
         public override string part1ExpectedAnswer => "4372";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             return ("Valid combinations: ", CountCombinations(write:false));
         }
         
         public override string part2ExpectedAnswer => "4";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             return ("Valid combinations: ", CountCombinations(write:true, minimize:true));
         }
 
-        private int CountCombinations(bool write, bool minimize = false) {
+        private int CountCombinations(bool write, bool minimize = false)
+        {
             int combos = 0;
 
-            for (int n = 1; n <= _containers.Count; n++) {
+            for (int n = 1; n <= _containers.Count; n++)
+            {
                 int[] indices = Enumerable.Range(0, n).ToArray();
 
-                do {
+                do
+                {
                     IEnumerable<int> usedContainers = indices.Select(i => _containers[i]);
 
-                    if (usedContainers.Sum() == Total) {
+                    if (usedContainers.Sum() == Total)
+                    {
                         combos++;
 
-                        if (write) {
+                        if (write)
+                        {
                             Console.WriteLine(usedContainers.Select(c => $"{c}").Aggregate((a, b) => $"{a} + {b}"));
                         }
                     }

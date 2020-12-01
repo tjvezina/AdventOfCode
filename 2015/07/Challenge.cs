@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdventOfCode.Year2015.Day07 {
-     public class Challenge : BaseChallenge {
-        public enum WireOpType {
+namespace AdventOfCode.Year2015.Day07
+{
+     public class Challenge : BaseChallenge
+     {
+        public enum WireOpType
+        {
             Assign,
             And,
             Or,
@@ -12,7 +15,8 @@ namespace AdventOfCode.Year2015.Day07 {
             RShift
         }
 
-        public class WireOp {
+        public class WireOp
+        {
             public WireOpType type;
             public string operandA;
             public string operandB;
@@ -24,8 +28,10 @@ namespace AdventOfCode.Year2015.Day07 {
         private readonly Dictionary<string, WireOp> _wireMap = new Dictionary<string, WireOp>();
         private UInt16 _part1Output;
 
-        public Challenge() {
-            foreach (string instruction in inputList) {
+        public Challenge()
+        {
+            foreach (string instruction in inputList)
+            {
                 string[] parts = instruction.Split(" -> ", StringSplitOptions.None);
                 string[] opData = parts[0].Split(' ');
                 string outputWire = parts[1];
@@ -39,8 +45,10 @@ namespace AdventOfCode.Year2015.Day07 {
                     op.type = WireOpType.Not;
                     op.operandA = opData[1];
                 }
-                else {
-                    op.type = opData[1] switch {
+                else
+                {
+                    op.type = opData[1] switch
+                    {
                         "AND" => WireOpType.And,
                         "OR" => WireOpType.Or,
                         "LSHIFT" => WireOpType.LShift,
@@ -56,37 +64,44 @@ namespace AdventOfCode.Year2015.Day07 {
             }
         }
 
-        public override void Reset() {
-            foreach (WireOp op in _wireMap.Values) {
+        public override void Reset()
+        {
+            foreach (WireOp op in _wireMap.Values)
+            {
                 op.value = null;
             }
         }
 
         public override string part1ExpectedAnswer => "3176";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             _part1Output = Resolve("a");
             return ("Wire \"a\" output: ", _part1Output);
         }
         
         public override string part2ExpectedAnswer => "14710";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             // Sub the original output from wire A for the input of wire B, then resolve again
             _wireMap["b"].operandA = $"{_part1Output}";
             return ("Wire \"a\" output (round 2): ", Resolve("a"));
         }
 
-        private UInt16 Resolve(string operand) {
+        private UInt16 Resolve(string operand)
+        {
             // Handle literal values (base case)
             if (UInt16.TryParse(operand, out UInt16 value)) return value;
 
             WireOp op = _wireMap[operand];
 
-            if (op.value == null) {
+            if (op.value == null)
+            {
                 // Unary operators
                 UInt16 valueA = Resolve(op.operandA);
                 if      (op.type == WireOpType.Assign) op.value = valueA;
                 else if (op.type == WireOpType.Not)    op.value = (UInt16)~valueA;
-                else {
+                else
+                {
                     // Binary operators
                     UInt16 valueB = Resolve(op.operandB);
                     if      (op.type == WireOpType.LShift) op.value = (UInt16)(valueA << valueB);
@@ -96,7 +111,8 @@ namespace AdventOfCode.Year2015.Day07 {
                 }
             }
 
-            if (op.value == null) {
+            if (op.value == null)
+            {
                 throw new Exception($"Failed to resolve operand {operand} with operator {op.type}");
             }
 

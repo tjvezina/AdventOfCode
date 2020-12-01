@@ -2,37 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day23 {
-    public class Computer {
-        private class Register {
+namespace AdventOfCode.Year2015.Day23
+{
+    public class Computer
+    {
+        private class Register
+        {
             public ulong value;
         }
 
-        private Dictionary<string, Register> _registers = new Dictionary<string, Register> {
+        private Dictionary<string, Register> _registers = new Dictionary<string, Register>
+        {
             { "a", new Register() }, { "b", new Register() }
         };
 
-        public ulong this[string registerID] {
+        public ulong this[string registerID]
+        {
             get => _registers[registerID].value;
             set => _registers[registerID].value = value;
         }
 
         private Instruction[] _instructions;
 
-        public Computer(string[] input) {
+        public Computer(string[] input)
+        {
             _instructions = input.Select(i => new Instruction(i)).ToArray();
         }
 
-        public void Run() {
+        public void Run()
+        {
             int instructionPtr = 0;
 
-            while (0 <= instructionPtr && instructionPtr < _instructions.Length) {
+            while (0 <= instructionPtr && instructionPtr < _instructions.Length)
+            {
                 Instruction instruction = _instructions[instructionPtr];
                 Register register = (instruction.register != null ? _registers[instruction.register] : null);
 
                 int step = 1;
 
-                switch (instruction.type) {
+                switch (instruction.type)
+                {
                     case Instruction.Type.Half:
                         register.value /= 2;
                         break;

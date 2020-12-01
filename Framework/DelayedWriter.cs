@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-public class DelayedWriter : TextWriter {
-    private struct WriteData {
+public class DelayedWriter : TextWriter
+{
+    private struct WriteData
+    {
         public string value;
         public ConsoleColor foreground;
         public ConsoleColor background;
@@ -16,8 +18,10 @@ public class DelayedWriter : TextWriter {
 
     private Queue<WriteData> queue = new Queue<WriteData>();
 
-    public override void Write(string value) {
-        queue.Enqueue(new WriteData {
+    public override void Write(string value)
+    {
+        queue.Enqueue(new WriteData
+        {
             value = value,
             foreground = Console.ForegroundColor,
             background = Console.BackgroundColor
@@ -26,8 +30,10 @@ public class DelayedWriter : TextWriter {
 
     public override void WriteLine(string value) => Write(value + NewLine);
 
-    public override void Flush() {
-        while (queue.Count > 0) {
+    public override void Flush()
+    {
+        while (queue.Count > 0)
+        {
             WriteData data = queue.Dequeue();
             Console.ForegroundColor = data.foreground;
             Console.BackgroundColor = data.background;

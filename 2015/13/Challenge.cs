@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day13 {
-     public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2015.Day13
+{
+     public class Challenge : BaseChallenge
+     {
         private MatrixInt _happyMatrix;
 
         private int[] _order;
@@ -12,7 +14,8 @@ namespace AdventOfCode.Year2015.Day13 {
         public override void Reset() => _maxHappiness = int.MinValue;
 
         public override string part1ExpectedAnswer => "709";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             BuildHappyMatrix();
             FindBestOrder();
 
@@ -21,7 +24,8 @@ namespace AdventOfCode.Year2015.Day13 {
         }
 
         public override string part2ExpectedAnswer => "668";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             BuildHappyMatrix(includeSelf:true);
             FindBestOrder();
 
@@ -29,11 +33,13 @@ namespace AdventOfCode.Year2015.Day13 {
             return ($"Max happiness: {{0}} ({orderStr})", _maxHappiness);
         }
 
-        private void BuildHappyMatrix(bool includeSelf = false) {
+        private void BuildHappyMatrix(bool includeSelf = false)
+        {
             List<string> guests = inputList.Select(l => l.Substring(0, l.IndexOf(' '))).Distinct().ToList();
             _happyMatrix = new MatrixInt(guests.Count + (includeSelf ? 1 : 0));
 
-            foreach (string data in inputList) {
+            foreach (string data in inputList)
+            {
                 string[] parts = data.Split(' ');
                 string guestA = parts[0];
                 string guestB = parts[parts.Length - 1];
@@ -50,21 +56,26 @@ namespace AdventOfCode.Year2015.Day13 {
             _bestOrder = new int[_happyMatrix.rows];
             _order = new int[_happyMatrix.rows];
 
-            for (int i = 0; i < _order.Length; i++) {
+            for (int i = 0; i < _order.Length; i++)
+            {
                 _order[i] = i;
             }
         }
 
-        private void FindBestOrder() {
-            do {
+        private void FindBestOrder()
+        {
+            do
+            {
                 CheckOrder();
             } while (DataUtil.NextPermutation(_order));
         }
 
-        private void CheckOrder() {
+        private void CheckOrder()
+        {
             int totalHappiness = 0;
 
-            for (int i = 0; i < _order.Length; i++) {
+            for (int i = 0; i < _order.Length; i++)
+            {
                 int guest = _order[i];
                 int neighborA = _order[(i > 0 ? i - 1 : _order.Length - 1)];
                 int neighborB = _order[(i < _order.Length - 1 ? i + 1 : 0)];
@@ -73,7 +84,8 @@ namespace AdventOfCode.Year2015.Day13 {
                 totalHappiness += _happyMatrix[guest, neighborB];
             }
 
-            if (_maxHappiness < totalHappiness) {
+            if (_maxHappiness < totalHappiness)
+            {
                 _maxHappiness = totalHappiness;
                 _order.CopyTo(_bestOrder, 0);
             }

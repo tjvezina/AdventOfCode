@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019.Day17 {
-     public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2019.Day17
+{
+     public class Challenge : BaseChallenge
+     {
         private const int MaxBotFuncLength = 20;
         private const int MaxActionsPerFunc = (MaxBotFuncLength + 1) / 4;
 
@@ -25,7 +27,8 @@ namespace AdventOfCode.Year2019.Day17 {
         public Challenge() => _intCodeMemory = inputList[0];
 
         public override string part1ExpectedAnswer => "3936";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             List<char> map = new List<char>();
 
             IntCode intCode = new IntCode(_intCodeMemory);
@@ -35,7 +38,8 @@ namespace AdventOfCode.Year2019.Day17 {
             ProcessOutput();
 
             int alignParams = 0;
-            foreach (Point intersection in GetIntersections()) {
+            foreach (Point intersection in GetIntersections())
+            {
                 alignParams += (intersection.x * intersection.y);
             }
 
@@ -43,16 +47,20 @@ namespace AdventOfCode.Year2019.Day17 {
         }
 
         public override string part2ExpectedAnswer => "785733";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             BuildActionsList();
             DefineBotFunctions();
 
             long finalOutput = 0;
 
-            void HandleOnOutput(long output) {
-                if (output > char.MaxValue) {
+            void HandleOnOutput(long output)
+            {
+                if (output > char.MaxValue)
+                {
                     finalOutput = output;
-                } else {
+                } else
+                {
                     Console.Write((char)output);
                 }
             }
@@ -64,7 +72,8 @@ namespace AdventOfCode.Year2019.Day17 {
 
             IEnumerable<char> inputBuffer = _mainRoutine.Append('\n');
 
-            foreach (char[] func in _botFuncs) {
+            foreach (char[] func in _botFuncs)
+            {
                 inputBuffer = inputBuffer.Concat(func.Append('\n'));
             }
 
@@ -79,7 +88,8 @@ namespace AdventOfCode.Year2019.Day17 {
 
         private void HandleOnOutput(long output) => _output.Add((char)output);
 
-        private void ProcessOutput() {
+        private void ProcessOutput()
+        {
             int width = _output.IndexOf('\n');
             int height = (_output.Count + 1) / (width + 1); // Account for newline chars on all but the last line
 
@@ -87,10 +97,13 @@ namespace AdventOfCode.Year2019.Day17 {
 
             Point? bot = null;
             List<char> botChars = new List<char> { '>', '<', '^', 'v' }; // Maps to Direction enum values
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
                     _map[x, y] = _output[x + y * (width + 1)];
-                    if (bot == null && botChars.Contains(_map[x, y])) {
+                    if (bot == null && botChars.Contains(_map[x, y]))
+                    {
                         bot = new Point(x, y);
                     }
                 }
@@ -101,35 +114,43 @@ namespace AdventOfCode.Year2019.Day17 {
             _map[_botPos.x, _botPos.y] = '#';
         }
 
-        private IEnumerable<Point> GetIntersections() {
-            foreach ((int x, int y, char c) in _map) {
+        private IEnumerable<Point> GetIntersections()
+        {
+            foreach ((int x, int y, char c) in _map)
+            {
                 Point p = new Point(x, y);
                 // Checking a point + 3 sides is sufficient to confirm intersection
-                if (IsPath(p) && IsPath(p + Direction.Up) && IsPath(p + Direction.Down) & IsPath(p + Direction.Left)) {
+                if (IsPath(p) && IsPath(p + Direction.Up) && IsPath(p + Direction.Down) & IsPath(p + Direction.Left))
+                {
                     yield return p;
                 }
             }
         }
 
-        private void BuildActionsList() {
+        private void BuildActionsList()
+        {
             List<BotAction> actions = new List<BotAction>();
 
             Point pos = _botPos;
             Direction lastDir = _botDir;
 
-            while (true) {
+            while (true)
+            {
                 Turn turn = Turn.Right;
                 Direction nextDir = lastDir.RotateCW();
-                if (!IsPath(pos + nextDir)) {
+                if (!IsPath(pos + nextDir))
+                {
                     turn = Turn.Left;
                     nextDir = lastDir.RotateCCW();
-                    if (!IsPath(pos + nextDir)) {
+                    if (!IsPath(pos + nextDir))
+                    {
                         break;
                     }
                 }
 
                 int steps = 0;
-                do {
+                do
+                {
                     steps++;
                     pos += nextDir;
                 } while (IsPath(pos + nextDir));
@@ -142,14 +163,17 @@ namespace AdventOfCode.Year2019.Day17 {
             _actions = actions.ToArray();
         }
 
-        private void DefineBotFunctions() {
+        private void DefineBotFunctions()
+        {
             // Convert each unique action into an identifier
             Dictionary<BotAction, char> actionToID = new Dictionary<BotAction, char>();
             Dictionary<char, string> idToAction = new Dictionary<char, string>();
             char nextID = '1';
             string actionIDs = string.Empty;
-            foreach (BotAction action in _actions) {
-                if (!actionToID.ContainsKey(action)) {
+            foreach (BotAction action in _actions)
+            {
+                if (!actionToID.ContainsKey(action))
+                {
                     actionToID[action] = nextID;
                     idToAction[nextID] = action.ToString();
                     nextID++;
@@ -161,11 +185,16 @@ namespace AdventOfCode.Year2019.Day17 {
             string b = null;
             string c = null;
 
-            void TestAllPatterns() {
-                for (int lenA = MaxActionsPerFunc; lenA > 0; lenA--) {
-                    for (int lenB = MaxActionsPerFunc; lenB > 0; lenB--) {
-                        for (int lenC = MaxActionsPerFunc; lenC > 0; lenC--) {
-                            if (TestPatterns(actionIDs, lenA, lenB, lenC, out a, out b, out c)) {
+            void TestAllPatterns()
+            {
+                for (int lenA = MaxActionsPerFunc; lenA > 0; lenA--)
+                {
+                    for (int lenB = MaxActionsPerFunc; lenB > 0; lenB--)
+                    {
+                        for (int lenC = MaxActionsPerFunc; lenC > 0; lenC--)
+                        {
+                            if (TestPatterns(actionIDs, lenA, lenB, lenC, out a, out b, out c))
+                            {
                                 return;
                             }
                         }
@@ -179,7 +208,8 @@ namespace AdventOfCode.Year2019.Day17 {
 
             char[] BuildFunc(string pattern) => pattern.Select(id => idToAction[id]).Aggregate((a, b) => $"{a},{b}").ToArray();
 
-            _botFuncs = new char[][] {
+            _botFuncs = new char[][]
+            {
                 BuildFunc(a),
                 BuildFunc(b),
                 BuildFunc(c)
@@ -212,7 +242,8 @@ namespace AdventOfCode.Year2019.Day17 {
             return true;
         }
 
-        private void BuildMainRoutine(string actionIDs, string a, string b, string c) {
+        private void BuildMainRoutine(string actionIDs, string a, string b, string c)
+        {
             actionIDs = actionIDs.Replace(a, "A");
             actionIDs = actionIDs.Replace(b, "B");
             actionIDs = actionIDs.Replace(c, "C");
@@ -222,10 +253,12 @@ namespace AdventOfCode.Year2019.Day17 {
 
         private bool IsPath(Point p) => _map.GetCharOrDefault(p) == '#';
 
-        private int Occurances(string input, string pattern) {
+        private int Occurances(string input, string pattern)
+        {
             int count = 0;
             int i = 0;
-            while ((i = input.IndexOf(pattern, i)) > 0) {
+            while ((i = input.IndexOf(pattern, i)) > 0)
+            {
                 count++;
                 i += pattern.Length;
             }

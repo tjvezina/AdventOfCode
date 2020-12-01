@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Year2019.IntCodeV2 {
-    public class IntCode {
-        private enum State {
+namespace AdventOfCode.Year2019.IntCodeV2
+{
+    public class IntCode
+    {
+        private enum State
+        {
             Uninitialized,
             Loaded,
             Complete
         }
 
-        private enum ParamMode {
+        private enum ParamMode
+        {
             Position = 0,
             Immediate = 1
         }
 
-        private struct Param {
+        private struct Param
+        {
             public int value;
             public ParamMode mode;
         }
 
-        private struct Instruction {
+        private struct Instruction
+        {
             public int paramCount;
             public Action<Param[]> action;
         }
@@ -41,8 +47,10 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
         public event Action<int> OnOutput;
         public event Func<int> OnInput;
 
-        public IntCode() {
-            s_Instructions = new Dictionary<int, Instruction> {
+        public IntCode()
+        {
+            s_Instructions = new Dictionary<int, Instruction>
+            {
                 { 01, new Instruction { paramCount = 3, action = InstructionAdd } },
                 { 02, new Instruction { paramCount = 3, action = InstructionMult } },
                 { 03, new Instruction { paramCount = 1, action = InstructionInput } },
@@ -55,13 +63,15 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
             };
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             _state = State.Loaded;
             _memory = new List<int>(_initialMemory);
             _memoryPtr = 0;
         }
 
-        public void Load(string input) {
+        public void Load(string input)
+        {
             Debug.Assert(_state == State.Uninitialized, "Code has already been loaded!");
 
             _memory = input.Split(Separator).Select(int.Parse).ToList();
@@ -69,12 +79,14 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
             _state = State.Loaded;
         }
 
-        public void Execute() {
+        public void Execute()
+        {
             Debug.Assert(_state == State.Loaded, _state == State.Uninitialized
                 ? "Unable to execute before loading, no program to run!"
                 : "Already executed! Reset and load before executing again.");
 
-            while (_state != State.Complete) {
+            while (_state != State.Complete)
+            {
                 Debug.Assert(_memoryPtr < Length, "End of program reached before halt opcode found.");
 
                 int opData = _memory[_memoryPtr++];
@@ -85,7 +97,8 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
                 Instruction instruction = s_Instructions[opCode];
 
                 Param[] opParams = new Param[instruction.paramCount];
-                for (int i = 0; i < instruction.paramCount; i++) {
+                for (int i = 0; i < instruction.paramCount; i++)
+                {
                     ParamMode paramMode = (ParamMode)(opData % 10);
                     opData /= 10;
 
@@ -101,35 +114,43 @@ namespace AdventOfCode.Year2019.IntCodeV2 {
 
         private void InstructionAdd(Param[] opParams) => InstructionMathOp(opParams, (a, b) => a + b);
         private void InstructionMult(Param[] opParams) => InstructionMathOp(opParams, (a, b) => a * b);
-        private void InstructionMathOp(Param[] opParams, Func<int, int, int> op) {
+        private void InstructionMathOp(Param[] opParams, Func<int, int, int> op)
+        {
             _memory[opParams[2].value] = op(ResolveParam(opParams[0]), ResolveParam(opParams[1]));
         }
 
-        private void InstructionInput(Param[] opParams) {
+        private void InstructionInput(Param[] opParams)
+        {
             int input = OnInput();
             _memory[opParams[0].value] = input;
         }
 
-        private void InstructionOutput(Param[] opParams) {
+        private void InstructionOutput(Param[] opParams)
+        {
             OnOutput(ResolveParam(opParams[0]));
         }
 
         private void InstructionJumpIfTrue(Param[] opParams) => InstructionJump(opParams, v => v != 0);
         private void InstructionJumpIfFalse(Param[] opParams) => InstructionJump(opParams, v => v == 0);
-        private void InstructionJump(Param[] opParams, Func<int, bool> condition) {
-            if (condition(ResolveParam(opParams[0]))) {
+        private void InstructionJump(Param[] opParams, Func<int, bool> condition)
+        {
+            if (condition(ResolveParam(opParams[0])))
+            {
                 _memoryPtr = ResolveParam(opParams[1]);
             }
         }
 
         private void InstructionLessThan(Param[] opParams) => InstructionCondition(opParams, (a, b) => a < b);
         private void InstructionEqual(Param[] opParams) => InstructionCondition(opParams, (a, b) => a == b);
-        private void InstructionCondition(Param[] opParams, Func<int, int, bool> condition) {
+        private void InstructionCondition(Param[] opParams, Func<int, int, bool> condition)
+        {
             _memory[opParams[2].value] = (condition(ResolveParam(opParams[0]), ResolveParam(opParams[1])) ? 1 : 0);
         }
 
-        private int ResolveParam(Param param) {
-            switch (param.mode) {
+        private int ResolveParam(Param param)
+        {
+            switch (param.mode)
+            {
                 case ParamMode.Immediate: return param.value;
                 case ParamMode.Position:  return _memory[param.value];
                 default:

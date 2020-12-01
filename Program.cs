@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace AdventOfCode {
+namespace AdventOfCode
+{
     /// <summary>
     /// USAGE
     /// dotnet run - run the most recent challenge in the active year
@@ -12,7 +13,8 @@ namespace AdventOfCode {
     /// dd       (ex. 5)        - December 5th of active year
     /// yyyy.dd  (ex. 2019.23)  - December 23rd 2019
     /// </summary>
-    public static class Program {
+    public static class Program
+    {
         private const int FirstYear = 2015;
         private static Range AllYears => new Range(FirstYear, DateTime.Now.Year);
         private static Range AllDays => new Range(1, 25);
@@ -22,11 +24,13 @@ namespace AdventOfCode {
         private static int GetDefaultYear() => ActiveYear ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
 
-        private static void Main(string[] args) {
+        private static void Main(string[] args)
+        {
             string arg0 = args.Length > 0 ? args[0] : null;
             string arg1 = args.Length > 1 ? args[1] : null;
 
-            switch (arg0) {
+            switch (arg0)
+            {
                 default:
                     RunMode(arg0);
                     break;
@@ -39,13 +43,15 @@ namespace AdventOfCode {
             }
         }
 
-        private static void CreateNextChallenge(string yearStr) {
+        private static void CreateNextChallenge(string yearStr)
+        {
             if (!int.TryParse(yearStr, out int year)) year = GetDefaultYear();
 
             int day = 1;
             while (ChallengeManager.GetType(year, day) != null) day++;
 
-            if (day > 25) {
+            if (day > 25)
+            {
                 Console.WriteLine($"All {year} challenges already exist");
                 return;
             }
@@ -53,21 +59,26 @@ namespace AdventOfCode {
             ChallengeManager.Create(year, day);
         }
 
-        private static void RunMode(string date) {
+        private static void RunMode(string date)
+        {
             Type type = (date == null ? GetMostRecentChallengeType() : GetChallengeTypeForDate(date));
 
-            if (type != null) {
+            if (type != null)
+            {
                 ChallengeManager.Run(type);
             }
         }
 
-        private static void TestMode(string date) {
-            if (date == null) {
+        private static void TestMode(string date)
+        {
+            if (date == null)
+            {
                 TestDay(GetDefaultYear(), GetMostRecentChallengeDay());
                 return;
             }
 
-            if (date == "all") {
+            if (date == "all")
+            {
                 TestAll();
                 return;
             }
@@ -76,44 +87,53 @@ namespace AdventOfCode {
             int year;
             int day;
 
-            if (parts.Length == 1) {
-                if (int.TryParse(parts[0], out year)) {
+            if (parts.Length == 1)
+            {
+                if (int.TryParse(parts[0], out year))
+                {
                     TestYear(year);
                 }
                 return;
             }
 
-            if (int.TryParse(parts[0], out year) && int.TryParse(parts[1], out day)) {
+            if (int.TryParse(parts[0], out year) && int.TryParse(parts[1], out day))
+            {
                 TestDay(year, day);
             }
         }
 
-        private static Type GetChallengeTypeForDate(string date) {
+        private static Type GetChallengeTypeForDate(string date)
+        {
             int year = 0;
             int day = 0;
             
             string[] parts = date.Split('.');
 
-            if (parts.Length == 1) {
+            if (parts.Length == 1)
+            {
                 year = GetDefaultYear();
                 int.TryParse(parts[0], out day);
-            } else {
+            } else
+            {
                 int.TryParse(parts[0], out year);
                 int.TryParse(parts[1], out day);
             }
 
             Type type = ChallengeManager.GetType(year, day);
 
-            if (type == null) {
+            if (type == null)
+            {
                 Console.WriteLine($"Challenge not found for {year}.{day}");
             }
 
             return type;
         }
 
-        private static Type GetMostRecentChallengeType() {
+        private static Type GetMostRecentChallengeType()
+        {
             int year = GetDefaultYear();
-            for (int day = GetDefaultDay(); day >= 1; day--) {
+            for (int day = GetDefaultDay(); day >= 1; day--)
+            {
                 Type type = ChallengeManager.GetType(year, day);
                 if (type != null) return type;
             }
@@ -122,9 +142,11 @@ namespace AdventOfCode {
             return null;
         }
 
-        private static int GetMostRecentChallengeDay() {
+        private static int GetMostRecentChallengeDay()
+        {
             int year = GetDefaultYear();
-            for (int day = GetDefaultDay(); day >= 1; day--) {
+            for (int day = GetDefaultDay(); day >= 1; day--)
+            {
                 Type type = ChallengeManager.GetType(year, day);
                 if (type != null) return day;
             }
@@ -136,16 +158,20 @@ namespace AdventOfCode {
         private static void TestAll() => TestRange(AllYears, AllDays);
         private static void TestYear(int year) => TestRange(new Range(year, year), AllDays);
         private static void TestDay(int year, int day) => TestRange(new Range(year, year), new Range(day, day));
-        private static void TestRange(Range years, Range days) {
+        private static void TestRange(Range years, Range days)
+        {
             bool wasYearHeaderDrawn;
-            for (int year = years.min; year <= years.max; year++) {
+            for (int year = years.min; year <= years.max; year++)
+            {
                 wasYearHeaderDrawn = false;
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                for (int day = days.min; day <= days.max; day++) {
+                for (int day = days.min; day <= days.max; day++)
+                {
                     Type type = ChallengeManager.GetType(year, day);
                     if (type == null) continue;
 
-                    if (!wasYearHeaderDrawn) {
+                    if (!wasYearHeaderDrawn)
+                    {
                         wasYearHeaderDrawn = true;
                         Console.WriteLine($"-- {year} --");
                     }

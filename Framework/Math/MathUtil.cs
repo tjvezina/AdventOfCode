@@ -1,12 +1,16 @@
 using System;
 using System.Numerics;
 
-namespace AdventOfCode {
-    public static class MathUtil {
-        public static int Mod(int value, int divisor) {
+namespace AdventOfCode
+{
+    public static class MathUtil
+    {
+        public static int Mod(int value, int divisor)
+        {
             return (divisor == 0 ? 0 : value - (divisor * (int)Math.Floor((decimal)value / divisor)));
         }
-        public static long Mod(long value, long divisor) {
+        public static long Mod(long value, long divisor)
+        {
             return (divisor == 0 ? 0 : value - (divisor * (long)Math.Floor((decimal)value / divisor)));
         }
         
@@ -23,13 +27,15 @@ namespace AdventOfCode {
 
         // Greatest common divisor
         public static int GCD(int a, int b) => (int)GCD((long)a, (long)b);
-        public static long GCD(long a, long b) {
+        public static long GCD(long a, long b)
+        {
             a = Math.Abs(a);
             b = Math.Abs(b);
 
             if (a < b) DataUtil.Swap(ref a, ref b);
 
-            while (b > 0) {
+            while (b > 0)
+            {
                 long r = a % b;
                 a = b;
                 b = r;
@@ -39,10 +45,13 @@ namespace AdventOfCode {
         }
 
         public static int Power(int b, int e) => (int)Power((long)b, e);
-        public static long Power(long b, long e) {
+        public static long Power(long b, long e)
+        {
             long result = 1;
-            while (e > 0) {
-                if ((e & 1) != 0) {
+            while (e > 0)
+            {
+                if ((e & 1) != 0)
+                {
                     result *= b;
                 }
                 b *= b;
@@ -53,10 +62,13 @@ namespace AdventOfCode {
 
         public static int ModPower(int b, int e, int m) => (int)ModPower((BigInteger)b, e, m);
         public static long ModPower(long b, long e, long m) => (long)ModPower((BigInteger)b, e, m);
-        public static BigInteger ModPower(BigInteger b, BigInteger e, BigInteger m) {
+        public static BigInteger ModPower(BigInteger b, BigInteger e, BigInteger m)
+        {
             BigInteger result = 1;
-            while (e > 0) {
-                if ((e & 1) != 0) {
+            while (e > 0)
+            {
+                if ((e & 1) != 0)
+                {
                     result = (result * b) % m;
                 }
                 b = (b * b) % m;

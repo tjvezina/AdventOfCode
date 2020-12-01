@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019.Day11 {
-    public class PaintBot {
-        private enum State {
+namespace AdventOfCode.Year2019.Day11
+{
+    public class PaintBot
+    {
+        private enum State
+        {
             Paint,
             Move
         }
@@ -20,18 +23,21 @@ namespace AdventOfCode.Year2019.Day11 {
 
         public int paintedCount => _paintedTiles.Count;
 
-        public PaintBot(string intCodeMemory) {
+        public PaintBot(string intCodeMemory)
+        {
             _intCode = new IntCode(intCodeMemory);
             _intCode.OnOutput += HandleOnOutput;
         }
 
-        public void Run(bool firstTileIsWhite) {
+        public void Run(bool firstTileIsWhite)
+        {
             _whiteTiles.Clear();
             _paintedTiles.Clear();
             _state = State.Paint;
             _pos = Point.zero;
             _dir = Direction.Up;
-            if (firstTileIsWhite) {
+            if (firstTileIsWhite)
+            {
                 _whiteTiles.Add(_pos);
             }
 
@@ -41,29 +47,37 @@ namespace AdventOfCode.Year2019.Day11 {
             while (Update());
         }
 
-        private bool Update() {
-            if (_intCode.state == IntCode.State.Waiting) {
+        private bool Update()
+        {
+            if (_intCode.state == IntCode.State.Waiting)
+            {
                 _intCode.Input(_whiteTiles.Contains(_pos) ? 1 : 0);
             }
 
             return _intCode.state != IntCode.State.Complete;
         }
 
-        private void HandleOnOutput(long output) {
-            switch (_state) {
+        private void HandleOnOutput(long output)
+        {
+            switch (_state)
+            {
                 case State.Paint:
                     _paintedTiles.Add(_pos);
-                    if (output == 1) {
+                    if (output == 1)
+                    {
                         _whiteTiles.Add(_pos);
-                    } else {
+                    } else
+                    {
                         _whiteTiles.Remove(_pos);
                     }
                     _state = State.Move;
                     break;
                 case State.Move:
-                    if (output == 0) {
+                    if (output == 0)
+                    {
                         _dir = _dir.RotateCCW();
-                    } else {
+                    } else
+                    {
                         _dir = _dir.RotateCW();
                     }
                     _pos += _dir;
@@ -72,11 +86,13 @@ namespace AdventOfCode.Year2019.Day11 {
             }
         }
 
-        public bool[,] GetImage() {
+        public bool[,] GetImage()
+        {
             Point min = new Point(int.MaxValue, int.MaxValue);
             Point max = new Point(int.MinValue, int.MinValue);
 
-            foreach (Point p in _whiteTiles) {
+            foreach (Point p in _whiteTiles)
+            {
                 min.x = Math.Min(min.x, p.x);
                 min.y = Math.Min(min.y, p.y);
                 max.x = Math.Max(max.x, p.x);
@@ -85,8 +101,10 @@ namespace AdventOfCode.Year2019.Day11 {
 
             bool[,] pixels = new bool[max.x - min.x + 1, max.y - min.y + 1];
 
-            for (int y = max.y; y >= min.y; y--) {
-                for (int x = min.x; x <= max.x; x++) {
+            for (int y = max.y; y >= min.y; y--)
+            {
+                for (int x = min.x; x <= max.x; x++)
+                {
                     int xPixel = x - min.x;
                     int yPixel = max.y - y;
                     pixels[xPixel, yPixel] = _whiteTiles.Contains(new Point(x, y));

@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019.Day15 {
-    public class RepairBot {
-        private enum Tile {
+namespace AdventOfCode.Year2019.Day15
+{
+    public class RepairBot
+    {
+        private enum Tile
+        {
             Wall = 0,
             Empty = 1,
             Goal = 2
         }
 
-        private static readonly Dictionary<Direction, long> InputMap = new Dictionary<Direction, long> {
+        private static readonly Dictionary<Direction, long> InputMap = new Dictionary<Direction, long>
+        {
             { Direction.Up,    1 },
             { Direction.Down,  2 },
             { Direction.Right, 3 },
@@ -31,19 +35,22 @@ namespace AdventOfCode.Year2019.Day15 {
 
         private Dictionary<Point, Tile> _map = new Dictionary<Point, Tile>();
         
-        public RepairBot(string intCodeMemory) {
+        public RepairBot(string intCodeMemory)
+        {
             _map[_position] = Tile.Empty;
             AddUnknownNeighbors();
 
             _intCode = new IntCode(intCodeMemory);
             _intCode.Begin();
 
-            while (_unknown.Count > 0) {
+            while (_unknown.Count > 0)
+            {
                 BuildPathToNearestUnknown();
                 ExecuteMoves();
             }
 
-            if (goalPos == null) {
+            if (goalPos == null)
+            {
                 Console.WriteLine("Failed to find oxygen system, no where left to search!");
                 return;
             }
@@ -58,23 +65,27 @@ namespace AdventOfCode.Year2019.Day15 {
             DrawMap();
         }
 
-        private void BuildPathToNearestUnknown() {
+        private void BuildPathToNearestUnknown()
+        {
             Point target = _unknown.OrderBy(p => Point.TaxiDist(p, _position)).First();
 
             Stack<Point> path = FindPath(_position, target);
 
             Point prev = _position;
-            while (path.Count > 0) {
+            while (path.Count > 0)
+            {
                 Point next = path.Pop();
                 _moves.Enqueue(next - prev);
                 prev = next;
             }
         }
 
-        private void ExecuteMoves() {
+        private void ExecuteMoves()
+        {
             Direction direction;
 
-            while (_moves.Count > 1) {
+            while (_moves.Count > 1)
+            {
                 direction = _moves.Dequeue();
                 _position += direction;
                 _intCode.Input(InputMap[direction]);
@@ -88,7 +99,8 @@ namespace AdventOfCode.Year2019.Day15 {
             _intCode.OnOutput -= HandleUnknownMove;
         }
 
-        private void HandleUnknownMove(long output) {
+        private void HandleUnknownMove(long output)
+        {
             Tile tile = (Tile)output;
             _map[_pendingPosition] = tile;
 
@@ -98,7 +110,8 @@ namespace AdventOfCode.Year2019.Day15 {
 
             _position = _pendingPosition;
 
-            if (tile == Tile.Goal) {
+            if (tile == Tile.Goal)
+            {
                 goalPos = _position;
                 return;
             }
@@ -106,26 +119,31 @@ namespace AdventOfCode.Year2019.Day15 {
             AddUnknownNeighbors();
         }
 
-        private void AddUnknownNeighbors() {
+        private void AddUnknownNeighbors()
+        {
             Point[] neighbors = EnumUtil.GetValues<Direction>().Select(d => _position + d).ToArray();
 
-            foreach (Point neighbor in neighbors.Where(n => !_map.ContainsKey(n))) {
+            foreach (Point neighbor in neighbors.Where(n => !_map.ContainsKey(n)))
+            {
                 _unknown.Add(neighbor);
             }
         }
 
-        private Stack<Point> FindPath(Point start, Point end) {
+        private Stack<Point> FindPath(Point start, Point end)
+        {
             bool IsValid(Point p) => (_map.ContainsKey(p) && _map[p] != Tile.Wall) || (p == end && !_map.ContainsKey(p));
             return Pathfinder.FindPathInGrid(start, end, IsValid);
         }
 
-        private void DrawMap() {
+        private void DrawMap()
+        {
             Stack<Point> path = FindPath(Point.zero, goalPos.Value);
 
             Point min = new Point(int.MaxValue, int.MaxValue);
             Point max = new Point(int.MinValue, int.MinValue);
 
-            foreach (Point p in _map.Keys) {
+            foreach (Point p in _map.Keys)
+            {
                 min.x = Math.Min(min.x, p.x);
                 min.y = Math.Min(min.y, p.y);
                 max.x = Math.Max(max.x, p.x);
@@ -133,12 +151,16 @@ namespace AdventOfCode.Year2019.Day15 {
             }
 
             ConsoleColor prevBackground = Console.BackgroundColor;
-            for (int y = max.y; y >= min.y; y--) {
-                for (int x = min.x; x <= max.x; x++) {
+            for (int y = max.y; y >= min.y; y--)
+            {
+                for (int x = min.x; x <= max.x; x++)
+                {
                     Point p = new Point(x, y);
                     ConsoleColor color = ConsoleColor.DarkGray;
-                    if (_map.ContainsKey(p)) {
-                        switch (_map[p]) {
+                    if (_map.ContainsKey(p))
+                    {
+                        switch (_map[p])
+                        {
                             case Tile.Goal:
                                 color = ConsoleColor.Green;
                                 break;

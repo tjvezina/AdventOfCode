@@ -1,8 +1,11 @@
 using TinyJSON;
 
-namespace AdventOfCode.Year2015.Day21 {
-    public struct Equipment {
-        public enum Type {
+namespace AdventOfCode.Year2015.Day21
+{
+    public struct Equipment
+    {
+        public enum Type
+        {
             Weapon,
             Armor,
             Ring

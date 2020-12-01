@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AdventOfCode {
-    public struct Range : IEnumerable<int> {
+namespace AdventOfCode
+{
+    public struct Range : IEnumerable<int>
+    {
         public int a;
         public int b;
         
@@ -12,7 +14,8 @@ namespace AdventOfCode {
         
         public int count => (max - min) + 1;
         
-        public Range(int a, int b) {
+        public Range(int a, int b)
+        {
             this.a = a;
             this.b = b;
         }
@@ -24,9 +27,11 @@ namespace AdventOfCode {
         public int Wrap(int value) => MathUtil.Wrap(value, a, b);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IEnumerator<int> GetEnumerator() {
+        public IEnumerator<int> GetEnumerator()
+        {
             int sign = (a <= b ? 1 : -1);
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < count; i++)
+            {
                 yield return a + (i * sign);
             }
         }

@@ -1,13 +1,16 @@
 using System;
 
-namespace AdventOfCode.Year2015.Day10 {
-    public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2015.Day10
+{
+    public class Challenge : BaseChallenge
+    {
         private const string Input = "1113122113";
 
         private readonly DNA _dna;
         private readonly int[] _elementInput;
 
-        public Challenge() {
+        public Challenge()
+        {
             _dna = new DNA(LoadFileLines("DNA.txt"));
 
             _elementInput = new int[_dna.elementCount];
@@ -15,13 +18,15 @@ namespace AdventOfCode.Year2015.Day10 {
         }
 
         public override string part1ExpectedAnswer => "360154";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             const int Iteration = 40;
             return ($"Iteration {Iteration}: ", GetIterationLength(Iteration));
         }
         
         public override string part2ExpectedAnswer => "5103798";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             const int Iteration = 50;
 
             void PrintIter(int iter) => Console.WriteLine($"Iteration {iter:N0}: {GetIterationLength(iter)}");

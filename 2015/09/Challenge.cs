@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day09 {
-     public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2015.Day09
+{
+     public class Challenge : BaseChallenge
+     {
         public class DistSubMap : Dictionary<int, int> { }
         public class DistMap : Dictionary<int, DistSubMap> { }
 
@@ -14,8 +16,10 @@ namespace AdventOfCode.Year2015.Day09 {
         private int[] _bestOrder;
         private int _bestDist = int.MaxValue;
 
-        public Challenge() {
-            foreach (string data in inputList) {
+        public Challenge()
+        {
+            foreach (string data in inputList)
+            {
                 string[] elements = data.Split(' ');
 
                 string cityA = elements[0];
@@ -36,13 +40,15 @@ namespace AdventOfCode.Year2015.Day09 {
             }
         }
 
-        public override void Reset() {
+        public override void Reset()
+        {
             _order = Enumerable.Range(0, _cities.Count).ToArray();
             _bestOrder = new int[_cities.Count];
         }
 
         public override string part1ExpectedAnswer => "141";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             bool IsShorter(int dist, int best) => dist < best;
             
             _bestDist = int.MaxValue;
@@ -51,7 +57,8 @@ namespace AdventOfCode.Year2015.Day09 {
         }
 
         public override string part2ExpectedAnswer => "736";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             bool IsLonger(int dist, int best) => dist > best;
             
             _bestDist = 0;
@@ -59,12 +66,15 @@ namespace AdventOfCode.Year2015.Day09 {
             return ("Shortest route: ", _bestDist);
         }
 
-        private void FindBestOrder(Func<int, int, bool> condition) {
-            do {
+        private void FindBestOrder(Func<int, int, bool> condition)
+        {
+            do
+            {
                 int dist = 0;
 
                 int prevCity = _order[0];
-                for (int i = 1; i < _cities.Count; i++) {
+                for (int i = 1; i < _cities.Count; i++)
+                {
                     int nextCity = _order[i];
 
                     dist += _distMap[prevCity][nextCity];
@@ -72,10 +82,12 @@ namespace AdventOfCode.Year2015.Day09 {
                     prevCity = nextCity;
                 }
 
-                if (condition(dist, _bestDist)) {
+                if (condition(dist, _bestDist))
+                {
                     _bestDist = dist;
 
-                    for (int i = 0; i < _cities.Count; i++) {
+                    for (int i = 0; i < _cities.Count; i++)
+                    {
                         _bestOrder[i] = _order[i];
                     }
                 }

@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Year2019.IntCodeV3 {
-    public class IntCode {
-        public enum State {
+namespace AdventOfCode.Year2019.IntCodeV3
+{
+    public class IntCode
+    {
+        public enum State
+        {
             Default,
             Waiting,
             Complete
         }
 
-        private enum ParamMode {
+        private enum ParamMode
+        {
             Position = 0,
             Immediate = 1
         }
 
-        private struct Param {
+        private struct Param
+        {
             public int value;
             public ParamMode mode;
         }
 
-        private struct Operator {
+        private struct Operator
+        {
             public int paramCount;
             public Action<Param[]> action;
         }
@@ -38,8 +44,10 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
         private int _memoryPtr;
         private int _inputDest;
 
-        public IntCode(string memory) {
-            Operators = new Dictionary<int, Operator> {
+        public IntCode(string memory)
+        {
+            Operators = new Dictionary<int, Operator>
+            {
                 { 01, new Operator { paramCount = 3, action = OpAdd } },
                 { 02, new Operator { paramCount = 3, action = OpMult } },
                 { 03, new Operator { paramCount = 1, action = OpInput } },
@@ -56,20 +64,23 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
             Reset();
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             state = State.Default;
             _initialMemory.CopyTo(_memory, 0);
             _memoryPtr = 0;
             _inputDest = -1;
         }
 
-        public void Begin() {
+        public void Begin()
+        {
             Debug.Assert(state == State.Default, "Execution has already begun, do you need to reset first?");
 
             Continue();
         }
 
-        public void Input(int input) {
+        public void Input(int input)
+        {
             Debug.Assert(state == State.Waiting, "Received input, but not expecting any.");
 
             _memory[_inputDest] = input;
@@ -77,13 +88,15 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
             Continue();
         }
 
-        private void Continue() {
+        private void Continue()
+        {
             Debug.Assert(_memoryPtr < length, "End of program reached before halt opcode found.");
             state = State.Default;
 
             int ReadMemory() => _memory[_memoryPtr++];
 
-            while (state == State.Default) {
+            while (state == State.Default)
+            {
                 int opData = ReadMemory();
                 int opCode = opData % 100;
                 opData /= 100;
@@ -91,7 +104,8 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
                 Operator op = Operators[opCode];
 
                 Param[] opParams = new Param[op.paramCount];
-                for (int i = 0; i < op.paramCount; i++) {
+                for (int i = 0; i < op.paramCount; i++)
+                {
                     ParamMode paramMode = (ParamMode)(opData % 10);
                     opData /= 10;
 
@@ -107,11 +121,13 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
 
         private void OpAdd(Param[] opParams) => OpMath(opParams, (a, b) => a + b);
         private void OpMult(Param[] opParams) => OpMath(opParams, (a, b) => a * b);
-        private void OpMath(Param[] opParams, Func<int, int, int> op) {
+        private void OpMath(Param[] opParams, Func<int, int, int> op)
+        {
             _memory[opParams[2].value] = op(ResolveParam(opParams[0]), ResolveParam(opParams[1]));
         }
 
-        private void OpInput(Param[] opParams) {
+        private void OpInput(Param[] opParams)
+        {
             _inputDest = opParams[0].value;
             state = State.Waiting;
         }
@@ -120,22 +136,27 @@ namespace AdventOfCode.Year2019.IntCodeV3 {
 
         private void OpJumpIfTrue(Param[] opParams) => OpJump(opParams, v => v != 0);
         private void OpJumpIfFalse(Param[] opParams) => OpJump(opParams, v => v == 0);
-        private void OpJump(Param[] opParams, Func<int, bool> condition) {
-            if (condition(ResolveParam(opParams[0]))) {
+        private void OpJump(Param[] opParams, Func<int, bool> condition)
+        {
+            if (condition(ResolveParam(opParams[0])))
+            {
                 _memoryPtr = ResolveParam(opParams[1]);
             }
         }
 
         private void OpLessThan(Param[] opParams) => OpCondition(opParams, (a, b) => a < b);
         private void OpEqual(Param[] opParams) => OpCondition(opParams, (a, b) => a == b);
-        private void OpCondition(Param[] opParams, Func<int, int, bool> condition) {
+        private void OpCondition(Param[] opParams, Func<int, int, bool> condition)
+        {
             int paramA = ResolveParam(opParams[0]);
             int paramB = ResolveParam(opParams[1]);
             _memory[opParams[2].value] = (condition(paramA, paramB) ? 1 : 0);
         }
 
-        private int ResolveParam(Param param) {
-            switch (param.mode) {
+        private int ResolveParam(Param param)
+        {
+            switch (param.mode)
+            {
                 case ParamMode.Immediate: return param.value;
                 case ParamMode.Position:  return _memory[param.value];
                 default:

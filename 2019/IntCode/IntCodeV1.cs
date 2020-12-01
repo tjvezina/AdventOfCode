@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Year2019.IntCodeV1 {
-    public class IntCode {
-        private enum State {
+namespace AdventOfCode.Year2019.IntCodeV1
+{
+    public class IntCode
+    {
+        private enum State
+        {
             Uninitialized,
             Loaded,
             Complete
         }
 
-        private struct Instruction {
+        private struct Instruction
+        {
             public int paramCount;
             public Action<int> action;
         }
@@ -27,20 +31,24 @@ namespace AdventOfCode.Year2019.IntCodeV1 {
         public int Length => _memory.Count;
         public int this[int i] => _memory[i];
 
-        public IntCode() {
-            s_Instructions = new Dictionary<int, Instruction> {
+        public IntCode()
+        {
+            s_Instructions = new Dictionary<int, Instruction>
+            {
                 { 1, new Instruction { paramCount = 3, action = InstructionAdd } },
                 { 2, new Instruction { paramCount = 3, action = InstructionMult } },
                 { 99, new Instruction { paramCount = 0, action = InstructionHalt } }
             };
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             _state = State.Loaded;
             _memory = new List<int>(_initialMemory);
         }
 
-        public void Load(string input) {
+        public void Load(string input)
+        {
             Debug.Assert(_state == State.Uninitialized, "Code has already been loaded!");
 
             _memory = input.Split(Separator).Select(int.Parse).ToList();
@@ -48,7 +56,8 @@ namespace AdventOfCode.Year2019.IntCodeV1 {
             _state = State.Loaded;
         }
 
-        public void Execute(int noun, int verb) {
+        public void Execute(int noun, int verb)
+        {
             Debug.Assert(_state == State.Loaded, _state == State.Uninitialized
                 ? "Unable to execute before loading, no program to run!"
                 : "Already executed! Reset and load before executing again.");
@@ -58,7 +67,8 @@ namespace AdventOfCode.Year2019.IntCodeV1 {
 
             int address = 0;
 
-            while (_state != State.Complete) {
+            while (_state != State.Complete)
+            {
                 Debug.Assert(address < Length, "End of program reached before exit opcode found.");
 
                 int opCode = _memory[address];
@@ -76,11 +86,13 @@ namespace AdventOfCode.Year2019.IntCodeV1 {
         private void InstructionHalt(int address) => _state = State.Complete;
         private void InstructionAdd(int address) => InstructionMathOp(address, (a, b) => a + b);
         private void InstructionMult(int address) => InstructionMathOp(address, (a, b) => a * b);
-        private void InstructionMathOp(int address, Func<int, int, int> op) {
+        private void InstructionMathOp(int address, Func<int, int, int> op)
+        {
             int[] opParams = new int[3];
 
             // Read and validate the instruction's parameters
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++)
+            {
                 int opIndex = _memory[address + i + 1];
                 Debug.Assert(opIndex >= 0 && opIndex < Length, $"Instruction failed, index {i} is invalid: {opIndex}");
                 opParams[i] = opIndex;

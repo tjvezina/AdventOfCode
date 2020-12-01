@@ -1,7 +1,9 @@
 using System;
 
-namespace AdventOfCode {
-    public struct Point3 {
+namespace AdventOfCode
+{
+    public struct Point3
+    {
         public static readonly Point3 zero  = new Point3(0, 0, 0);
 
         public static implicit operator Point3(Point p) => new Point3(p.x, p.y, 0);
@@ -13,13 +15,15 @@ namespace AdventOfCode {
 
         public int this[int i]
         {
-            get {
+            get
+            {
                 if (i == 0) return x;
                 if (i == 1) return y;
                 if (i == 2) return z;
                 throw new IndexOutOfRangeException();
             }
-            set {
+            set
+            {
                 if (i == 0) x = value;
                 else if (i == 1) y = value;
                 else if (i == 2) z = value;
@@ -27,7 +31,8 @@ namespace AdventOfCode {
             }
         }
 
-        public Point3(int x, int y, int z) {
+        public Point3(int x, int y, int z)
+        {
             this.x = x;
             this.y = y;
             this.z = z;

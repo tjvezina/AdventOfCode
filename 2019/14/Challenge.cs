@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2019.Day14 {
-     public class Challenge : BaseChallenge {
-        private struct ElementData {
-            public static ElementData Parse(string rawData) {
+namespace AdventOfCode.Year2019.Day14
+{
+     public class Challenge : BaseChallenge
+     {
+        private struct ElementData
+        {
+            public static ElementData Parse(string rawData)
+            {
                 string[] parts = rawData.Split(' ');
-                return new ElementData {
+                return new ElementData
+                {
                     name = parts[1],
                     amount = long.Parse(parts[0])
                 };
@@ -19,10 +24,13 @@ namespace AdventOfCode.Year2019.Day14 {
             public override string ToString() => $"{name} {amount}";
         }
 
-        private struct Reaction {
-            public static Reaction Parse(string rawData) {
+        private struct Reaction
+        {
+            public static Reaction Parse(string rawData)
+            {
                 string[] parts = rawData.Split(new[] { ", ", " => " }, StringSplitOptions.RemoveEmptyEntries);
-                return new Reaction {
+                return new Reaction
+                {
                     inputs = parts.Take(parts.Length - 1).Select(ElementData.Parse).ToArray(),
                     output = ElementData.Parse(parts.Last()),
                 };
@@ -47,7 +55,8 @@ namespace AdventOfCode.Year2019.Day14 {
         public override void Reset() => _available.Clear();
 
         public override string part1ExpectedAnswer => "1037742";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             ModifyAvailable(Ore, InitialOre);
 
             Create(Fuel, 1);
@@ -57,7 +66,8 @@ namespace AdventOfCode.Year2019.Day14 {
         }
         
         public override string part2ExpectedAnswer => "1572358";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             ModifyAvailable(Ore, InitialOre);
             
             while (Create(Fuel, Math.Max(1, GetAvailable(Ore) / _orePerFuel)));
@@ -65,7 +75,8 @@ namespace AdventOfCode.Year2019.Day14 {
             return ($"{{0}} fuel created from {InitialOre} ore", _available[Fuel]);
         }
 
-        private bool Consume(string element, long amount) {
+        private bool Consume(string element, long amount)
+        {
             long available = GetAvailable(element);
             if (available < amount && !Create(element, amount - available)) return false;
 
@@ -73,7 +84,8 @@ namespace AdventOfCode.Year2019.Day14 {
             return true;
         }
 
-        private bool Create(string element, long amount) {
+        private bool Create(string element, long amount)
+        {
             if (!_reactionMap.ContainsKey(element)) return false;
 
             Reaction reaction = _reactionMap[element];
@@ -81,8 +93,10 @@ namespace AdventOfCode.Year2019.Day14 {
             long reactionCount = ((amount - 1) / reaction.output.amount) + 1;
             long leftover = (reaction.output.amount * reactionCount) - amount;
 
-            foreach (ElementData subElement in reaction.inputs) {
-                if (!Consume(subElement.name, subElement.amount * reactionCount)) {
+            foreach (ElementData subElement in reaction.inputs)
+            {
+                if (!Consume(subElement.name, subElement.amount * reactionCount))
+                {
                     return false;
                 }
             }
@@ -93,16 +107,19 @@ namespace AdventOfCode.Year2019.Day14 {
 
         private long GetAvailable(string element) => _available.ContainsKey(element) ? _available[element] : 0;
 
-        private void ModifyAvailable(string element, long amount) {
+        private void ModifyAvailable(string element, long amount)
+        {
             if (amount == 0) return;
 
-            if (!_available.ContainsKey(element)) {
+            if (!_available.ContainsKey(element))
+            {
                 _available[element] = 0;
             }
 
             _available[element] += amount;
 
-            if (_available[element] == 0) {
+            if (_available[element] == 0)
+            {
                 _available.Remove(element);
             }
         }

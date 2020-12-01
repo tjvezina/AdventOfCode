@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019.Day19 {
-     public class Challenge : BaseChallenge {
-        private enum Result {
+namespace AdventOfCode.Year2019.Day19
+{
+     public class Challenge : BaseChallenge
+     {
+        private enum Result
+        {
             Stationary = 0,
             Pulled = 1
         }
@@ -18,11 +21,15 @@ namespace AdventOfCode.Year2019.Day19 {
         public Challenge() => _intCode = new IntCode(inputList[0]);
 
         public override string part1ExpectedAnswer => "215";
-        public override (string message, object answer) SolvePart1() {
-            for (int y = 0; y < 50; y++) {
-                for (int x = 0; x < 50; x++) {
+        public override (string message, object answer) SolvePart1()
+        {
+            for (int y = 0; y < 50; y++)
+            {
+                for (int x = 0; x < 50; x++)
+                {
                     char c = '.';
-                    if (IsPointPulled(x, y)) {
+                    if (IsPointPulled(x, y))
+                    {
                         _pulledCount++;
                         c = '#';
                     }
@@ -35,19 +42,25 @@ namespace AdventOfCode.Year2019.Day19 {
         }
 
         public override string part2ExpectedAnswer => "7720975";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             Point p = new Point(100, 100);
             List<Direction> moves = new List<Direction>();
 
-            while (true) {
+            while (true)
+            {
                 moves.Add((IsPointPulled(p) ? Direction.Right : Direction.Down));
-                if (moves.Count > 2) {
+                if (moves.Count > 2)
+                {
                     moves.RemoveAt(0);
-                    if (moves[0] == Direction.Down && moves[1] == Direction.Right) {
+                    if (moves[0] == Direction.Down && moves[1] == Direction.Right)
+                    {
                         Point topLeft = p + new Point(-99, 0);
-                        if (IsPointPulled(topLeft)) {
+                        if (IsPointPulled(topLeft))
+                        {
                             Point botLeft = topLeft + new Point(0, 99);
-                            if (IsPointPulled(botLeft)) {
+                            if (IsPointPulled(botLeft))
+                            {
                                 return ("Result: ", topLeft.x * 10_000 + topLeft.y);
                             }
                         }
@@ -59,7 +72,8 @@ namespace AdventOfCode.Year2019.Day19 {
         }
 
         private bool IsPointPulled(Point p) => IsPointPulled(p.x, p.y);
-        private bool IsPointPulled(int x, int y) {
+        private bool IsPointPulled(int x, int y)
+        {
             bool isPulled = false;
             void HandleOutput(long o) => isPulled = (o == 1);
             _intCode.OnOutput += HandleOutput;

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using AdventOfCode.Year2019.IntCodeV4;
 
-namespace AdventOfCode.Year2019.Day13 {
-    public class Arcade {
-        public enum Tile {
+namespace AdventOfCode.Year2019.Day13
+{
+    public class Arcade
+    {
+        public enum Tile
+        {
             Empty = 0,
             Wall = 1,
             Block = 2,
@@ -13,7 +16,8 @@ namespace AdventOfCode.Year2019.Day13 {
             Ball = 4
         }
 
-        public enum State {
+        public enum State
+        {
             PosX,
             PosY,
             Type
@@ -33,9 +37,11 @@ namespace AdventOfCode.Year2019.Day13 {
         private int _paddleX;
         private int _ballX;
 
-        public Arcade(string intCodeMemory, bool insertQuarters = false) {
+        public Arcade(string intCodeMemory, bool insertQuarters = false)
+        {
             Dictionary<int, long> substitutions = new Dictionary<int, long>();
-            if (insertQuarters) {
+            if (insertQuarters)
+            {
                 substitutions[0] = 2;
             }
 
@@ -43,38 +49,50 @@ namespace AdventOfCode.Year2019.Day13 {
             _intCode.OnOutput += HandleOnOutput;
             _intCode.Begin();
 
-            while (_intCode.state == IntCode.State.Waiting) {
+            while (_intCode.state == IntCode.State.Waiting)
+            {
                 int delta = _ballX - _paddleX;
                 delta = delta == 0 ? 0 : delta / Math.Abs(delta); // -1, 0, 1
                 _intCode.Input(delta);
             }
 
-            if (insertQuarters) {
+            if (insertQuarters)
+            {
                 Console.WriteLine("Final score: " + score);
-            } else {
+            } else
+            {
                 RunDiagnosticCheck();
             }
         }
 
-        private void RunDiagnosticCheck() {
-            for (int y = 0; y < _screen.GetLength(1); y++) {
-                for (int x = 0; x < _screen.GetLength(0); x++) {
+        private void RunDiagnosticCheck()
+        {
+            for (int y = 0; y < _screen.GetLength(1); y++)
+            {
+                for (int x = 0; x < _screen.GetLength(0); x++)
+                {
                     blockCount += (_screen[x, y] == Tile.Block ? 1 : 0);
                 }
             }
         }
 
-        private void HandleOnOutput(long output) {
-            if (state == State.PosX) {
+        private void HandleOnOutput(long output)
+        {
+            if (state == State.PosX)
+            {
                 _nextPos.x = (int)output;
             }
-            else if (state == State.PosY) {
+            else if (state == State.PosY)
+            {
                 _nextPos.y = (int)output;
             }
-            else if (state == State.Type) {
-                if (_nextPos == ScorePos) {
+            else if (state == State.Type)
+            {
+                if (_nextPos == ScorePos)
+                {
                     score = (int)output;
-                } else {
+                } else
+                {
                     ResizeScreen();
                     Tile tile = (Tile)output;
                     _screen[_nextPos.x, _nextPos.y] = tile;
@@ -87,7 +105,8 @@ namespace AdventOfCode.Year2019.Day13 {
             if (!Enum.IsDefined(typeof(State), state)) state = (State)0;
         }
 
-        private void ResizeScreen() {
+        private void ResizeScreen()
+        {
             if (_nextPos.x < _screen.GetLength(0) && _nextPos.y < _screen.GetLength(1)) return;
 
             int width = Math.Max(_nextPos.x + 1, _screen.GetLength(0));
@@ -95,8 +114,10 @@ namespace AdventOfCode.Year2019.Day13 {
 
             Tile[,] newScreen = new Tile[width, height];
 
-            for (int y = 0; y < _screen.GetLength(1); y++) {
-                for (int x = 0; x < _screen.GetLength(0); x++) {
+            for (int y = 0; y < _screen.GetLength(1); y++)
+            {
+                for (int x = 0; x < _screen.GetLength(0); x++)
+                {
                     newScreen[x, y] = _screen[x, y];
                 }
             }

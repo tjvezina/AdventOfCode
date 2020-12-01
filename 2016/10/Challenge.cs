@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2016.Day10 {
-    public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2016.Day10
+{
+    public class Challenge : BaseChallenge
+    {
         private const string PATTERN_INPUT = @"value (\d+) goes to bot (\d+)";
         private const string PATTERN_BOT = @"bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)";
 
@@ -11,14 +13,16 @@ namespace AdventOfCode.Year2016.Day10 {
         private BotNode[] _bots;
         private OutputNode[] _outputs;
 
-        public Challenge() {
+        public Challenge()
+        {
             string[] inputNodeData = inputList.Where(i => i.StartsWith("value")).ToArray();
             string[] botNodeData = inputList.Where(i => i.StartsWith("bot")).ToArray();
 
             _bots = Enumerable.Range(0, botNodeData.Length).Select(i => new BotNode(i)).ToArray();
             _outputs = Enumerable.Range(0, inputNodeData.Length).Select(i => new OutputNode()).ToArray();
 
-            foreach (string data in botNodeData) {
+            foreach (string data in botNodeData)
+            {
                 Match match = Regex.Match(data, PATTERN_BOT);
                 int index = int.Parse(match.Groups[1].Value);
                 string minType = match.Groups[2].Value;
@@ -30,7 +34,8 @@ namespace AdventOfCode.Year2016.Day10 {
                 _bots[index].maxOutput = (maxType == "bot" ? (IOutputNode)_bots[maxIndex] : _outputs[maxIndex]);
             }
 
-            InputNode ParseInputNode(string data) {
+            InputNode ParseInputNode(string data)
+            {
                 Match match = Regex.Match(data, PATTERN_INPUT);
                 int value = int.Parse(match.Groups[1].Value);
                 int index = int.Parse(match.Groups[2].Value);
@@ -42,17 +47,22 @@ namespace AdventOfCode.Year2016.Day10 {
         }
 
         public override string part1ExpectedAnswer => "98";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             Queue<INode> _openSet = new Queue<INode>(_inputs);
 
-            void GiveChip(IOutputNode output, int chip) {
-                if (output != null && output.TakeChip(chip)) {
+            void GiveChip(IOutputNode output, int chip)
+            {
+                if (output != null && output.TakeChip(chip))
+                {
                     _openSet.Enqueue(output);
                 }
             }
 
-            while (_openSet.TryDequeue(out INode node)) {
-                switch (node) {
+            while (_openSet.TryDequeue(out INode node))
+            {
+                switch (node)
+                {
                     case InputNode inputNode:
                         GiveChip(inputNode.output, inputNode.chip);
                         break;
@@ -69,7 +79,8 @@ namespace AdventOfCode.Year2016.Day10 {
         }
         
         public override string part2ExpectedAnswer => "4042";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             int product = _outputs.Take(3).Select(o => o.chip).Aggregate((a, b) => a * b);
             return ("Product of first 3 outputs: ", product);
         }

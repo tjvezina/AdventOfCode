@@ -2,16 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day15 {
-    public abstract class Recipe {
-        protected class Ingredient {
+namespace AdventOfCode.Year2015.Day15
+{
+    public abstract class Recipe
+    {
+        protected class Ingredient
+        {
             public const int PropertyCount = 4;
 
             public string name { get; }
             public int[] properties { get; }
             public int calories { get; }
 
-            public Ingredient(string name, int[] properties, int calories) {
+            public Ingredient(string name, int[] properties, int calories)
+            {
                 this.name = name;
                 this.calories = calories;
                 this.properties = new int[PropertyCount];
@@ -26,8 +30,10 @@ namespace AdventOfCode.Year2015.Day15 {
 
         protected static List<Ingredient> _ingredients = new List<Ingredient>();
 
-        public static void Init(IEnumerable<string> input) {
-            foreach (string data in input) {
+        public static void Init(IEnumerable<string> input)
+        {
+            foreach (string data in input)
+            {
                 string[] parts = data.Split(':');
                 string name = parts[0];
 
@@ -35,7 +41,8 @@ namespace AdventOfCode.Year2015.Day15 {
                 int GetProperty(int index) => int.Parse(propData[index].Split(' ')[2]);
 
                 int[] properties = new int[Ingredient.PropertyCount];
-                for (int i = 0; i < properties.Length; i++) {
+                for (int i = 0; i < properties.Length; i++)
+                {
                     properties[i] = GetProperty(i);
                 }
 
@@ -49,11 +56,14 @@ namespace AdventOfCode.Year2015.Day15 {
 
         public int GetScore() => CalculateScore(_quantities);
 
-        protected int CalculateScore(int[] quantities) {
+        protected int CalculateScore(int[] quantities)
+        {
             List<int> propScores = new List<int>(new int[Ingredient.PropertyCount]);
 
-            for (int p = 0; p < propScores.Count; p++) {
-                for (int i = 0; i < _ingredients.Count; i++) {
+            for (int p = 0; p < propScores.Count; p++)
+            {
+                for (int i = 0; i < _ingredients.Count; i++)
+                {
                     propScores[p] += (_ingredients[i].properties[p] * quantities[i]);
                 }
 
@@ -63,10 +73,12 @@ namespace AdventOfCode.Year2015.Day15 {
             return propScores.Aggregate((a, b) => a * b);
         }
 
-        protected int CalculateCalories(int[] quantities) {
+        protected int CalculateCalories(int[] quantities)
+        {
             int calories = 0;
 
-            for (int i = 0; i < _ingredients.Count; i++) {
+            for (int i = 0; i < _ingredients.Count; i++)
+            {
                 calories += (_ingredients[i].calories * quantities[i]);
             }
 

@@ -6,11 +6,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode {
-    public static class ChallengeManager {
+namespace AdventOfCode
+{
+    public static class ChallengeManager
+    {
         private enum ChallengePart { Part1 = 1, Part2 = 2 }
 
-        private enum ResultStatus {
+        private enum ResultStatus
+        {
             Development, // No answer given; hasn't been started, or isn't complete yet
             Candidate,   // Answer given, expected answer unknown; to be submitted to AoC
             WrongAnswer, // Given answer does not match expected
@@ -18,17 +21,21 @@ namespace AdventOfCode {
             Exception    // Unhandled exception during execution
         }
 
-        private struct Results {
+        private struct Results
+        {
             public ResultStatus status;
             public string givenAnswer;
             public string message;
 
-            public void SetStatusColor() {
+            public void SetStatusColor()
+            {
                 Console.ResetColor();
-                if (status == ResultStatus.Exception) {
+                if (status == ResultStatus.Exception)
+                {
                     Console.BackgroundColor = ConsoleColor.Red;
                 }
-                Console.ForegroundColor = status switch {
+                Console.ForegroundColor = status switch
+                {
                     ResultStatus.Development => ConsoleColor.DarkGray,
                     ResultStatus.Candidate   => ConsoleColor.Cyan,
                     ResultStatus.WrongAnswer => ConsoleColor.Red,
@@ -41,11 +48,13 @@ namespace AdventOfCode {
 
         private static readonly Type ChallengeType = typeof(BaseChallenge);
         private static readonly MethodInfo ResetMethod = ChallengeType.GetMethod(nameof(BaseChallenge.Reset));
-        private static readonly Dictionary<ChallengePart, MethodInfo> SolvePartMethods = new Dictionary<ChallengePart, MethodInfo> {
+        private static readonly Dictionary<ChallengePart, MethodInfo> SolvePartMethods = new Dictionary<ChallengePart, MethodInfo>
+        {
             { ChallengePart.Part1, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart1)) },
             { ChallengePart.Part2, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart2)) }
         };
-        private static readonly Dictionary<ChallengePart, PropertyInfo> ExpectedAnswerProps = new Dictionary<ChallengePart, PropertyInfo> {
+        private static readonly Dictionary<ChallengePart, PropertyInfo> ExpectedAnswerProps = new Dictionary<ChallengePart, PropertyInfo>
+        {
             { ChallengePart.Part1, ChallengeType.GetProperty(nameof(BaseChallenge.part1ExpectedAnswer)) },
             { ChallengePart.Part2, ChallengeType.GetProperty(nameof(BaseChallenge.part2ExpectedAnswer)) }
         };
@@ -57,7 +66,8 @@ namespace AdventOfCode {
 
         public static Type GetType(int year, int day) => Type.GetType($"AdventOfCode.Year{year}.Day{day:00}.Challenge");
 
-        public static void Create(int year, int day) {
+        public static void Create(int year, int day)
+        {
             Debug.Assert(GetType(year, day) == null, $"Challenge {year}.{day} already exists");
             
             string path = GetPath(year, day);
@@ -72,7 +82,8 @@ namespace AdventOfCode {
             File.WriteAllText(filePath, template);
         }
 
-        public static void Run(Type type) {
+        public static void Run(Type type)
+        {
             BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);
 
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -85,7 +96,8 @@ namespace AdventOfCode {
             Console.WriteLine();
         }
 
-        private static void RunPart(BaseChallenge challenge, ChallengePart part) {
+        private static void RunPart(BaseChallenge challenge, ChallengePart part)
+        {
             Results results = Execute(challenge, part);
 
             results.SetStatusColor();
@@ -97,26 +109,30 @@ namespace AdventOfCode {
 
             Console.ResetColor();
             string[] messageParts = (results.message ?? string.Empty).Split("{0}");
-            if (messageParts.Length > 0) {
+            if (messageParts.Length > 0)
+            {
                 Console.Write(messageParts[0]);
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write(results.givenAnswer);
             Console.ResetColor();
-            if (messageParts.Length > 1) {
+            if (messageParts.Length > 1)
+            {
                 Console.Write(messageParts[1]);
             }
             Console.WriteLine();
         }
 
-        public static void Test(Type type) {
+        public static void Test(Type type)
+        {
             BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);
 
             TestPart(challenge, ChallengePart.Part1);
             TestPart(challenge, ChallengePart.Part2);
         }
 
-        private static void TestPart(BaseChallenge challenge, ChallengePart part) {
+        private static void TestPart(BaseChallenge challenge, ChallengePart part)
+        {
             Console.SetOut(new StringWriter()); // Discard all output during part execution
             Results results = Execute(challenge, part, fullStackTrace:false);
             ConsoleUtil.RestoreDefaultOutput();
@@ -125,7 +141,8 @@ namespace AdventOfCode {
             Console.Write($"{challenge.day:00}-{(int)part} ");
 
             results.SetStatusColor();
-            switch (results.status) {
+            switch (results.status)
+            {
                 case ResultStatus.Development:
                 case ResultStatus.Candidate:
                     Console.Write("WIP ");
@@ -147,10 +164,12 @@ namespace AdventOfCode {
             Console.WriteLine(results.status == ResultStatus.Exception ? results.message : results.givenAnswer);
         }
 
-        private static Results Execute(BaseChallenge challenge, ChallengePart part, bool fullStackTrace = true) {
+        private static Results Execute(BaseChallenge challenge, ChallengePart part, bool fullStackTrace = true)
+        {
             Results data = new Results();
 
-            try {
+            try
+            {
                 _stopwatch.Restart();
                 ResetMethod.Invoke(challenge, null);
                 (string message, object answer) = ((string, object))SolvePartMethods[part].Invoke(challenge, null);
@@ -160,22 +179,27 @@ namespace AdventOfCode {
                 data.givenAnswer = answer?.ToString();
 
                 string expected = (string)ExpectedAnswerProps[part].GetValue(challenge);
-                if (!string.IsNullOrEmpty(expected)) {
+                if (!string.IsNullOrEmpty(expected))
+                {
                     data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
-                } else if (!string.IsNullOrEmpty(data.givenAnswer)) {
+                } else if (!string.IsNullOrEmpty(data.givenAnswer))
+                {
                     data.status = ResultStatus.Candidate;
-                } else {
+                } else
+                {
                     data.status = ResultStatus.Development;
                     _stopwatch.Reset();
                 }
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
                 data.status = ResultStatus.Exception;
                 _stopwatch.Reset();
                 
                 while (ex.InnerException != null) ex = ex.InnerException; // Skip Invoke() and nested exceptions
 
                 data.message = ex.Message;
-                if (fullStackTrace) {
+                if (fullStackTrace)
+                {
                     data.message += "\n" + FormatStackTrace(ex.StackTrace);
                 }
             }
@@ -183,19 +207,22 @@ namespace AdventOfCode {
             return data;
         }
 
-        private static void WriteBenchmark() {
+        private static void WriteBenchmark()
+        {
             if (_stopwatch.ElapsedTicks == 0) return;
 
             double elapsed = _stopwatch.Elapsed.TotalSeconds;
 
-            string elapsedStr = elapsed switch {
+            string elapsedStr = elapsed switch
+            {
                 double e when e < 10   => $"{elapsed:0.000}",
                 double e when e < 100  => $"{elapsed:00.00}",
                 double e when e < 1000 => $"{elapsed:000.0}",
                 _                      => ">1000"
             };
 
-            Console.ForegroundColor = elapsed switch {
+            Console.ForegroundColor = elapsed switch
+            {
                 double e when e >= 10.0 => ConsoleColor.Red,
                 double e when e >= 5.0  => ConsoleColor.DarkRed,
                 double e when e >= 1.0  => ConsoleColor.DarkYellow,
@@ -206,9 +233,11 @@ namespace AdventOfCode {
             Console.Write($"({elapsedStr}s) ");
         }
 
-        private static string FormatStackTrace(string stackTrace) {
+        private static string FormatStackTrace(string stackTrace)
+        {
             string[] lines = stackTrace.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++) {
+            for (int i = 0; i < lines.Length; i++)
+            {
                 Match match = Regex.Match(lines[i], @" in (.*:line \d+)");
                 lines[i] = "- " + (match.Success ? match.Groups[1].Value : lines[i].Substring(6)); // Remove "   at "
             }

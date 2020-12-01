@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day06 {
-     public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2015.Day06
+{
+     public class Challenge : BaseChallenge
+     {
         private enum InstructionType { TurnOn, TurnOff, Toggle }
 
         private const string TypeTurnOn = "turn on";
@@ -11,25 +13,31 @@ namespace AdventOfCode.Year2015.Day06 {
         private const string TypeToggle = "toggle";
         private static readonly string[] Separators = new[] { ",", " through " };
 
-        private struct Instruction {
+        private struct Instruction
+        {
             public InstructionType type;
             public Point start;
             public Point end;
 
-            public Instruction(string data) {
-                if (data.StartsWith(TypeTurnOn)) {
+            public Instruction(string data)
+            {
+                if (data.StartsWith(TypeTurnOn))
+                {
                     type = InstructionType.TurnOn;
                     data = data.Substring(TypeTurnOn.Length + 1);
                 }
-                else if (data.StartsWith(TypeTurnOff)) {
+                else if (data.StartsWith(TypeTurnOff))
+                {
                     type = InstructionType.TurnOff;
                     data = data.Substring(TypeTurnOff.Length + 1);
                 }
-                else if (data.StartsWith(TypeToggle)) {
+                else if (data.StartsWith(TypeToggle))
+                {
                     type = InstructionType.Toggle;
                     data = data.Substring(TypeToggle.Length + 1);
                 }
-                else {
+                else
+                {
                     throw new Exception("Failed to determine instruction type: " + data);
                 }
 
@@ -44,7 +52,8 @@ namespace AdventOfCode.Year2015.Day06 {
         public Challenge() => _instructions = inputList.Select(i => new Instruction(i)).ToList();
 
         public override string part1ExpectedAnswer => "377891";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             LightBoard board = new LightBoard(
                 turnOn:(x) => 1,
                 turnOff:(x) => 0,
@@ -55,7 +64,8 @@ namespace AdventOfCode.Year2015.Day06 {
         }
         
         public override string part2ExpectedAnswer => "14110788";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             LightBoard board = new LightBoard(
                 turnOn:(x) => x + 1,
                 turnOff:(x) => Math.Max(0, x - 1),
@@ -65,9 +75,12 @@ namespace AdventOfCode.Year2015.Day06 {
             return ("Total brightness: ", RunInstructions(board));
         }
 
-        private int RunInstructions(LightBoard board) {
-            foreach (Instruction instruction in _instructions) {
-                switch (instruction.type) {
+        private int RunInstructions(LightBoard board)
+        {
+            foreach (Instruction instruction in _instructions)
+            {
+                switch (instruction.type)
+                {
                     case InstructionType.TurnOn:  board.TurnOn(instruction.start, instruction.end);  break;
                     case InstructionType.TurnOff: board.TurnOff(instruction.start, instruction.end); break;
                     case InstructionType.Toggle:  board.Toggle(instruction.start, instruction.end);  break;

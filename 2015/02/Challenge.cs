@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day02 {
-     public class Challenge : BaseChallenge {
-        private struct Box {
+namespace AdventOfCode.Year2015.Day02
+{
+     public class Challenge : BaseChallenge
+     {
+        private struct Box
+        {
             private readonly IReadOnlyList<int> _sides;
 
             public int l => _sides[0];
@@ -23,12 +26,14 @@ namespace AdventOfCode.Year2015.Day02 {
         public Challenge() => _boxes = inputList.Select(data => new Box(data));
 
         public override string part1ExpectedAnswer => "1586300";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             return ("Wrapping paper needed: ", _boxes.Sum(b => b.surfaceArea + b.smallestSideArea));
         }
         
         public override string part2ExpectedAnswer => "3737498";
-        public override (string message, object answer) SolvePart2() {
+        public override (string message, object answer) SolvePart2()
+        {
             return ("Ribbon needed: ", _boxes.Sum(b => b.smallestSidePerim + b.volume));
         }
     }

@@ -1,11 +1,14 @@
-namespace AdventOfCode.Year2019.Day17 {
+namespace AdventOfCode.Year2019.Day17
+{
     public enum Turn { Left, Right }
 
-    public struct BotAction {
+    public struct BotAction
+    {
         public Turn turn;
         public int steps;
 
-        public BotAction(Turn turn, int steps) {
+        public BotAction(Turn turn, int steps)
+        {
             this.turn = turn;
             this.steps = steps;
         }

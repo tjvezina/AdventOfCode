@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2016.Day07 {
-    public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2016.Day07
+{
+    public class Challenge : BaseChallenge
+    {
         private const string PatternABA = @"(\w)(?=(?!\1)(\w)\1)";
         private const string PatternABBA = @"(\w)(?=(?!\1)(\w)\2\1)";
         private const string PatternHypernet = @"(?=[^\[]*\])";
@@ -14,15 +16,19 @@ namespace AdventOfCode.Year2016.Day07 {
         public override string part2ExpectedAnswer => "242";
         public override (string message, object answer) SolvePart2() => ("IP's with SSL support: ", inputList.Count(SupportsSSL));
 
-        private bool SupportsTLS(string ip) {
+        private bool SupportsTLS(string ip)
+        {
             return Regex.IsMatch(ip, PatternABBA) &&
                   !Regex.IsMatch(ip, PatternABBA + PatternHypernet);
         }
 
-        private bool SupportsSSL(string ip) {
-            foreach (Match match in Regex.Matches(ip, PatternABA + PatternSupernet)) {
+        private bool SupportsSSL(string ip)
+        {
+            foreach (Match match in Regex.Matches(ip, PatternABA + PatternSupernet))
+            {
                 string patternBAB = string.Format("{1}{0}{1}", match.Groups[1], match.Groups[2]);
-                if (Regex.IsMatch(ip, patternBAB + PatternHypernet)) {
+                if (Regex.IsMatch(ip, patternBAB + PatternHypernet))
+                {
                     return true;
                 }
             }

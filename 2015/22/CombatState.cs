@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace AdventOfCode.Year2015.Day22 {
-    public class CombatState : IDeepCloneable<CombatState> {
-        public enum Result {
+namespace AdventOfCode.Year2015.Day22
+{
+    public class CombatState : IDeepCloneable<CombatState>
+    {
+        public enum Result
+        {
             InProgress,
             InsufficientMana,
             EffectAlreadyActive,
@@ -21,7 +24,8 @@ namespace AdventOfCode.Year2015.Day22 {
         public IList<Spell> spellsCast;
         public int manaSpent;
 
-        public CombatState(Difficulty difficulty) {
+        public CombatState(Difficulty difficulty)
+        {
             this.difficulty = difficulty;
             result = Result.InProgress;
             player = new Player();
@@ -30,7 +34,8 @@ namespace AdventOfCode.Year2015.Day22 {
             spellsCast = new List<Spell>();
         }
 
-        private CombatState(CombatState toCopy) {
+        private CombatState(CombatState toCopy)
+        {
             difficulty = toCopy.difficulty;
             result = toCopy.result;
             player = toCopy.player.DeepClone();
@@ -42,13 +47,17 @@ namespace AdventOfCode.Year2015.Day22 {
 
         public CombatState DeepClone() => new CombatState(this);
 
-        public void CastSpell(Spell spellToCast) {
-            bool CheckForGameOver() {
-                if (player.isDead) {
+        public void CastSpell(Spell spellToCast)
+        {
+            bool CheckForGameOver()
+            {
+                if (player.isDead)
+                {
                     result = Result.PlayerKilled;
                     return true;
                 }
-                if (boss.isDead) {
+                if (boss.isDead)
+                {
                     result = Result.Victory;
                     return true;
                 }
@@ -59,7 +68,8 @@ namespace AdventOfCode.Year2015.Day22 {
             manaSpent += spellToCast.manaCost;
 
             // --- PLAYER TURN ---
-            if (difficulty == Difficulty.Hard) {
+            if (difficulty == Difficulty.Hard)
+            {
                 player.TakeHit(DamageType.Physical, 1);
                 if (CheckForGameOver()) return;
             }
@@ -67,17 +77,21 @@ namespace AdventOfCode.Year2015.Day22 {
             ApplyActiveEffects();
             if (CheckForGameOver()) return;
 
-            if (player.mana < spellToCast.manaCost) {
+            if (player.mana < spellToCast.manaCost)
+            {
                 result = Result.InsufficientMana;
                 return;
             }
 
-            if (spellToCast.duration == 0) {
+            if (spellToCast.duration == 0)
+            {
                 spellToCast.Apply(this);
                 if (CheckForGameOver()) return;
-            } else {
+            } else
+            {
                 // Unable to cast an already active effect
-                if (activeSpells.Any(a => a.spell == spellToCast)) {
+                if (activeSpells.Any(a => a.spell == spellToCast))
+                {
                     result = Result.EffectAlreadyActive;
                     return;
                 }
@@ -97,15 +111,19 @@ namespace AdventOfCode.Year2015.Day22 {
             player.HandleTurnEnd();
         }
 
-        private void ApplyActiveEffects() {
-            for (int i = activeSpells.Count - 1; i >= 0; i--) {
+        private void ApplyActiveEffects()
+        {
+            for (int i = activeSpells.Count - 1; i >= 0; i--)
+            {
                 (Spell spell, int turnsLeft) = activeSpells[i];
 
                 spell.Apply(this);
 
-                if (--turnsLeft == 0) {
+                if (--turnsLeft == 0)
+                {
                     activeSpells.RemoveAt(i);
-                } else {
+                } else
+                {
                     activeSpells[i] = (spell, turnsLeft);
                 }
             }

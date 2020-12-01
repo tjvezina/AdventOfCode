@@ -1,14 +1,18 @@
 // #define MANUAL_SOLVE
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2019.Day25 {
-    public class Challenge : BaseChallenge {
+namespace AdventOfCode.Year2019.Day25
+{
+    public class Challenge : BaseChallenge
+    {
         public override string part1ExpectedAnswer => "8912902";
-        public override (string message, object answer) SolvePart1() {
+        public override (string message, object answer) SolvePart1()
+        {
             Droid droid = new Droid(inputList[0]);
 
 #if MANUAL_SOLVE
-            while (!droid.isComplete) {
+            while (!droid.isComplete)
+            {
                 droid.ReadInput();
             }
 #else

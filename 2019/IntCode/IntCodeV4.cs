@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace AdventOfCode.Year2019.IntCodeV4 {
-    public class IntCode {
-        public enum State {
+namespace AdventOfCode.Year2019.IntCodeV4
+{
+    public class IntCode
+    {
+        public enum State
+        {
             Default,
             Waiting,
             Complete
         }
 
-        private enum ParamMode {
+        private enum ParamMode
+        {
             Position = 0,
             Immediate = 1,
             Relative = 2
         }
 
-        private struct Param {
+        private struct Param
+        {
             public long value;
             public ParamMode mode;
         }
 
-        private struct Operator {
+        private struct Operator
+        {
             public int paramCount;
             public Action<Param[]> action;
         }
@@ -40,8 +46,10 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
         private Param? _inputDest;
         private int _relativeBase;
 
-        public IntCode(string memory, Dictionary<int, long> substitutions = null) {
-            Operators = new Dictionary<int, Operator> {
+        public IntCode(string memory, Dictionary<int, long> substitutions = null)
+        {
+            Operators = new Dictionary<int, Operator>
+            {
                 { 01, new Operator { paramCount = 3, action = OpAdd } },
                 { 02, new Operator { paramCount = 3, action = OpMult } },
                 { 03, new Operator { paramCount = 1, action = OpInput } },
@@ -56,8 +64,10 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
 
             _initialMemory = memory.Split(',').Select(long.Parse).ToArray();
 
-            if (substitutions != null) {
-                foreach ((int index, long value) in substitutions) {
+            if (substitutions != null)
+            {
+                foreach ((int index, long value) in substitutions)
+                {
                     _initialMemory[index] = value;
                 }
             }
@@ -65,7 +75,8 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
             Reset();
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             state = State.Default;
             _memory = new List<long>(_initialMemory);
             _memoryPtr = 0;
@@ -73,13 +84,15 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
             _inputDest = null;
         }
 
-        public void Begin() {
+        public void Begin()
+        {
             Debug.Assert(state == State.Default, "Execution has already begun, do you need to reset first?");
 
             Continue();
         }
 
-        public void Input(long input) {
+        public void Input(long input)
+        {
             Debug.Assert(state == State.Waiting, "Received input, but not expecting any.");
 
             WriteToMemory(_inputDest.Value, input);
@@ -87,13 +100,15 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
             Continue();
         }
 
-        private void Continue() {
+        private void Continue()
+        {
             Debug.Assert(_memoryPtr < length, "End of program reached before halt opcode found.");
             state = State.Default;
 
             long ReadMemory() => _memory[_memoryPtr++];
 
-            while (state == State.Default) {
+            while (state == State.Default)
+            {
                 long opData = ReadMemory();
                 int opCode = (int)(opData % 100);
                 opData /= 100;
@@ -101,7 +116,8 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
                 Operator op = Operators[opCode];
 
                 Param[] opParams = new Param[op.paramCount];
-                for (int i = 0; i < op.paramCount; i++) {
+                for (int i = 0; i < op.paramCount; i++)
+                {
                     ParamMode paramMode = (ParamMode)(opData % 10);
                     opData /= 10;
 
@@ -117,11 +133,13 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
 
         private void OpAdd(Param[] opParams) => OpMath(opParams, (a, b) => a + b);
         private void OpMult(Param[] opParams) => OpMath(opParams, (a, b) => a * b);
-        private void OpMath(Param[] opParams, Func<long, long, long> op) {
+        private void OpMath(Param[] opParams, Func<long, long, long> op)
+        {
             WriteToMemory(opParams[2], op(ResolveParam(opParams[0]), ResolveParam(opParams[1])));
         }
 
-        private void OpInput(Param[] opParams) {
+        private void OpInput(Param[] opParams)
+        {
             _inputDest = opParams[0];
             state = State.Waiting;
         }
@@ -130,15 +148,18 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
 
         private void OpJumpIfTrue(Param[] opParams) => OpJump(opParams, v => v != 0);
         private void OpJumpIfFalse(Param[] opParams) => OpJump(opParams, v => v == 0);
-        private void OpJump(Param[] opParams, Func<long, bool> condition) {
-            if (condition(ResolveParam(opParams[0]))) {
+        private void OpJump(Param[] opParams, Func<long, bool> condition)
+        {
+            if (condition(ResolveParam(opParams[0])))
+            {
                 _memoryPtr = (int)ResolveParam(opParams[1]);
             }
         }
 
         private void OpLessThan(Param[] opParams) => OpCondition(opParams, (a, b) => a < b);
         private void OpEqual(Param[] opParams) => OpCondition(opParams, (a, b) => a == b);
-        private void OpCondition(Param[] opParams, Func<long, long, bool> condition) {
+        private void OpCondition(Param[] opParams, Func<long, long, bool> condition)
+        {
             long paramA = ResolveParam(opParams[0]);
             long paramB = ResolveParam(opParams[1]);
             WriteToMemory(opParams[2], condition(paramA, paramB) ? 1 : 0);
@@ -146,10 +167,12 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
 
         private void OpMoveRelativeBase(Param[] opParams) => _relativeBase += (int)ResolveParam(opParams[0]);
 
-        private long ResolveParam(Param param) {
+        private long ResolveParam(Param param)
+        {
             long ReadMemory(int index) => (index < _memory.Count ? _memory[index] : 0);
 
-            switch (param.mode) {
+            switch (param.mode)
+            {
                 case ParamMode.Immediate: return param.value;
                 case ParamMode.Position:  return ReadMemory((int)param.value);
                 case ParamMode.Relative:  return ReadMemory((int)param.value + _relativeBase);
@@ -158,15 +181,18 @@ namespace AdventOfCode.Year2019.IntCodeV4 {
             }
         }
 
-        private void WriteToMemory(Param writeParam, long value) {
+        private void WriteToMemory(Param writeParam, long value)
+        {
             int position = (int)writeParam.value;
-            if (writeParam.mode == ParamMode.Relative) {
+            if (writeParam.mode == ParamMode.Relative)
+            {
                 position += _relativeBase;
             }
 
             Debug.Assert(position >= 0, "Invalid write address: " + position);
 
-            while (_memory.Count <= position) {
+            while (_memory.Count <= position)
+            {
                 _memory.Add(0);
             }
 

@@ -1,25 +1,33 @@
 using System;
 
-namespace AdventOfCode {
-    public enum CoordSystem {
+namespace AdventOfCode
+{
+    public enum CoordSystem
+    {
         YUp,  // X+ = right, Y+ = up
         YDown // X+ = right, Y+ = down
     }
 
-    public static class CoordUtil {
+    public static class CoordUtil
+    {
         public static CoordSystem? system;
-        private static CoordSystem _system {
-            get {
-                if (system == null) {
+        private static CoordSystem _system
+        {
+            get
+            {
+                if (system == null)
+                {
                     throw new Exception($"{nameof(CoordSystem)} must be set before using {nameof(CoordUtil)} functions");
                 }
                 return system.Value;
             }
         }
 
-        public static Point ToPoint(this Direction dir) {
+        public static Point ToPoint(this Direction dir)
+        {
             Point p = Point.zero;
-            switch (dir) {
+            switch (dir)
+            {
                 case Direction.Right: p = new Point( 1, 0); break;
                 case Direction.Left:  p = new Point(-1, 0); break;
                 case Direction.Up:    p = new Point( 0, 1); break;
@@ -31,7 +39,8 @@ namespace AdventOfCode {
             return p;
         }
 
-        public static Direction ToDirection(this Point p) {
+        public static Direction ToDirection(this Point p)
+        {
             if (_system == CoordSystem.YDown) p.y *= -1;
 
             if (p == new Point( 1, 0)) return Direction.Right;

@@ -2,41 +2,50 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AdventOfCode {
-    public class CharMap : IEnumerable<(int x, int y, char c)> {
+namespace AdventOfCode
+{
+    public class CharMap : IEnumerable<(int x, int y, char c)>
+    {
         private char[,] _map;
         public int width { get; }
         public int height { get; }
 
-        public char this[int x, int y] {
+        public char this[int x, int y]
+        {
             get => _map[x, y];
             set => _map[x, y] = value;
         }
 
-        public char this[Point p] {
+        public char this[Point p]
+        {
             get => _map[p.x, p.y];
             set => _map[p.x, p.y] = value;
         }
 
-        public CharMap(int width, int height) {
+        public CharMap(int width, int height)
+        {
             this.width = width;
             this.height = height;
             _map = new char[width, height];
         }
 
-        public CharMap(string[] input) {
+        public CharMap(string[] input)
+        {
             height = input.Length;
             width = input[0].Length;
             _map = new char[width, height];
 
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
                     _map[x, y] = input[y][x];
                 }
             }
         }
 
-        public CharMap(CharMap other) {
+        public CharMap(CharMap other)
+        {
             width = other.width;
             height = other.height;
             _map = new char[width, height];
@@ -45,31 +54,41 @@ namespace AdventOfCode {
         }
 
         public char GetCharOrDefault(Point p) => GetCharOrDefault(p.x, p.y);
-        public char GetCharOrDefault(int x, int y) {
+        public char GetCharOrDefault(int x, int y)
+        {
             if (x >= 0 && y >= 0 && x < width && y < height) return _map[x, y];
             return default;
         }
 
-        public IEnumerable<char> GetElements() {
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+        public IEnumerable<char> GetElements()
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
                     yield return _map[x, y];
                 }
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IEnumerator<(int x, int y, char c)> GetEnumerator() {
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+        public IEnumerator<(int x, int y, char c)> GetEnumerator()
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
                     yield return (x, y, _map[x, y]);
                 }
             }
         }
 
-        public void Draw() {
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+        public void Draw()
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
                     Console.Write(_map[x, y]);
                 }
                 Console.WriteLine();

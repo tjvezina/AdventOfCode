@@ -1,9 +1,12 @@
-namespace AdventOfCode {
-    public interface IDeepCloneable<T> {
+namespace AdventOfCode
+{
+    public interface IDeepCloneable<T>
+    {
         T DeepClone();
     }
 
-    public interface IShallowCloneable<T> {
+    public interface IShallowCloneable<T>
+    {
         T ShallowClone();
     }
 }

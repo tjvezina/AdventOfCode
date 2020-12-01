@@ -1,7 +1,9 @@
 using System;
 
-namespace AdventOfCode {
-    public struct Point {
+namespace AdventOfCode
+{
+    public struct Point
+    {
         public static readonly Point zero = new Point(0, 0);
         public static readonly Point one = new Point(1, 1);
 
@@ -17,24 +19,28 @@ namespace AdventOfCode {
 
         public int this[int i]
         {
-            get {
+            get
+            {
                 if (i == 0) return x;
                 if (i == 1) return y;
                 throw new IndexOutOfRangeException();
             }
-            set {
+            set
+            {
                 if (i == 0) x = value;
                 else if (i == 1) y = value;
                 else throw new IndexOutOfRangeException();
             }
         }
 
-        public Point(int x, int y) {
+        public Point(int x, int y)
+        {
             this.x = x;
             this.y = y;
         }
 
-        public void Deconstruct(out int x, out int y) {
+        public void Deconstruct(out int x, out int y)
+        {
             x = this.x;
             y = this.y;
         }

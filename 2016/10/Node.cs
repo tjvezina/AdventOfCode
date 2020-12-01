@@ -1,18 +1,22 @@
 using System;
 
-namespace AdventOfCode.Year2016.Day10 {
+namespace AdventOfCode.Year2016.Day10
+{
     public interface INode { }
 
-    public interface IOutputNode : INode {
+    public interface IOutputNode : INode
+    {
         bool TakeChip(int chip);
     }
 
-    public class InputNode : INode {
+    public class InputNode : INode
+    {
         public IOutputNode output;
         public int chip;
     }
 
-    public class BotNode : IOutputNode {
+    public class BotNode : IOutputNode
+    {
         public readonly int number;
 
         public int? chipA;
@@ -26,8 +30,10 @@ namespace AdventOfCode.Year2016.Day10 {
 
         public BotNode(int number) => this.number = number;
 
-        public bool TakeChip(int chip) {
-            if (chipA == null) {
+        public bool TakeChip(int chip)
+        {
+            if (chipA == null)
+            {
                 chipA = chip;
                 return false;
             }
@@ -37,10 +43,12 @@ namespace AdventOfCode.Year2016.Day10 {
         }
     }
 
-    public class OutputNode : IOutputNode {
+    public class OutputNode : IOutputNode
+    {
         public int chip;
 
-        public bool TakeChip(int chip) {
+        public bool TakeChip(int chip)
+        {
             this.chip = chip;
             return false;
         }

@@ -2,9 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2015.Day10 {
-    public class DNA {
-        public struct Element {
+namespace AdventOfCode.Year2015.Day10
+{
+    public class DNA
+    {
+        public struct Element
+        {
             public int index;
             public string value;
         }
@@ -14,13 +17,15 @@ namespace AdventOfCode.Year2015.Day10 {
         private List<Element> _elements = new List<Element>();
         private MatrixInt _dna;
 
-        public DNA(string[] dna) {
+        public DNA(string[] dna)
+        {
             _dna = new MatrixInt(dna.Length);
         
             Dictionary<string, Element> elementMap = new Dictionary<string, Element>();
 
             string[][] ruleSet = new string[dna.Length][];
-            for (int i = 0; i < dna.Length; i++) {
+            for (int i = 0; i < dna.Length; i++)
+            {
                 string[] parts = dna[i].Split('=');
                 string elementName = parts[0];
                 string[] subElements = parts[1].Split('.');
@@ -35,34 +40,41 @@ namespace AdventOfCode.Year2015.Day10 {
                 subElements[valueIndex] = elementName;
 
                 // Rules apply to the next element
-                if (i < dna.Length - 1) {
+                if (i < dna.Length - 1)
+                {
                     ruleSet[i + 1] = subElements;
                 }
 
                 // The first rule is simply the first element (it simply breaks down into itself)
-                if (i == 0) {
+                if (i == 0)
+                {
                     ruleSet[0] = new string[] { elementName };
                 }
             }
 
-            for (int i = 0; i < ruleSet.Length; i++) {
-                foreach (int subIndex in ruleSet[i].Select(e => elementMap[e].index)) {
+            for (int i = 0; i < ruleSet.Length; i++)
+            {
+                foreach (int subIndex in ruleSet[i].Select(e => elementMap[e].index))
+                {
                     _dna[subIndex, i]++;
                 }
             }
         }
         
-        public ulong GetIterationLength(int[] initial, int iterations) {
+        public ulong GetIterationLength(int[] initial, int iterations)
+        {
             MatrixInt iterDNA = MatrixInt.Power(_dna, iterations);
 
             int[] elementCounts = iterDNA * initial;
 
             ulong length = 0;
 
-            for (int i = 0; i < elementCounts.Length; i++) {
+            for (int i = 0; i < elementCounts.Length; i++)
+            {
                 int count = elementCounts[i];
 
-                if (count > 0) {
+                if (count > 0)
+                {
                     length += (ulong)_elements[i].value.Length * (ulong)count;
                 }
             }

@@ -3,12 +3,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode.Year2016.Day04 {
-    public class Room {
+namespace AdventOfCode.Year2016.Day04
+{
+    public class Room
+    {
         public int sectorID { get; }
         public bool isValid { get; }
-        public string name {
-            get {
+        public string name
+        {
+            get
+            {
                 Debug.Assert(_name != null, $"Call {nameof(Decrypt)} before accessing the decrypted room name");
                 return _name;
             }
@@ -17,7 +21,8 @@ namespace AdventOfCode.Year2016.Day04 {
         private string _encryptedName;
         private string _name;
 
-        public Room(string encryptedData) {
+        public Room(string encryptedData)
+        {
             Match match = Regex.Match(encryptedData, @"(.*)-(\d+)\[([a-z]{5})\]");
             Debug.Assert(match.Success, "Encrypted room data did not match expected format");
 
@@ -35,7 +40,8 @@ namespace AdventOfCode.Year2016.Day04 {
             isValid = (letters.Count() >= 5 && new string(letters.Take(5).ToArray()) == checksum);
         }
 
-        public void Decrypt() {
+        public void Decrypt()
+        {
             char Shift(char c) => (c == '-' ? ' ' : (char)((c + sectorID - 'a') % 26 + 'a'));
 
             _name = new string(_encryptedName.Select(Shift).ToArray());

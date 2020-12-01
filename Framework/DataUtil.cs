@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace AdventOfCode {
-    public static class DataUtil {
-        public static void Swap<T>(ref T a, ref T b) {
+namespace AdventOfCode
+{
+    public static class DataUtil
+    {
+        public static void Swap<T>(ref T a, ref T b)
+        {
             T hold = a;
             a = b;
             b = hold;
         }
 
-        public static void Swap<T>(this T[] array, int iA, int iB) {
+        public static void Swap<T>(this T[] array, int iA, int iB)
+        {
             T hold = array[iA];
             array[iA] = array[iB];
             array[iB] = hold;
@@ -17,9 +21,11 @@ namespace AdventOfCode {
 
         public static void Reverse<T>(this T[] array) => Reverse(array, 0, array.Length);
         public static void Reverse<T>(this T[] array, int start) => Reverse(array, start, array.Length - start);
-        public static void Reverse<T>(this T[] array, int start, int count) {
+        public static void Reverse<T>(this T[] array, int start, int count)
+        {
             int end = start + count - 1;
-            for (int i = 0; i < count / 2; i++) {
+            for (int i = 0; i < count / 2; i++)
+            {
                 array.Swap(start + i, end - i);
             }
         }
@@ -29,25 +35,31 @@ namespace AdventOfCode {
         /// order (ex. 1, 2, 3) and the final permutation is descending order (ex. 3, 2, 1).
         /// </summary>
         /// <returns>False if the order given is already the final permutation, i.e. nothing was changed.</returns>
-        public static bool NextPermutation(int[] order) {
+        public static bool NextPermutation(int[] order)
+        {
             // Find greatest index x, where order[x] < order[x+1]
             int x = -1;
-            for (int i = order.Length - 2; i >= 0; i--) {
-                if (order[i] < order[i+1]) {
+            for (int i = order.Length - 2; i >= 0; i--)
+            {
+                if (order[i] < order[i+1])
+                {
                     x = i;
                     break;
                 }
             }
 
             // Final permutation reached
-            if (x == -1) {
+            if (x == -1)
+            {
                 return false;
             }
 
             // Find greatest index y, where order[x] < order[y]
             int y = -1;
-            for (int i = order.Length - 1; i >= x + 1; i--) {
-                if (order[x] < order[i]) {
+            for (int i = order.Length - 1; i >= x + 1; i--)
+            {
+                if (order[x] < order[i])
+                {
                     y = i;
                     break;
                 }
@@ -68,20 +80,25 @@ namespace AdventOfCode {
         /// of 2, the sequence of combinations is [0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3].
         /// </summary>
         /// <returns>False if the combo given is already the final combination, i.e. nothing was changed.</returns>
-        public static bool NextCombination(int[] combo, int listLength) {
+        public static bool NextCombination(int[] combo, int listLength)
+        {
             int n = combo.Length;
             int i = n - 1;
-            for (int j = listLength - 1; i >= 0; i--, j--) {
-                if (combo[i] < j) {
+            for (int j = listLength - 1; i >= 0; i--, j--)
+            {
+                if (combo[i] < j)
+                {
                     break;
                 }
             }
 
-            if (i < 0) {
+            if (i < 0)
+            {
                 return false;
             }
 
-            for (int j = combo[i] + 1; i < n; i++, j++) {
+            for (int j = combo[i] + 1; i < n; i++, j++)
+            {
                 combo[i] = j;
             }
 
@@ -91,17 +108,21 @@ namespace AdventOfCode {
         /// <summary>
         /// Determines and returns all possible combinations of comboCount items in the given list.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, int comboCount) {
+        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, int comboCount)
+        {
             if (comboCount > list.Count) yield break;
 
             int[] combo = new int[comboCount];
-            for (int i = 0; i < combo.Length; i++) {
+            for (int i = 0; i < combo.Length; i++)
+            {
                 combo[i] = i;
             }
 
-            do {
+            do
+            {
                 T[] items = new T[comboCount];
-                for (int i = 0; i < combo.Length; i++) {
+                for (int i = 0; i < combo.Length; i++)
+                {
                     items[i] = list[combo[i]];
                 }
                 yield return items;
@@ -113,9 +134,12 @@ namespace AdventOfCode {
         /// within the given range. For example, if the range [1, 3] is given, all combinations of 1, 2, or 3 items
         /// will be returned.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, Range comboCountRange) {
-            foreach (int comboCount in comboCountRange) {
-                foreach (T[] items in GetAllCombinations(list, comboCount)) {
+        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, Range comboCountRange)
+        {
+            foreach (int comboCount in comboCountRange)
+            {
+                foreach (T[] items in GetAllCombinations(list, comboCount))
+                {
                     yield return items;
                 }
             }

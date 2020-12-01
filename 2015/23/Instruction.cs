@@ -1,8 +1,11 @@
 using System;
 
-namespace AdventOfCode.Year2015.Day23 {
-    public class Instruction {
-        public enum Type {
+namespace AdventOfCode.Year2015.Day23
+{
+    public class Instruction
+    {
+        public enum Type
+        {
             Half,
             Triple,
             Increment,
@@ -15,10 +18,12 @@ namespace AdventOfCode.Year2015.Day23 {
         public string register { get; }
         public int offset { get; }
 
-        public Instruction(string data) {
+        public Instruction(string data)
+        {
             string[] parts = data.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-            type = parts[0] switch {
+            type = parts[0] switch
+            {
                 "hlf" => Type.Half,
                 "tpl" => Type.Triple,
                 "inc" => Type.Increment,
@@ -28,11 +33,13 @@ namespace AdventOfCode.Year2015.Day23 {
                 _     => throw new Exception($"Unrecognized instruction code: {parts[0]}")
             };
 
-            if (type != Type.Jump) {
+            if (type != Type.Jump)
+            {
                 register = parts[1];
             }
             
-            switch (type) {
+            switch (type)
+            {
                 case Type.Jump:
                     offset = int.Parse(parts[1]);
                     break;
