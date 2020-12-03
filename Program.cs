@@ -22,7 +22,11 @@ namespace AdventOfCode
         // Set to a specific year while working on puzzles from that year, or null for current year
         private static readonly int? ActiveYear = 2020;
         private static int GetDefaultYear() => ActiveYear ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
-        private static int GetDefaultDay() => (DateTime.Now.Month == 12 ? DateTime.Now.Day : 25);
+        private static int GetDefaultDay()
+        {
+            bool isCurrentYear = (!ActiveYear.HasValue || ActiveYear == DateTime.Now.Year);
+            return (DateTime.Now.Month == 12 && isCurrentYear ? DateTime.Now.Day : 25);
+        }
 
         private static void Main(string[] args)
         {
