@@ -9,7 +9,7 @@ namespace AdventOfCode.Year2020.Day04
 
         public Challenge()
         {
-            _passportList = LoadFile("input.txt").Split("\n\n").Select(Passport.Parse).ToList();
+            _passportList = inputFile.Split("\n\n").Select(Passport.Parse).ToList();
         }
 
         public override string part1ExpectedAnswer => "226";

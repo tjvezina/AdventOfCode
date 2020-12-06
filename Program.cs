@@ -61,6 +61,7 @@ namespace AdventOfCode
             }
 
             ChallengeManager.Create(year, day);
+            Console.WriteLine($"Created {year}.{day} challenge");
         }
 
         private static void RunMode(string date)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode
@@ -16,6 +17,7 @@ namespace AdventOfCode
 
         public virtual CoordSystem? coordSystem => null;
 
+        protected string inputFile { get; }
         protected IReadOnlyList<string> inputList { get; }
 
         protected BaseChallenge()
@@ -29,6 +31,7 @@ namespace AdventOfCode
             if (File.Exists(inputFilePath))
             {
                 inputList = Array.AsReadOnly(File.ReadAllLines(inputFilePath));
+                inputFile = inputList.Aggregate((a, b) => $"{a}\n{b}");
             }
 
             CoordUtil.system = coordSystem;
