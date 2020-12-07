@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2015.Day03
 
         public Challenge() => _input = inputList[0];
 
-        public override string part1ExpectedAnswer => "2081";
+        public override object part1ExpectedAnswer => 2081;
         public override (string message, object answer) SolvePart1()
         {
             Point pos = Point.zero;
@@ -38,7 +38,7 @@ namespace AdventOfCode.Year2015.Day03
             return ("Total houses visited: ", presentMap.Count);
         }
         
-        public override string part2ExpectedAnswer => "2341";
+        public override object part2ExpectedAnswer => 2341;
         public override (string message, object answer) SolvePart2()
         {
             Point posA = Point.zero;

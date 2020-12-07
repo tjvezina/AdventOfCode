@@ -40,7 +40,7 @@ namespace AdventOfCode.Year2020.Day05
 
         private List<Seat> _seats;
 
-        public override string part1ExpectedAnswer => "866";
+        public override object part1ExpectedAnswer => 866;
         public override (string message, object answer) SolvePart1()
         {
             _seats = inputList.Select(Seat.Parse).OrderBy(x => x.seatID).ToList();
@@ -48,7 +48,7 @@ namespace AdventOfCode.Year2020.Day05
             return ("Highest seat ID: ", _seats.Last().seatID);
         }
         
-        public override string part2ExpectedAnswer => "583";
+        public override object part2ExpectedAnswer => 583;
         public override (string message, object answer) SolvePart2()
         {
             int lastID = _seats[0].seatID;

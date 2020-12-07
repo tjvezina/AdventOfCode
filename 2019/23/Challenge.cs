@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2019.Day23
 {
     public class Challenge : BaseChallenge
     {
-        public override string part1ExpectedAnswer => "24602";
+        public override object part1ExpectedAnswer => 24602;
         public override (string message, object answer) SolvePart1()
         {
             Network network = new Network(inputList[0]);
@@ -27,7 +27,7 @@ namespace AdventOfCode.Year2019.Day23
             return ($"First packet for address 255: ({packet.x}, {{0}})", packet.y);
         }
         
-        public override string part2ExpectedAnswer => "19641";
+        public override object part2ExpectedAnswer => 19641;
         public override (string message, object answer) SolvePart2()
         {
             HashSet<long> natPackets = new HashSet<long>();

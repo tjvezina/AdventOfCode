@@ -17,14 +17,14 @@ namespace AdventOfCode.Year2015.Day10
             _elementInput[86] = 1; // Element #87 (index 86) is equivalent to the input string 1113122113
         }
 
-        public override string part1ExpectedAnswer => "360154";
+        public override object part1ExpectedAnswer => 360154;
         public override (string message, object answer) SolvePart1()
         {
             const int Iteration = 40;
             return ($"Iteration {Iteration}: ", GetIterationLength(Iteration));
         }
         
-        public override string part2ExpectedAnswer => "5103798";
+        public override object part2ExpectedAnswer => 5103798;
         public override (string message, object answer) SolvePart2()
         {
             const int Iteration = 50;

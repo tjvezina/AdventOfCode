@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2020.Day01
     {
         private const int Target = 2020;
 
-        public override string part1ExpectedAnswer => "1014624";
+        public override object part1ExpectedAnswer => 1014624;
         public override (string message, object answer) SolvePart1()
         {
             int[] numbers = inputList.Select(int.Parse).ToArray();
@@ -29,7 +29,7 @@ namespace AdventOfCode.Year2020.Day01
             throw new Exception($"Failed to find a pair of numbers that sum to {Target}!");
         }
         
-        public override string part2ExpectedAnswer => "80072256";
+        public override object part2ExpectedAnswer => 80072256;
         public override (string message, object answer) SolvePart2()
         {
             int[] numbers = inputList.Select(int.Parse).ToArray();

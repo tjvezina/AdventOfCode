@@ -9,7 +9,7 @@ namespace AdventOfCode.Year2015.Day01
 
         public Challenge() => _input = inputList[0];
 
-        public override string part1ExpectedAnswer => "138";
+        public override object part1ExpectedAnswer => 138;
         public override (string message, object answer) SolvePart1()
         {
             int up = _input.Count(c => c == '(');
@@ -18,7 +18,7 @@ namespace AdventOfCode.Year2015.Day01
             return ("Floor: ", up - down);
         }
         
-        public override string part2ExpectedAnswer => "1771";
+        public override object part2ExpectedAnswer => 1771;
         public override (string message, object answer) SolvePart2()
         {
             int floor = 0;

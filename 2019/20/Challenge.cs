@@ -84,13 +84,13 @@ namespace AdventOfCode.Year2019.Day20
                    p.y == 2 || p.y == _map.height - 3;
         }
 
-        public override string part1ExpectedAnswer => "484";
+        public override object part1ExpectedAnswer => 484;
         public override (string message, object answer) SolvePart1()
         {
             return ("Shortest path: {0} steps", FindShortestPath());
         }
         
-        public override string part2ExpectedAnswer => "5754";
+        public override object part2ExpectedAnswer => 5754;
         public override (string message, object answer) SolvePart2()
         {
             return ("Shortest path: {0} steps", FindShortestPathRecursive());

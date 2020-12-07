@@ -51,7 +51,7 @@ namespace AdventOfCode.Year2015.Day06
 
         public Challenge() => _instructions = inputList.Select(i => new Instruction(i)).ToList();
 
-        public override string part1ExpectedAnswer => "377891";
+        public override object part1ExpectedAnswer => 377891;
         public override (string message, object answer) SolvePart1()
         {
             LightBoard board = new LightBoard(
@@ -63,7 +63,7 @@ namespace AdventOfCode.Year2015.Day06
             return ("Lit lights: ", RunInstructions(board));
         }
         
-        public override string part2ExpectedAnswer => "14110788";
+        public override object part2ExpectedAnswer => 14110788;
         public override (string message, object answer) SolvePart2()
         {
             LightBoard board = new LightBoard(

@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2020.Day02
 {
     public class Challenge : BaseChallenge
     {
-        public override string part1ExpectedAnswer => "474";
+        public override object part1ExpectedAnswer => 474;
         public override (string message, object answer) SolvePart1()
         {
             int validCount = 0;
@@ -29,7 +29,7 @@ namespace AdventOfCode.Year2020.Day02
             return ("There are {0} valid passwords", validCount);
         }
         
-        public override string part2ExpectedAnswer => "745";
+        public override object part2ExpectedAnswer => 745;
         public override (string message, object answer) SolvePart2()
         {
             int validCount = 0;

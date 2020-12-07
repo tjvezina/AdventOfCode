@@ -20,7 +20,7 @@ namespace AdventOfCode.Year2019.Day19
 
         public Challenge() => _intCode = new IntCode(inputList[0]);
 
-        public override string part1ExpectedAnswer => "215";
+        public override object part1ExpectedAnswer => 215;
         public override (string message, object answer) SolvePart1()
         {
             for (int y = 0; y < 50; y++)
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2019.Day19
             return ("Drone was pulled from {0} locations", _pulledCount);
         }
 
-        public override string part2ExpectedAnswer => "7720975";
+        public override object part2ExpectedAnswer => 7720975;
         public override (string message, object answer) SolvePart2()
         {
             Point p = new Point(100, 100);

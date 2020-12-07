@@ -33,13 +33,13 @@ namespace AdventOfCode.Year2019.Day03
             _wireB = ParseWireInput(inputList[1]);
         }
 
-        public override string part1ExpectedAnswer => "1519";
+        public override object part1ExpectedAnswer => 1519;
         public override (string message, object answer) SolvePart1()
         {
             return ("Nearest intersection is {0} units from origin.", FindClosestIntersection());
         }
         
-        public override string part2ExpectedAnswer => "14358";
+        public override object part2ExpectedAnswer => 14358;
         public override (string message, object answer) SolvePart2()
         {
             return ("Shortest intersection is {0} units along wires.", FindShortestIntersection());

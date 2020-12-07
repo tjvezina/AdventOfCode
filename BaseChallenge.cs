@@ -12,8 +12,8 @@ namespace AdventOfCode
         public int year { get; }
         public int day { get; }
 
-        public abstract string part1ExpectedAnswer { get; }
-        public abstract string part2ExpectedAnswer { get; }
+        public abstract object part1ExpectedAnswer { get; }
+        public abstract object part2ExpectedAnswer { get; }
 
         public virtual CoordSystem? coordSystem => null;
 

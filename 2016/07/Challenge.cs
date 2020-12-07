@@ -10,10 +10,10 @@ namespace AdventOfCode.Year2016.Day07
         private const string PatternHypernet = @"(?=[^\[]*\])";
         private const string PatternSupernet = @"(?![^\[]*\])";
 
-        public override string part1ExpectedAnswer => "110";
+        public override object part1ExpectedAnswer => 110;
         public override (string message, object answer) SolvePart1() => ("IP's with TLS support: ", inputList.Count(SupportsTLS));
         
-        public override string part2ExpectedAnswer => "242";
+        public override object part2ExpectedAnswer => 242;
         public override (string message, object answer) SolvePart2() => ("IP's with SSL support: ", inputList.Count(SupportsSSL));
 
         private bool SupportsTLS(string ip)

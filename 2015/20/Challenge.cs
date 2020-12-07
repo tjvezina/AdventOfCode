@@ -9,7 +9,7 @@ namespace AdventOfCode.Year2015.Day20
         private const int Target = 29_000_000;
         private const int HouseLimit = 50; // Max houses/elf
 
-        public override string part1ExpectedAnswer => "665280";
+        public override object part1ExpectedAnswer => 665280;
         public override (string message, object answer) SolvePart1()
         {
             for (int i = 1; ; i++)
@@ -21,7 +21,7 @@ namespace AdventOfCode.Year2015.Day20
             }
         }
 
-        public override string part2ExpectedAnswer => "705600";
+        public override object part2ExpectedAnswer => 705600;
         public override (string message, object answer) SolvePart2()
         {
             for (int i = 1; ; i++)

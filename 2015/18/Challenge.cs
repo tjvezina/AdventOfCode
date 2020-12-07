@@ -4,7 +4,7 @@ namespace AdventOfCode.Year2015.Day18
 {
      public class Challenge : BaseChallenge
      {
-        public override string part1ExpectedAnswer => "814";
+        public override object part1ExpectedAnswer => 814;
         public override (string message, object answer) SolvePart1()
         {
             LightBoard board = new LightBoard(inputList.ToArray());
@@ -17,7 +17,7 @@ namespace AdventOfCode.Year2015.Day18
             return ("Lights on: ", board.litCount);
         }
         
-        public override string part2ExpectedAnswer => "924";
+        public override object part2ExpectedAnswer => 924;
         public override (string message, object answer) SolvePart2()
         {
             LightBoard board = new LightBoard(inputList.ToArray(), cornersAlwaysOn:true);

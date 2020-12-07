@@ -10,14 +10,14 @@ namespace AdventOfCode.Year2019.Day01
 
         public Challenge() => _massList = inputList.Select(int.Parse);
 
-        public override string part1ExpectedAnswer => "3323874";
+        public override object part1ExpectedAnswer => 3323874;
         public override (string message, object answer) SolvePart1()
         {
             int fuelCost = _massList.Select(GetFuelCost).Sum();
             return ("Total fuel cost: ", fuelCost);
         }
         
-        public override string part2ExpectedAnswer => "4982961";
+        public override object part2ExpectedAnswer => 4982961;
         public override (string message, object answer) SolvePart2()
         {
             int fuelCost = _massList.Select(GetFuelCostRecursive).Sum();

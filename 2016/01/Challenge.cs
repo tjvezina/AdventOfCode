@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2016.Day01
 
         public Challenge() => _steps = inputList[0].Split(", ").Select(d => new Step(d)).ToArray();
 
-        public override string part1ExpectedAnswer => "332";
+        public override object part1ExpectedAnswer => 332;
         public override (string message, object answer) SolvePart1()
         {
             Point pos = StartPos;
@@ -29,7 +29,7 @@ namespace AdventOfCode.Year2016.Day01
             return ("Blocks to target: ", pos.taxiLength);
         }
         
-        public override string part2ExpectedAnswer => "166";
+        public override object part2ExpectedAnswer => 166;
         public override (string message, object answer) SolvePart2()
         {
             Point pos = StartPos;

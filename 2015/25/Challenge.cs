@@ -18,7 +18,7 @@ namespace AdventOfCode.Year2015.Day25
             _codeCol = int.Parse(match.Groups[2].Value);
         }
 
-        public override string part1ExpectedAnswer => "2650453";
+        public override object part1ExpectedAnswer => 2650453;
         public override (string message, object answer) SolvePart1()
         {
             int codeIndex = GetCodeIndex(_codeRow, _codeCol);
@@ -32,7 +32,7 @@ namespace AdventOfCode.Year2015.Day25
             return ($"Code at ({_codeRow}, {_codeCol}): ", code);
         }
         
-        public override string part2ExpectedAnswer => "Weather Machine";
+        public override object part2ExpectedAnswer => "Weather Machine";
         public override (string message, object answer) SolvePart2() => (null, part2ExpectedAnswer);
 
         private int GetCodeIndex(int row, int col)

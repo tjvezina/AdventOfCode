@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2019.Day16
 
         public Challenge() => _input = inputList[0].Select(c => c - '0').ToArray();
 
-        public override string part1ExpectedAnswer => "44098263";
+        public override object part1ExpectedAnswer => 44098263;
         public override (string message, object answer) SolvePart1()
         {
             int[] output = new int[_input.Length];
@@ -25,7 +25,7 @@ namespace AdventOfCode.Year2019.Day16
             return ("First 8 digits of result: ", result);
         }
         
-        public override string part2ExpectedAnswer => "12482168";
+        public override object part2ExpectedAnswer => 12482168;
         public override (string message, object answer) SolvePart2()
         {
             int offset = _input.Take(7).Aggregate((a, b) => a * 10 + b);

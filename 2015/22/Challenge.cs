@@ -19,14 +19,14 @@ namespace AdventOfCode.Year2015.Day22
             new Spell("Recharge",      manaCost:229, duration:5, new ManaRestoreEffect(101))
         });
 
-        public override string part1ExpectedAnswer => "1824";
+        public override object part1ExpectedAnswer => 1824;
         public override (string message, object answer) SolvePart1()
         {
             Play(Difficulty.Easy, out int leastMana);
             return ("Least-mana victory: ", leastMana);
         }
         
-        public override string part2ExpectedAnswer => "1937";
+        public override object part2ExpectedAnswer => 1937;
         public override (string message, object answer) SolvePart2()
         {
             Play(Difficulty.Hard, out int leastMana);

@@ -6,7 +6,7 @@ namespace AdventOfCode.Year2019.Day08
 
         public Challenge() => image = new SpaceImage(25, 6, inputList[0]);
 
-        public override string part1ExpectedAnswer => "1360";
+        public override object part1ExpectedAnswer => 1360;
         public override (string message, object answer) SolvePart1()
         {
             int leastZerosLayer = -1;
@@ -35,7 +35,7 @@ namespace AdventOfCode.Year2019.Day08
             return ("Image validation output: ", leastZerosValueCounts[1] * leastZerosValueCounts[2]);
         }
         
-        public override string part2ExpectedAnswer => "FPUAR";
+        public override object part2ExpectedAnswer => "FPUAR";
         public override (string message, object answer) SolvePart2()
         {
             bool[,] data = image.Flatten();

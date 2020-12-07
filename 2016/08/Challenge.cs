@@ -7,13 +7,13 @@ namespace AdventOfCode.Year2016.Day08
     {
         private const int Width = 50;
         private const int Height = 6;
-        private bool[,] _board = new bool[Width, Height];
+        private readonly bool[,] _board = new bool[Width, Height];
 
-        private IEnumerable<Operation> _operations;
+        private readonly IEnumerable<Operation> _operations;
         
         public Challenge() => _operations = inputList.Select(Operation.Parse);
 
-        public override string part1ExpectedAnswer => "106";
+        public override object part1ExpectedAnswer => 106;
         public override (string message, object answer) SolvePart1()
         {
             foreach (Operation operation in _operations)
@@ -33,7 +33,7 @@ namespace AdventOfCode.Year2016.Day08
             return ("Lit pixels: ", litCount);
         }
         
-        public override string part2ExpectedAnswer => "CFLELOYFCS";
+        public override object part2ExpectedAnswer => "CFLELOYFCS";
         public override (string message, object answer) SolvePart2()
         {
             ASCIIArt.Draw(_board, doubleWidth:false);

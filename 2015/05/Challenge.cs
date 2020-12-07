@@ -8,10 +8,10 @@ namespace AdventOfCode.Year2015.Day05
         private static readonly char[] Vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
         private static readonly List<string> BadStrings = new List<string> { "ab", "cd", "pq", "xy" };
 
-        public override string part1ExpectedAnswer => "236";
+        public override object part1ExpectedAnswer => 236;
         public override (string message, object answer) SolvePart1() => ("Nice strings (rule set A): ", inputList.Count(IsNiceRuleSetA));
         
-        public override string part2ExpectedAnswer => "51";
+        public override object part2ExpectedAnswer => 51;
         public override (string message, object answer) SolvePart2() => ("Nice strings (rule set B): ", inputList.Count(IsNiceRuleSetB));
 
         private bool IsNiceRuleSetA(string str)

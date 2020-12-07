@@ -12,13 +12,13 @@ namespace AdventOfCode.Year2016.Day14
         private const string Pattern3InARow = @"(.)\1{2}";
         private const string Pattern5InARow = @"(.)\1{4}";
 
-        public override string part1ExpectedAnswer => "25427";
+        public override object part1ExpectedAnswer => 25427;
         public override (string message, object answer) SolvePart1()
         {
             return ("64th key index: ", GetKeys().Last());
         }
         
-        public override string part2ExpectedAnswer => "22045";
+        public override object part2ExpectedAnswer => 22045;
         public override (string message, object answer) SolvePart2()
         {
             return ("64th key index: ", GetKeys(year).Last());

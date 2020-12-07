@@ -8,13 +8,13 @@ namespace AdventOfCode.Year2019.Day07
 
         public Challenge() => _ampManager = new AmplifierManager(inputList[0]);
 
-        public override string part1ExpectedAnswer => "20413";
+        public override object part1ExpectedAnswer => 20413;
         public override (string message, object answer) SolvePart1()
         {
             return TestAllPermutations(Enumerable.Range(0, AmplifierManager.AmpCount).ToArray());
         }
         
-        public override string part2ExpectedAnswer => "3321777";
+        public override object part2ExpectedAnswer => 3321777;
         public override (string message, object answer) SolvePart2()
         {
             return TestAllPermutations(Enumerable.Range(5, AmplifierManager.AmpCount).ToArray());

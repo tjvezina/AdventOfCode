@@ -26,7 +26,7 @@ namespace AdventOfCode.Year2019.Day17
 
         public Challenge() => _intCodeMemory = inputList[0];
 
-        public override string part1ExpectedAnswer => "3936";
+        public override object part1ExpectedAnswer => 3936;
         public override (string message, object answer) SolvePart1()
         {
             List<char> map = new List<char>();
@@ -46,7 +46,7 @@ namespace AdventOfCode.Year2019.Day17
             return ("Sum of alignment parameters: ", alignParams);
         }
 
-        public override string part2ExpectedAnswer => "785733";
+        public override object part2ExpectedAnswer => 785733;
         public override (string message, object answer) SolvePart2()
         {
             BuildActionsList();

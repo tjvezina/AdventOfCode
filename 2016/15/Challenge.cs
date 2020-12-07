@@ -25,13 +25,13 @@ namespace AdventOfCode.Year2016.Day15
 
         public Challenge() => _discs = inputList.Select(Disc.Parse).ToList();
 
-        public override string part1ExpectedAnswer => "122318";
+        public override object part1ExpectedAnswer => 122318;
         public override (string message, object answer) SolvePart1()
         {
             return ("First chance to drop capsule: ", FindFirstAlignTime());
         }
         
-        public override string part2ExpectedAnswer => "3208583";
+        public override object part2ExpectedAnswer => 3208583;
         public override (string message, object answer) SolvePart2()
         {
             _discs.Add(new Disc { steps = 11, position = 0 });

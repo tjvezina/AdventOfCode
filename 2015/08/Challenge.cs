@@ -4,7 +4,7 @@ namespace AdventOfCode.Year2015.Day08
 {
     public class Challenge : BaseChallenge
     {
-        public override string part1ExpectedAnswer => "1333";
+        public override object part1ExpectedAnswer => 1333;
         public override (string message, object answer) SolvePart1()
         {
             int totalChars = inputList.Sum(s => s.Length);
@@ -12,7 +12,7 @@ namespace AdventOfCode.Year2015.Day08
             return ("Non-visible characters: ", totalChars - visibleChars);
         }
         
-        public override string part2ExpectedAnswer => "2046";
+        public override object part2ExpectedAnswer => 2046;
         public override (string message, object answer) SolvePart2()
         {
             int totalChars = inputList.Sum(s => s.Length);

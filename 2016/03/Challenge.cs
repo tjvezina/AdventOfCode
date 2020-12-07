@@ -24,14 +24,14 @@ namespace AdventOfCode.Year2016.Day03
             _sides = inputList.Select(ReadSides).ToArray();
         }
 
-        public override string part1ExpectedAnswer => "1050";
+        public override object part1ExpectedAnswer => 1050;
         public override (string message, object answer) SolvePart1()
         {
             int validCount = _sides.Select(s => new Triangle(s)).Count(t => t.isValid);
             return ("{0} valid triangles", validCount);
         }
         
-        public override string part2ExpectedAnswer => "1921";
+        public override object part2ExpectedAnswer => 1921;
         public override (string message, object answer) SolvePart2()
         {
             List<Triangle> triangles = new List<Triangle>();

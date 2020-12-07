@@ -40,7 +40,7 @@ namespace AdventOfCode.Year2019.Day12
         }
 
         private readonly List<Body> _bodies = new List<Body>();
-        private readonly List<Point3> _initialBodyPositions = new List<Point3>();
+        private readonly List<Point3> _initialBodyPositions;
         private List<AxisData> _axisData;
 
         public Challenge()
@@ -55,7 +55,7 @@ namespace AdventOfCode.Year2019.Day12
             _initialBodyPositions = _bodies.Select(b => b.position).ToList();
         }
 
-        public override string part1ExpectedAnswer => "6849";
+        public override object part1ExpectedAnswer => 6849;
         public override (string message, object answer) SolvePart1()
         {
             for (int i = 0; i < 1000; i++)
@@ -68,7 +68,7 @@ namespace AdventOfCode.Year2019.Day12
             return ("Total energy: ", totalEnergy);
         }
         
-        public override string part2ExpectedAnswer => "356658899375688";
+        public override object part2ExpectedAnswer => 356658899375688;
         public override (string message, object answer) SolvePart2()
         {
             long[] cycleLengths = new long[3];

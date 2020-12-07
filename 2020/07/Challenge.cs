@@ -19,7 +19,7 @@ namespace AdventOfCode.Year2020.Day07
 
         private readonly Dictionary<string, Bag> _bagMap = new Dictionary<string, Bag>();
 
-        public override string part1ExpectedAnswer => "211";
+        public override object part1ExpectedAnswer => 211;
         public override (string message, object answer) SolvePart1()
         {
             BuildBagMap();
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2020.Day07
             return ($"There are {{0}} bag colors that could contain my {MyBagColor} bag", parents.Count);
         }
         
-        public override string part2ExpectedAnswer => "12414";
+        public override object part2ExpectedAnswer => 12414;
         public override (string message, object answer) SolvePart2()
         {
             Bag myBag = _bagMap[MyBagColor];

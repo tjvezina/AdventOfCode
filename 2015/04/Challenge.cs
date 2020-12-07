@@ -16,14 +16,14 @@ namespace AdventOfCode.Year2015.Day04
 
         public override void Reset() => _targetInput = 0;
 
-        public override string part1ExpectedAnswer => "117946";
+        public override object part1ExpectedAnswer => 117946;
         public override (string message, object answer) SolvePart1()
         {
             int input = FindInput(h => h[0] + h[1] == 0 && h[2] < 0x10); // Starts with 5 zeros
             return ("Desired input: ", input);
         }
 
-        public override string part2ExpectedAnswer => "3938038";
+        public override object part2ExpectedAnswer => 3938038;
         public override (string message, object answer) SolvePart2()
         {
             int input = FindInput(h => h[0] + h[1] + h[2] == 0); // Starts with 6 zeros

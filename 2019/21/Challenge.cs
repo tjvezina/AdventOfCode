@@ -17,7 +17,7 @@ namespace AdventOfCode.Year2019.Day21
             _intCode.OnOutput += HandleOutput;
         }
 
-        public override string part1ExpectedAnswer => "19354392";
+        public override object part1ExpectedAnswer => 19354392;
         public override (string message, object answer) SolvePart1()
         {
             RunSpringBot(new[]
@@ -34,7 +34,7 @@ namespace AdventOfCode.Year2019.Day21
             return ("Dust collected: ", _lastOutput);
         }
         
-        public override string part2ExpectedAnswer => "1139528802";
+        public override object part2ExpectedAnswer => 1139528802;
         public override (string message, object answer) SolvePart2()
         {
             RunSpringBot(new[]

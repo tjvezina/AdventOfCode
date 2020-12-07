@@ -178,7 +178,7 @@ namespace AdventOfCode
                 data.message = message;
                 data.givenAnswer = answer?.ToString();
 
-                string expected = (string)ExpectedAnswerProps[part].GetValue(challenge);
+                string expected = ExpectedAnswerProps[part].GetValue(challenge)?.ToString();
                 if (!string.IsNullOrEmpty(expected))
                 {
                     data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);

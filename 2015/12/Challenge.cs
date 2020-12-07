@@ -10,13 +10,13 @@ namespace AdventOfCode.Year2015.Day12
 
         public Challenge() => _root = JSON.Load(inputList[0]);
 
-        public override string part1ExpectedAnswer => "119433";
+        public override object part1ExpectedAnswer => 119433;
         public override (string message, object answer) SolvePart1()
         {
             return ("Sum of all numbers: ", SumNumbers(_root));
         }
         
-        public override string part2ExpectedAnswer => "68466";
+        public override object part2ExpectedAnswer => 68466;
         public override (string message, object answer) SolvePart2()
         {
             return ("Sum of all numbers: ", SumNumbers(_root, excludeRed:true));

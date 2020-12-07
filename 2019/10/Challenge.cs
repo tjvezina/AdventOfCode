@@ -53,7 +53,7 @@ namespace AdventOfCode.Year2019.Day10
             }
         }
 
-        public override string part1ExpectedAnswer => "282";
+        public override object part1ExpectedAnswer => 282;
         public override (string message, object answer) SolvePart1()
         {
             int maxVisible = 0;
@@ -73,7 +73,7 @@ namespace AdventOfCode.Year2019.Day10
             return ($"Max visible asteroids: {{0}} {_stationPos}", maxVisible);
         }
         
-        public override string part2ExpectedAnswer => "1008";
+        public override object part2ExpectedAnswer => 1008;
         public override (string message, object answer) SolvePart2()
         {
             const int AsteroidNum = 200;

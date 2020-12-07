@@ -36,7 +36,7 @@ namespace AdventOfCode.Year2019.Day06
             }
         }
 
-        public override string part1ExpectedAnswer => "130681";
+        public override object part1ExpectedAnswer => 130681;
         public override (string message, object answer) SolvePart1()
         {
             int orbitTotal = 0;
@@ -54,7 +54,7 @@ namespace AdventOfCode.Year2019.Day06
             return ("Total direct + indirect orbits: ", orbitTotal);
         }
         
-        public override string part2ExpectedAnswer => "313";
+        public override object part2ExpectedAnswer => 313;
         public override (string message, object answer) SolvePart2()
         {
             List<Body> myHierarchy = new List<Body>();

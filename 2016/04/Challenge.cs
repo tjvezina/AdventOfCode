@@ -7,7 +7,7 @@ namespace AdventOfCode.Year2016.Day04
     {
         private List<Room> _rooms;
 
-        public override string part1ExpectedAnswer => "158835";
+        public override object part1ExpectedAnswer => 158835;
         public override (string message, object answer) SolvePart1()
         {
             _rooms = inputList.Select(i => new Room(i)).Where(r => r.isValid).ToList();
@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2016.Day04
             return ("Sum of sector ID's of valid rooms: ", _rooms.Sum(r => r.sectorID));
         }
         
-        public override string part2ExpectedAnswer => "993";
+        public override object part2ExpectedAnswer => 993;
         public override (string message, object answer) SolvePart2()
         {
             foreach (Room room in _rooms)

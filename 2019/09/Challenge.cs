@@ -15,7 +15,7 @@ namespace AdventOfCode.Year2019.Day09
             _intCode.OnOutput += HandleOnOutput;
         }
 
-        public override string part1ExpectedAnswer => "4261108180";
+        public override object part1ExpectedAnswer => 4261108180;
         public override (string message, object answer) SolvePart1()
         {
             _intCode.Begin();
@@ -23,7 +23,7 @@ namespace AdventOfCode.Year2019.Day09
             return ("Final output: ", _lastOutput);
         }
         
-        public override string part2ExpectedAnswer => "77944";
+        public override object part2ExpectedAnswer => 77944;
         public override (string message, object answer) SolvePart2()
         {
             _intCode.Reset();

@@ -23,7 +23,7 @@ namespace AdventOfCode.Year2015.Day19
             _molecule = input.Dequeue();
         }
 
-        public override string part1ExpectedAnswer => "576";
+        public override object part1ExpectedAnswer => 576;
         public override (string message, object answer) SolvePart1()
         {
             HashSet<string> subMolecules = new HashSet<string>();
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2015.Day19
             return ("Distinct submolecules: ", subMolecules.Count);
         }
 
-        public override string part2ExpectedAnswer => "207";
+        public override object part2ExpectedAnswer => 207;
         public override (string message, object answer) SolvePart2()
         {
             int Count(string match)

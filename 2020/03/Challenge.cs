@@ -22,13 +22,13 @@ namespace AdventOfCode.Year2020.Day03
             _map = new CharMap(inputList.ToArray());
         }
 
-        public override string part1ExpectedAnswer => "242";
+        public override object part1ExpectedAnswer => 242;
         public override (string message, object answer) SolvePart1()
         {
             return ("The toboggan hits {0} trees", CheckSlope(new Point(3, 1)));
         }
 
-        public override string part2ExpectedAnswer => "2265549792";
+        public override object part2ExpectedAnswer => 2265549792;
         public override (string message, object answer) SolvePart2()
         {
             long product = Part2Slopes.Select(x => (long)CheckSlope(x)).Aggregate((a, b) => a * b);

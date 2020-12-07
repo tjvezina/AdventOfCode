@@ -24,13 +24,13 @@ namespace AdventOfCode.Year2015.Day14
             }
         }
 
-        public override string part1ExpectedAnswer => "2640";
+        public override object part1ExpectedAnswer => 2640;
         public override (string message, object answer) SolvePart1()
         {
             return ("Furthest dist: ", _reindeer.Max(r => r.GetDistance(RaceDuration)));
         }
         
-        public override string part2ExpectedAnswer => "1102";
+        public override object part2ExpectedAnswer => 1102;
         public override (string message, object answer) SolvePart2()
         {
             List<int> distances = new List<int>(new int[_reindeer.Count]);

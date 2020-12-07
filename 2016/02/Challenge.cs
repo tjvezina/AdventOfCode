@@ -30,7 +30,7 @@ namespace AdventOfCode.Year2016.Day02
             _instructions = inputList.Select(i => i.Select(ToDirection).ToArray()).ToArray();
         }
 
-        public override string part1ExpectedAnswer => "56983";
+        public override object part1ExpectedAnswer => "56983";
         public override (string message, object answer) SolvePart1()
         {
             CharMap keypad = new CharMap(new[]
@@ -43,7 +43,7 @@ namespace AdventOfCode.Year2016.Day02
             return ("Bathroom code: ", GetCode(Point.one, keypad));
         }
         
-        public override string part2ExpectedAnswer => "8B8B1";
+        public override object part2ExpectedAnswer => "8B8B1";
         public override (string message, object answer) SolvePart2()
         {
             CharMap keypad = new CharMap(new[]

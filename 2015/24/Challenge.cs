@@ -11,14 +11,14 @@ namespace AdventOfCode.Year2015.Day24
 
         public Challenge() => _packages = inputList.Select(int.Parse).ToArray();
 
-        public override string part1ExpectedAnswer => "10723906903";
+        public override object part1ExpectedAnswer => 10723906903;
         public override (string message, object answer) SolvePart1()
         {
             List<int[]> groups = FindBestGroups(groupCount:3);
             return ("Quantum entanglement of first group: ", GetQuantumEntanglement(groups[0]));
         }
         
-        public override string part2ExpectedAnswer => "74850409";
+        public override object part2ExpectedAnswer => 74850409;
         public override (string message, object answer) SolvePart2()
         {
             // Try some other counts, just for fun

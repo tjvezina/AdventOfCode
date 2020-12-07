@@ -22,7 +22,7 @@ namespace AdventOfCode.Year2019.Day05
             _intCode.Load(inputList[0]);
         }
 
-        public override string part1ExpectedAnswer => "10987514";
+        public override object part1ExpectedAnswer => 10987514;
         public override (string message, object answer) SolvePart1()
         {
             _input = InputTest;
@@ -35,7 +35,7 @@ namespace AdventOfCode.Year2019.Day05
             throw new Exception("At least one system failed, check outputs for more info");
         }
         
-        public override string part2ExpectedAnswer => "14195011";
+        public override object part2ExpectedAnswer => 14195011;
         public override (string message, object answer) SolvePart2()
         {
             _intCode.Reset();

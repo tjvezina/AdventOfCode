@@ -53,7 +53,7 @@ namespace AdventOfCode.Year2019.Day24
 
         private BugMap _map3D;
 
-        public override string part2ExpectedAnswer => "1928";
+        public override object part2ExpectedAnswer => 1928;
         public override (string message, object answer) SolvePart2()
         {
             _map3D = new BugMap(inputList.ToArray());

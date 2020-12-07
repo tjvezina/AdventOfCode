@@ -44,7 +44,7 @@ namespace AdventOfCode.Year2016.Day11
             }
         }
 
-        public override string part1ExpectedAnswer => "31";
+        public override object part1ExpectedAnswer => 31;
         public override (string message, object answer) SolvePart1()
         {
             State initialState = new State(_microchipFloors, _generatorFloors);
@@ -52,7 +52,7 @@ namespace AdventOfCode.Year2016.Day11
             return ("All objects moved to top floor in {0} moves", GetMinimumSteps(initialState));
         }
         
-        public override string part2ExpectedAnswer => "55";
+        public override object part2ExpectedAnswer => 55;
         public override (string message, object answer) SolvePart2()
         {
             // Add new equipment found on first floor

@@ -12,13 +12,13 @@ namespace AdventOfCode.Year2015.Day17
 
         public Challenge() => _containers = inputList.Select(int.Parse).ToList();
 
-        public override string part1ExpectedAnswer => "4372";
+        public override object part1ExpectedAnswer => 4372;
         public override (string message, object answer) SolvePart1()
         {
             return ("Valid combinations: ", CountCombinations(write:false));
         }
         
-        public override string part2ExpectedAnswer => "4";
+        public override object part2ExpectedAnswer => 4;
         public override (string message, object answer) SolvePart2()
         {
             return ("Valid combinations: ", CountCombinations(write:true, minimize:true));

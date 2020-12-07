@@ -11,7 +11,7 @@ namespace AdventOfCode.Year2016.Day05
     {
         private const string DoorID = "wtnhxymk";
         private const int PasswordLength = 8;
-        private const int ThreadCount = 6;
+        private const int ThreadCount = 2;
 
         private volatile SortedList<int, (char a, char b)> _passwordValues = new SortedList<int, (char a, char b)>();
 
@@ -20,7 +20,7 @@ namespace AdventOfCode.Year2016.Day05
         private int _part1Target = int.MaxValue;
         private int _part2Target = int.MaxValue;
 
-        public override string part1ExpectedAnswer => "2414BC77";
+        public override object part1ExpectedAnswer => "2414BC77";
         public override (string message, object answer) SolvePart1()
         {
             StartThreads();
@@ -36,7 +36,7 @@ namespace AdventOfCode.Year2016.Day05
             return ("Password: ", password);
         }
         
-        public override string part2ExpectedAnswer => "437E60FC";
+        public override object part2ExpectedAnswer => "437E60FC";
         public override (string message, object answer) SolvePart2()
         {
             WaitForPart2Values();

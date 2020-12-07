@@ -46,7 +46,7 @@ namespace AdventOfCode.Year2016.Day10
             _inputs = inputNodeData.Select(ParseInputNode).ToArray();
         }
 
-        public override string part1ExpectedAnswer => "98";
+        public override object part1ExpectedAnswer => 98;
         public override (string message, object answer) SolvePart1()
         {
             Queue<INode> _openSet = new Queue<INode>(_inputs);
@@ -78,7 +78,7 @@ namespace AdventOfCode.Year2016.Day10
             return ("Bot {0} compares 17 & 61 microchips.", answerBot.number);
         }
         
-        public override string part2ExpectedAnswer => "4042";
+        public override object part2ExpectedAnswer => 4042;
         public override (string message, object answer) SolvePart2()
         {
             int product = _outputs.Take(3).Select(o => o.chip).Aggregate((a, b) => a * b);

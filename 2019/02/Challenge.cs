@@ -16,7 +16,7 @@ namespace AdventOfCode.Year2019.Day02
             _intCode.Load(inputList[0]);
         }
 
-        public override string part1ExpectedAnswer => "5434663";
+        public override object part1ExpectedAnswer => 5434663;
         public override (string message, object answer) SolvePart1()
         {
             _intCode.Execute(Noun, Verb);
@@ -24,7 +24,7 @@ namespace AdventOfCode.Year2019.Day02
             return ($"Output of {Noun}/{Verb}: ", _intCode[0]);
         }
         
-        public override string part2ExpectedAnswer => "4559";
+        public override object part2ExpectedAnswer => 4559;
         public override (string message, object answer) SolvePart2()
         {
             const int TargetOutput = 19690720;

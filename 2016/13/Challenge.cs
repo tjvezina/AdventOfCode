@@ -10,7 +10,7 @@ namespace AdventOfCode.Year2016.Day13
         private static readonly Point Start = new Point(1, 1);
         private static readonly Point End = new Point(31, 39);
 
-        public override string part1ExpectedAnswer => "86";
+        public override object part1ExpectedAnswer => 86;
         public override (string message, object answer) SolvePart1()
         {
             Stack<Point> path = Pathfinder.FindPathInGrid(Start, End, isValid:IsOpen);
@@ -18,7 +18,7 @@ namespace AdventOfCode.Year2016.Day13
             return ("Shortest path: {0} steps", path.Count);
         }
         
-        public override string part2ExpectedAnswer => "127";
+        public override object part2ExpectedAnswer => 127;
         public override (string message, object answer) SolvePart2()
         {
             return ("Reachable spaces: ", CountReachable(50));

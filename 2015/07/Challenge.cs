@@ -72,14 +72,14 @@ namespace AdventOfCode.Year2015.Day07
             }
         }
 
-        public override string part1ExpectedAnswer => "3176";
+        public override object part1ExpectedAnswer => 3176;
         public override (string message, object answer) SolvePart1()
         {
             _part1Output = Resolve("a");
             return ("Wire \"a\" output: ", _part1Output);
         }
         
-        public override string part2ExpectedAnswer => "14710";
+        public override object part2ExpectedAnswer => 14710;
         public override (string message, object answer) SolvePart2()
         {
             // Sub the original output from wire A for the input of wire B, then resolve again

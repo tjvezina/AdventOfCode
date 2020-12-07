@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2019.Day25
 {
     public class Challenge : BaseChallenge
     {
-        public override string part1ExpectedAnswer => "8912902";
+        public override object part1ExpectedAnswer => 8912902;
         public override (string message, object answer) SolvePart1()
         {
             Droid droid = new Droid(inputList[0]);
@@ -27,7 +27,7 @@ namespace AdventOfCode.Year2019.Day25
             return ("Airlock password: ", match.Value);
         }
         
-        public override string part2ExpectedAnswer => "The Sun";
+        public override object part2ExpectedAnswer => "The Sun";
         public override (string message, object answer) SolvePart2() => (null, part2ExpectedAnswer);
     }
 }

@@ -37,7 +37,7 @@ namespace AdventOfCode.Year2019.Day22
             }
         }
 
-        public override string part1ExpectedAnswer => "4684";
+        public override object part1ExpectedAnswer => 4684;
         public override (string message, object answer) SolvePart1()
         {
             const long DeckSize = 10_007;
@@ -50,7 +50,7 @@ namespace AdventOfCode.Year2019.Day22
             return ("Final card position: ", card);
         }
         
-        public override string part2ExpectedAnswer => "452290953297";
+        public override object part2ExpectedAnswer => 452290953297;
         public override (string message, object answer) SolvePart2()
         {
             const long DeckSize  = 119_315_717_514_047;

@@ -20,7 +20,7 @@ namespace AdventOfCode.Year2015.Day21
             _allArmor   = equipment.Where(e => e.type == Equipment.Type.Armor).ToArray();
         }
 
-        public override string part1ExpectedAnswer => "121";
+        public override object part1ExpectedAnswer => 121;
         public override (string message, object answer) SolvePart1()
         {
             Equipment[] bestEquipment = FindBestEquipment(playerWins:true, leastGold:true);
@@ -30,7 +30,7 @@ namespace AdventOfCode.Year2015.Day21
             return ($"Won by spending {{0}}g on {equipmentStr}", bestEquipment.Sum(e => e.cost));
         }
         
-        public override string part2ExpectedAnswer => "201";
+        public override object part2ExpectedAnswer => 201;
         public override (string message, object answer) SolvePart2()
         {
             Equipment[] bestEquipment = FindBestEquipment(playerWins:false, leastGold:false);

@@ -54,7 +54,7 @@ namespace AdventOfCode.Year2019.Day14
 
         public override void Reset() => _available.Clear();
 
-        public override string part1ExpectedAnswer => "1037742";
+        public override object part1ExpectedAnswer => 1037742;
         public override (string message, object answer) SolvePart1()
         {
             ModifyAvailable(Ore, InitialOre);
@@ -65,7 +65,7 @@ namespace AdventOfCode.Year2019.Day14
             return ("{{0}} ore required for 1 fuel", _orePerFuel);
         }
         
-        public override string part2ExpectedAnswer => "1572358";
+        public override object part2ExpectedAnswer => 1572358;
         public override (string message, object answer) SolvePart2()
         {
             ModifyAvailable(Ore, InitialOre);

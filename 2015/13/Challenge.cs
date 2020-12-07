@@ -13,7 +13,7 @@ namespace AdventOfCode.Year2015.Day13
 
         public override void Reset() => _maxHappiness = int.MinValue;
 
-        public override string part1ExpectedAnswer => "709";
+        public override object part1ExpectedAnswer => 709;
         public override (string message, object answer) SolvePart1()
         {
             BuildHappyMatrix();
@@ -23,7 +23,7 @@ namespace AdventOfCode.Year2015.Day13
             return ($"Max happiness: {{0}} ({orderStr})", _maxHappiness);
         }
 
-        public override string part2ExpectedAnswer => "668";
+        public override object part2ExpectedAnswer => 668;
         public override (string message, object answer) SolvePart2()
         {
             BuildHappyMatrix(includeSelf:true);

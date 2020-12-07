@@ -46,7 +46,7 @@ namespace AdventOfCode.Year2015.Day09
             _bestOrder = new int[_cities.Count];
         }
 
-        public override string part1ExpectedAnswer => "141";
+        public override object part1ExpectedAnswer => 141;
         public override (string message, object answer) SolvePart1()
         {
             bool IsShorter(int dist, int best) => dist < best;
@@ -56,7 +56,7 @@ namespace AdventOfCode.Year2015.Day09
             return ("Shortest route: ", _bestDist);
         }
 
-        public override string part2ExpectedAnswer => "736";
+        public override object part2ExpectedAnswer => 736;
         public override (string message, object answer) SolvePart2()
         {
             bool IsLonger(int dist, int best) => dist > best;

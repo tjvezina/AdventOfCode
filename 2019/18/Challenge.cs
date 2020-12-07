@@ -21,14 +21,14 @@ namespace AdventOfCode.Year2019.Day18
 
         public Challenge() => _map = new CharMap(inputList.ToArray());
 
-        public override string part1ExpectedAnswer => "5406";
+        public override object part1ExpectedAnswer => 5406;
         public override (string message, object answer) SolvePart1()
         {
             BuildGraph();
             return ("Shortest path to all keys: ", FindShortestPath());
         }
 
-        public override string part2ExpectedAnswer => "1938";
+        public override object part2ExpectedAnswer => 1938;
         public override (string message, object answer) SolvePart2()
         {
             UpdateMap();

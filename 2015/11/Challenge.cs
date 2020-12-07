@@ -10,14 +10,14 @@ namespace AdventOfCode.Year2015.Day11
 
         private Password _password = new Password(Input);
 
-        public override string part1ExpectedAnswer => "vzbxxyzz";
+        public override object part1ExpectedAnswer => "vzbxxyzz";
         public override (string message, object answer) SolvePart1()
         {
             NextValidPassword();
             return ("Next valid password: ", _password);
         }
         
-        public override string part2ExpectedAnswer => "vzcaabcc";
+        public override object part2ExpectedAnswer => "vzcaabcc";
         public override (string message, object answer) SolvePart2()
         {
             NextValidPassword();

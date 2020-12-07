@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2015.Day16
             }
         }
 
-        public override string part1ExpectedAnswer => "40";
+        public override object part1ExpectedAnswer => 40;
         public override (string message, object answer) SolvePart1()
         {
             PropType GetPropType(string prop) => PropType.Equal;
@@ -49,7 +49,7 @@ namespace AdventOfCode.Year2015.Day16
             return ("Matching aunt Sue found: #", FindSue(GetPropType));
         }
 
-        public override string part2ExpectedAnswer => "241";
+        public override object part2ExpectedAnswer => 241;
         public override (string message, object answer) SolvePart2()
         {
             PropType GetPropType(string prop)

@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2016.Day06
 {
     public class Challenge : BaseChallenge
     {
-        public override string part1ExpectedAnswer => "gebzfnbt";
+        public override object part1ExpectedAnswer => "gebzfnbt";
         public override (string message, object answer) SolvePart1()
         {
             char GetMostFrequent(char[] set) => set.GroupBy(c => c).OrderBy(g => g.Count()).Last().First();
@@ -13,7 +13,7 @@ namespace AdventOfCode.Year2016.Day06
             return ("Message: ", GetMessage(charSelector:GetMostFrequent));
         }
         
-        public override string part2ExpectedAnswer => "fykjtwyn";
+        public override object part2ExpectedAnswer => "fykjtwyn";
         public override (string message, object answer) SolvePart2()
         {
             char GetLeastFrequent(char[] set) => set.GroupBy(c => c).OrderBy(g => g.Count()).First().First();
