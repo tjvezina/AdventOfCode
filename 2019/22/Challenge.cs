@@ -68,7 +68,7 @@ namespace AdventOfCode.Year2019.Day22
             DeckData finalData = new DeckData(DeckSize);
             finalData.increment = MathUtil.ModPower(passData.increment, Iterations, DeckSize);
             finalData.offset = (passData.offset * (1 - finalData.increment) *
-                               MathUtil.ModPower(1 - passData.increment, DeckSize - 2, DeckSize)) % DeckSize;
+                MathUtil.ModPower(1 - passData.increment, DeckSize - 2, DeckSize)) % DeckSize;
 
             BigInteger card = (finalData.offset + (finalData.increment * 2020)) % DeckSize;
 

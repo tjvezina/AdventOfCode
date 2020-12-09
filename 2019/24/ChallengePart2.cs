@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day24
 {
-    public partial class Challenge : BaseChallenge
+    public partial class Challenge
     {
         private class BugMap
         {

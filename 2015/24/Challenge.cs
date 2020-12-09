@@ -42,12 +42,14 @@ namespace AdventOfCode.Year2015.Day24
             int groupSize = 1;
             while (groupSize <= _packages.Length)
             {
-                IEnumerable<int[]> validGroups = DataUtil.GetAllCombinations(_packages, groupSize)
-                    .Where(g => g.Sum() == groupSum);
+                int[] group = DataUtil.GetAllCombinations(_packages, groupSize)
+                    .Where(g => g.Sum() == groupSum)
+                    .OrderBy(GetQuantumEntanglement)
+                    .FirstOrDefault();
 
-                if (validGroups.Count() > 0)
+                if (group != null)
                 {
-                    groups.Add(validGroups.OrderBy(GetQuantumEntanglement).First());
+                    groups.Add(group);
                     break;
                 }
 
@@ -56,7 +58,7 @@ namespace AdventOfCode.Year2015.Day24
 
             Debug.Assert(groups.Count > 0, $"Failed to find any groups that total {groupSum}");
 
-            bool FindNextGroup(IEnumerable<int> except, int index = 1)
+            bool FindNextGroup(IReadOnlyList<int> except, int index = 1)
             {
                 if (index == groupCount - 1)
                 {
@@ -67,8 +69,7 @@ namespace AdventOfCode.Year2015.Day24
 
                 foreach (int[] subGroup in FindGroups(groupSum, except))
                 {
-                    IEnumerable<int> nextExcept = except.Concat(subGroup);
-                    if (FindNextGroup(nextExcept, index + 1))
+                    if (FindNextGroup(except.Concat(subGroup).ToArray(), index + 1))
                     {
                         groups.Insert(1, subGroup);
                         return true;

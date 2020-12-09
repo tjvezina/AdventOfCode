@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day01
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private readonly IEnumerable<int> _massList;
 
         public Challenge() => _massList = inputList.Select(int.Parse);

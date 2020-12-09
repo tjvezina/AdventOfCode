@@ -50,19 +50,19 @@ namespace AdventOfCode
         private static readonly MethodInfo ResetMethod = ChallengeType.GetMethod(nameof(BaseChallenge.Reset));
         private static readonly Dictionary<ChallengePart, MethodInfo> SolvePartMethods = new Dictionary<ChallengePart, MethodInfo>
         {
-            { ChallengePart.Part1, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart1)) },
-            { ChallengePart.Part2, ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart2)) }
+            [ChallengePart.Part1] = ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart1)),
+            [ChallengePart.Part2] = ChallengeType.GetMethod(nameof(BaseChallenge.SolvePart2))
         };
         private static readonly Dictionary<ChallengePart, PropertyInfo> ExpectedAnswerProps = new Dictionary<ChallengePart, PropertyInfo>
         {
-            { ChallengePart.Part1, ChallengeType.GetProperty(nameof(BaseChallenge.part1ExpectedAnswer)) },
-            { ChallengePart.Part2, ChallengeType.GetProperty(nameof(BaseChallenge.part2ExpectedAnswer)) }
+            [ChallengePart.Part1] = ChallengeType.GetProperty(nameof(BaseChallenge.part1ExpectedAnswer)),
+            [ChallengePart.Part2] = ChallengeType.GetProperty(nameof(BaseChallenge.part2ExpectedAnswer))
         };
 
-        private static Stopwatch _stopwatch = new Stopwatch();
+        private static readonly Stopwatch Stopwatch = new Stopwatch();
 
+        private static string GetPath(int year, int day) => $"{year}/{day:00}";
         public static string GetPath(this BaseChallenge challenge) => GetPath(challenge.year, challenge.day);
-        public static string GetPath(int year, int day) => $"{year}/{day:00}";
 
         public static Type GetType(int year, int day) => Type.GetType($"AdventOfCode.Year{year}.Day{day:00}.Challenge");
 
@@ -82,9 +82,13 @@ namespace AdventOfCode
             File.WriteAllText(filePath, template);
         }
 
+        private static BaseChallenge CreateChallengeInstance(Type type) =>
+            (BaseChallenge)type.GetConstructor(Type.EmptyTypes)?.Invoke(null)
+                ?? throw new Exception($"Failed to create instance of {type}, no public empty constructor found");
+
         public static void Run(Type type)
         {
-            BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);
+            BaseChallenge challenge = CreateChallengeInstance(type);
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($" <<< Advent of Code {challenge.year} Day {challenge.day} >>> ");
@@ -125,7 +129,7 @@ namespace AdventOfCode
 
         public static void Test(Type type)
         {
-            BaseChallenge challenge = (BaseChallenge)type.GetConstructor(Type.EmptyTypes).Invoke(null);
+            BaseChallenge challenge = CreateChallengeInstance(type);
 
             TestPart(challenge, ChallengePart.Part1);
             TestPart(challenge, ChallengePart.Part2);
@@ -170,10 +174,12 @@ namespace AdventOfCode
 
             try
             {
-                _stopwatch.Restart();
+                Stopwatch.Restart();
                 ResetMethod.Invoke(challenge, null);
-                (string message, object answer) = ((string, object))SolvePartMethods[part].Invoke(challenge, null);
-                _stopwatch.Stop();
+                object output = SolvePartMethods[part].Invoke(challenge, null);
+                Stopwatch.Stop();
+
+                (string message, object answer) = ((string, object)?)output ?? (null, null);
 
                 data.message = message;
                 data.givenAnswer = answer?.ToString();
@@ -181,19 +187,21 @@ namespace AdventOfCode
                 string expected = ExpectedAnswerProps[part].GetValue(challenge)?.ToString();
                 if (!string.IsNullOrEmpty(expected))
                 {
-                    data.status = (data.givenAnswer == expected ? ResultStatus.Success : ResultStatus.WrongAnswer);
-                } else if (!string.IsNullOrEmpty(data.givenAnswer))
+                    data.status = (data.givenAnswer == $"{expected}" ? ResultStatus.Success : ResultStatus.WrongAnswer);
+                }
+                else if (!string.IsNullOrEmpty(data.givenAnswer))
                 {
                     data.status = ResultStatus.Candidate;
-                } else
+                }
+                else
                 {
                     data.status = ResultStatus.Development;
-                    _stopwatch.Reset();
+                    Stopwatch.Reset();
                 }
             } catch (Exception ex)
             {
                 data.status = ResultStatus.Exception;
-                _stopwatch.Reset();
+                Stopwatch.Reset();
                 
                 while (ex.InnerException != null) ex = ex.InnerException; // Skip Invoke() and nested exceptions
 
@@ -209,25 +217,25 @@ namespace AdventOfCode
 
         private static void WriteBenchmark()
         {
-            if (_stopwatch.ElapsedTicks == 0) return;
+            if (Stopwatch.ElapsedTicks == 0) return;
 
-            double elapsed = _stopwatch.Elapsed.TotalSeconds;
+            double elapsed = Stopwatch.Elapsed.TotalSeconds;
 
             string elapsedStr = elapsed switch
             {
-                double e when e < 10   => $"{elapsed:0.000}",
-                double e when e < 100  => $"{elapsed:00.00}",
-                double e when e < 1000 => $"{elapsed:000.0}",
-                _                      => ">1000"
+                var e when e <   10 => $"{elapsed:0.000}",
+                var e when e <  100 => $"{elapsed:00.00}",
+                var e when e < 1000 => $"{elapsed:000.0}",
+                _                   => ">1000"
             };
 
             Console.ForegroundColor = elapsed switch
             {
-                double e when e >= 10.0 => ConsoleColor.Red,
-                double e when e >= 5.0  => ConsoleColor.DarkRed,
-                double e when e >= 1.0  => ConsoleColor.DarkYellow,
-                double e when e >= 0.25 => ConsoleColor.DarkGreen,
-                _                       => ConsoleColor.DarkGray
+                var e when e >= 10.0  => ConsoleColor.Red,
+                var e when e >=  5.0  => ConsoleColor.DarkRed,
+                var e when e >=  1.0  => ConsoleColor.DarkYellow,
+                var e when e >=  0.25 => ConsoleColor.DarkGreen,
+                _                     => ConsoleColor.DarkGray
             };
 
             Console.Write($"({elapsedStr}s) ");

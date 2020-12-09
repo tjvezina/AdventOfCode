@@ -37,7 +37,7 @@ namespace AdventOfCode.Year2015.Day23
             {
                 register = parts[1];
             }
-            
+
             switch (type)
             {
                 case Type.Jump:
@@ -46,6 +46,10 @@ namespace AdventOfCode.Year2015.Day23
                 case Type.JumpIfEven:
                 case Type.JumpIfOne:
                     offset = int.Parse(parts[2]);
+                    break;
+                case Type.Half:
+                case Type.Triple:
+                case Type.Increment:
                     break;
             }
         }

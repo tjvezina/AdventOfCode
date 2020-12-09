@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode.Year2019.Day03
 {
-     public class Challenge : BaseChallenge
-     {
+    [CoordSystem(CoordSystem.YUp)]
+    public class Challenge : BaseChallenge
+    {
         private struct Step
         {
             public Point start;
@@ -21,8 +21,6 @@ namespace AdventOfCode.Year2019.Day03
             public List<Step> horizontalSteps = new List<Step>();
             public List<Step> verticalSteps = new List<Step>();
         }
-
-        public override CoordSystem? coordSystem => CoordSystem.YUp;
 
         private readonly Wire _wireA;
         private readonly Wire _wireB;

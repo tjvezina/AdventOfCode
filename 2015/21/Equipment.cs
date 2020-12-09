@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using TinyJSON;
 
 namespace AdventOfCode.Year2015.Day21
 {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local", Justification = "Property setters used by TinyJSON")]
     public struct Equipment
     {
         public enum Type

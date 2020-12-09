@@ -4,12 +4,11 @@ using System.Linq;
 
 namespace AdventOfCode.Year2016.Day01
 {
+    [CoordSystem(CoordSystem.YUp)]
     public class Challenge : BaseChallenge
     {
-        public override CoordSystem? coordSystem => CoordSystem.YUp;
-
         private static readonly Point StartPos = Point.zero;
-        private static readonly Direction StartDir = Direction.Up;
+        private const Direction StartDir = Direction.Up;
 
         private readonly Step[] _steps;
 

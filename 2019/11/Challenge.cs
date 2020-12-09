@@ -1,9 +1,8 @@
 namespace AdventOfCode.Year2019.Day11
 {
-     public class Challenge : BaseChallenge
-     {
-        public override CoordSystem? coordSystem => CoordSystem.YUp;
-
+    [CoordSystem(CoordSystem.YUp)]
+    public class Challenge : BaseChallenge
+    {
         private readonly PaintBot _paintBot;
 
         public Challenge() => _paintBot = new PaintBot(inputList[0]);

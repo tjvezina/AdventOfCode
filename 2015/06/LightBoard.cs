@@ -4,34 +4,34 @@ namespace AdventOfCode.Year2015.Day06
 {
     public class LightBoard
     {
-        public const int Size = 1000;
+        private const int Size = 1000;
 
-        private int[,] _grid = new int[Size, Size];
+        private readonly int[,] _grid = new int[Size, Size];
 
-        private Func<int, int> turnOn;
-        private Func<int, int> turnOff;
-        private Func<int, int> toggle;
+        private readonly Func<int, int> _turnOn;
+        private readonly Func<int, int> _turnOff;
+        private readonly Func<int, int> _toggle;
 
         public LightBoard(Func<int, int> turnOn, Func<int, int> turnOff, Func<int, int> toggle)
         {
-            this.turnOn = turnOn;
-            this.turnOff = turnOff;
-            this.toggle = toggle;
+            _turnOn = turnOn;
+            _turnOff = turnOff;
+            _toggle = toggle;
         }
 
-        public int Brightness
+        public int brightness
         {
             get
             {
-                int brightness = 0;
+                int value = 0;
                 for (int x = 0; x < Size; x++)
                 {
                     for (int y = 0; y < Size; y++)
                     {
-                        brightness += _grid[x, y];
+                        value += _grid[x, y];
                     }
                 }
-                return brightness;
+                return value;
             }
         }
 
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2015.Day06
             {
                 for (int y = a.y; y <= b.y; y++)
                 {
-                    _grid[x, y] = turnOn(_grid[x, y]);
+                    _grid[x, y] = _turnOn(_grid[x, y]);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace AdventOfCode.Year2015.Day06
             {
                 for (int y = a.y; y <= b.y; y++)
                 {
-                    _grid[x, y] = turnOff(_grid[x, y]);
+                    _grid[x, y] = _turnOff(_grid[x, y]);
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace AdventOfCode.Year2015.Day06
             {
                 for (int y = a.y; y <= b.y; y++)
                 {
-                    _grid[x, y] = toggle(_grid[x, y]);
+                    _grid[x, y] = _toggle(_grid[x, y]);
                 }
             }
         }

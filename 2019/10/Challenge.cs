@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Year2019.Day10
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private struct Asteroid
         {
             public Point position;

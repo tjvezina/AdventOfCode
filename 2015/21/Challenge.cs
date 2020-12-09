@@ -49,12 +49,11 @@ namespace AdventOfCode.Year2015.Day21
 
             foreach (Equipment[] rings in DataUtil.GetAllCombinations(_allRings, new Range(0, 2)))
             {
-                for (int w = 0; w < _allWeapons.Length; w++)
+                foreach (Equipment[] weapons in DataUtil.GetAllCombinations(_allWeapons, 1))
                 {
-                    for (int a = -1; a < _allArmor.Length; a++)
+                    foreach (Equipment[] armor in DataUtil.GetAllCombinations(_allArmor, new Range(0, 1)))
                     {
-                        IEnumerable<Equipment> equipment = rings.Append(_allWeapons[w]);
-                        if (a > -1) equipment = equipment.Append(_allArmor[a]);
+                        Equipment[] equipment = rings.Concat(weapons).Concat(armor).ToArray();
                         Player player = new Player(equipment);
 
                         bool desiredWinner = (playerWins == (player.TurnsToDefeat(boss) <= boss.TurnsToDefeat(player)));
@@ -63,7 +62,7 @@ namespace AdventOfCode.Year2015.Day21
                         if (desiredWinner && betterCost)
                         {
                             bestCost = player.equipmentCost;
-                            bestEquipment = equipment.ToArray();
+                            bestEquipment = equipment;
                         }
                     }
                 }

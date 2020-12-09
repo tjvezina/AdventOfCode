@@ -1,9 +1,8 @@
 namespace AdventOfCode.Year2019.Day15
 {
-     public class Challenge : BaseChallenge
-     {
-        public override CoordSystem? coordSystem => CoordSystem.YUp;
-
+    [CoordSystem(CoordSystem.YUp)]
+    public class Challenge : BaseChallenge
+    {
         private RepairBot _bot;
 
         public override object part1ExpectedAnswer => 374;

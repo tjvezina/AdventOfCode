@@ -5,8 +5,8 @@ using AdventOfCode.Year2019.IntCodeV2;
 
 namespace AdventOfCode.Year2019.Day05
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         public const int InputTest = 1;
         public const int InputRun = 5;
 

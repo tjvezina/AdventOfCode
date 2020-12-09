@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day04
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const int Digits = 6;
         private const int RangeMin = 146810;
         private const int RangeMax = 612564;

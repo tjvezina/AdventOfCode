@@ -4,8 +4,6 @@ namespace AdventOfCode.Year2015.Day10
 {
     public class Challenge : BaseChallenge
     {
-        private const string Input = "1113122113";
-
         private readonly DNA _dna;
         private readonly int[] _elementInput;
 
@@ -21,6 +19,7 @@ namespace AdventOfCode.Year2015.Day10
         public override (string message, object answer) SolvePart1()
         {
             const int Iteration = 40;
+
             return ($"Iteration {Iteration}: ", GetIterationLength(Iteration));
         }
         
@@ -29,13 +28,13 @@ namespace AdventOfCode.Year2015.Day10
         {
             const int Iteration = 50;
 
-            void PrintIter(int iter) => Console.WriteLine($"Iteration {iter:N0}: {GetIterationLength(iter)}");
-
             // Some huge values, just for fun
             PrintIter(1_000);
             PrintIter(1_000_000);
 
             return ($"Iteration {Iteration}: ", GetIterationLength(Iteration));
+
+            void PrintIter(int iter) => Console.WriteLine($"Iteration {iter:N0}: {GetIterationLength(iter)}");
         }
 
         private ulong GetIterationLength(int iter) => _dna.GetIterationLength(_elementInput, iter);

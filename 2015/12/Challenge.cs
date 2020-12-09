@@ -24,27 +24,21 @@ namespace AdventOfCode.Year2015.Day12
 
         private int SumNumbers(Variant variant, bool excludeRed = false)
         {
-            if (variant is ProxyNumber number)
+            switch (variant)
             {
-                return (int)Convert.ChangeType(number, typeof(int));
-            }
-
-            if (variant is ProxyArray array)
-            {
-                return array.Sum(v => SumNumbers(v, excludeRed));
-            }
-
-            if (variant is ProxyObject obj)
-            {
-                if (excludeRed && obj.Any(pair => pair.Value is ProxyString str && str.ToString() == "red"))
-                {
+                case ProxyNumber number:
+                    return (int)Convert.ChangeType(number, typeof(int));
+                case ProxyArray array:
+                    return array.Sum(v => SumNumbers(v, excludeRed));
+                case ProxyObject obj:
+                    if (excludeRed && obj.Any(p => p.Value is ProxyString s && $"{s}" == "red"))
+                    {
+                        return 0;
+                    }
+                    return obj.Sum(p => SumNumbers(p.Value, excludeRed));
+                default:
                     return 0;
-                }
-
-                return obj.Sum(pair => SumNumbers(pair.Value, excludeRed));
             }
-
-            return 0;
         }
     }
 }

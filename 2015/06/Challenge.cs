@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day06
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private enum InstructionType { TurnOn, TurnOff, Toggle }
 
         private const string TypeTurnOn = "turn on";
         private const string TypeTurnOff = "turn off";
         private const string TypeToggle = "toggle";
-        private static readonly string[] Separators = new[] { ",", " through " };
+        private static readonly string[] Separators = { ",", " through " };
 
-        private struct Instruction
+        private readonly struct Instruction
         {
-            public InstructionType type;
-            public Point start;
-            public Point end;
+            public readonly InstructionType type;
+            public readonly Point start;
+            public readonly Point end;
 
             public Instruction(string data)
             {
@@ -55,9 +55,9 @@ namespace AdventOfCode.Year2015.Day06
         public override (string message, object answer) SolvePart1()
         {
             LightBoard board = new LightBoard(
-                turnOn:(x) => 1,
-                turnOff:(x) => 0,
-                toggle:(x) => x == 0 ? 1 : 0
+                turnOn: x => 1,
+                turnOff: x => 0,
+                toggle: x => x == 0 ? 1 : 0
             );
 
             return ("Lit lights: ", RunInstructions(board));
@@ -67,9 +67,9 @@ namespace AdventOfCode.Year2015.Day06
         public override (string message, object answer) SolvePart2()
         {
             LightBoard board = new LightBoard(
-                turnOn:(x) => x + 1,
-                turnOff:(x) => Math.Max(0, x - 1),
-                toggle:(x) => x + 2
+                turnOn: x => x + 1,
+                turnOff: x => Math.Max(0, x - 1),
+                toggle: x => x + 2
             );
 
             return ("Total brightness: ", RunInstructions(board));
@@ -87,7 +87,7 @@ namespace AdventOfCode.Year2015.Day06
                 }
             }
 
-            return board.Brightness;
+            return board.brightness;
         }
     }
 }

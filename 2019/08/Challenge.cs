@@ -1,7 +1,7 @@
 namespace AdventOfCode.Year2019.Day08
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private readonly SpaceImage image;
 
         public Challenge() => image = new SpaceImage(25, 6, inputList[0]);
@@ -40,8 +40,8 @@ namespace AdventOfCode.Year2019.Day08
         {
             bool[,] data = image.Flatten();
 
-           ASCIIArt.Draw(data);
-           return ("Image text: ", ASCIIArt.ImageToText(data));
+            ASCIIArt.Draw(data);
+            return ("Image text: ", ASCIIArt.ImageToText(data));
         }
     }
 }

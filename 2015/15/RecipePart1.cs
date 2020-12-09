@@ -3,15 +3,17 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day15
 {
-    public class RecipePart1 : Recipe
+    public class RecipePart1 : BaseRecipe
     {
+        private readonly int[] _quantities = new int[Ingredients.Count];
+
         public RecipePart1()
         {
             for (int i = 0; i < _quantities.Length; i++)
             {
-                _quantities[i] = Quantity / _ingredients.Count;
+                _quantities[i] = Quantity / Ingredients.Count;
             }
-            _quantities[0] += Quantity % _ingredients.Count; // Drop leftovers in the first ingredient
+            _quantities[0] += Quantity % Ingredients.Count; // Drop leftovers in the first ingredient
         }
 
         public override void MaximizeScore()
@@ -23,15 +25,15 @@ namespace AdventOfCode.Year2015.Day15
                 Console.WriteLine($"Improved: {ingredients} = {bestScore}");
             }
 
-            Console.WriteLine("Unable to further improve recipe.");
+            Console.WriteLine("Unable to further improve recipe:\n" +
+                _quantities.Select((q, i) => $"- {q} {Ingredients[i].name}").Aggregate((a, b) => $"{a}\n{b}")
+            );
         }
 
         private bool TryImprove()
         {
-            int baseScore = GetScore();
-            int[] nextRecipe = new int[_ingredients.Count];
-            
-            void Reset() => _quantities.CopyTo(nextRecipe, 0);
+            int baseScore = CalculateScore(_quantities);
+            int[] nextRecipe = new int[Ingredients.Count];
 
             for (int i = 0; i < _quantities.Length; i++)
             {
@@ -39,7 +41,7 @@ namespace AdventOfCode.Year2015.Day15
                 {
                     if (i == j) continue;
 
-                    Reset();
+                    _quantities.CopyTo(nextRecipe, 0);
                     
                     if (nextRecipe[i] == 100 || nextRecipe[j] == 0) continue;
 

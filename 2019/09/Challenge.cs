@@ -3,8 +3,8 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019.Day09
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private readonly IntCode _intCode;
 
         private long _lastOutput;

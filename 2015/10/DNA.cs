@@ -6,7 +6,7 @@ namespace AdventOfCode.Year2015.Day10
 {
     public class DNA
     {
-        public struct Element
+        private struct Element
         {
             public int index;
             public string value;
@@ -14,17 +14,17 @@ namespace AdventOfCode.Year2015.Day10
 
         public int elementCount => _elements.Count;
 
-        private List<Element> _elements = new List<Element>();
-        private MatrixInt _dna;
+        private readonly List<Element> _elements = new List<Element>();
+        private readonly MatrixInt _dna;
 
-        public DNA(string[] dna)
+        public DNA(IReadOnlyList<string> dna)
         {
-            _dna = new MatrixInt(dna.Length);
+            _dna = new MatrixInt(dna.Count);
         
             Dictionary<string, Element> elementMap = new Dictionary<string, Element>();
 
-            string[][] ruleSet = new string[dna.Length][];
-            for (int i = 0; i < dna.Length; i++)
+            string[][] ruleSet = new string[dna.Count][];
+            for (int i = 0; i < dna.Count; i++)
             {
                 string[] parts = dna[i].Split('=');
                 string elementName = parts[0];
@@ -40,7 +40,7 @@ namespace AdventOfCode.Year2015.Day10
                 subElements[valueIndex] = elementName;
 
                 // Rules apply to the next element
-                if (i < dna.Length - 1)
+                if (i < dna.Count - 1)
                 {
                     ruleSet[i + 1] = subElements;
                 }
@@ -48,7 +48,7 @@ namespace AdventOfCode.Year2015.Day10
                 // The first rule is simply the first element (it simply breaks down into itself)
                 if (i == 0)
                 {
-                    ruleSet[0] = new string[] { elementName };
+                    ruleSet[0] = new [] { elementName };
                 }
             }
 

@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace AdventOfCode.Year2015.Day11
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const string Input = "vzbxkghb";
 
-        private Password _password = new Password(Input);
+        private readonly Password _password = new Password(Input);
 
         public override object part1ExpectedAnswer => "vzbxxyzz";
         public override (string message, object answer) SolvePart1()

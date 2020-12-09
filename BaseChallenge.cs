@@ -15,8 +15,6 @@ namespace AdventOfCode
         public abstract object part1ExpectedAnswer { get; }
         public abstract object part2ExpectedAnswer { get; }
 
-        public virtual CoordSystem? coordSystem => null;
-
         protected string inputFile { get; }
         protected IReadOnlyList<string> inputList { get; }
 
@@ -34,7 +32,11 @@ namespace AdventOfCode
                 inputFile = inputList.Aggregate((a, b) => $"{a}\n{b}");
             }
 
-            CoordUtil.system = coordSystem;
+            Attribute attribute = Attribute.GetCustomAttribute(GetType(), typeof(CoordSystemAttribute));
+            if (attribute is CoordSystemAttribute coordSystemAttribute)
+            {
+                CoordUtil.system = coordSystemAttribute.coordSystem;
+            }
         }
 
         protected string GetFilePath(string fileName) => $"{this.GetPath()}/{fileName}";

@@ -6,10 +6,10 @@ namespace AdventOfCode.Year2015.Day21
 {
     public abstract class Actor
     {
-        public abstract int hitPoints { get; }
-        
-        public abstract int damage { get; }
-        public abstract int armor { get; }
+        protected abstract int hitPoints { get; }
+
+        protected abstract int damage { get; }
+        protected abstract int armor { get; }
 
         public int TurnsToDefeat(Actor opponent)
         {
@@ -20,32 +20,26 @@ namespace AdventOfCode.Year2015.Day21
 
     public class Boss : Actor
     {
-        public override int hitPoints => 103;
+        protected override int hitPoints => 103;
 
-        public override int damage => 9;
-        public override int armor => 2;
+        protected override int damage => 9;
+        protected override int armor => 2;
     }
 
     public class Player : Actor
     {
-        public override int hitPoints => 100;
+        protected override int hitPoints => 100;
 
-        public override int damage => _equipmentDamage;
-        public override int armor => _equipmentArmor;
+        protected override int damage { get; }
+        protected override int armor { get; }
 
         public int equipmentCost { get; }
 
-        private List<Equipment> _equipment;
-        private int _equipmentDamage;
-        private int _equipmentArmor;
-
-        public Player(IEnumerable<Equipment> equipment)
+        public Player(IReadOnlyList<Equipment> equipment)
         {
-            _equipment = new List<Equipment>(equipment);
-
-            _equipmentDamage = _equipment.Sum(e => e.damage);
-            _equipmentArmor = _equipment.Sum(e => e.armor);
-            equipmentCost = _equipment.Sum(e => e.cost);
+            damage = equipment.Sum(e => e.damage);
+            armor = equipment.Sum(e => e.armor);
+            equipmentCost = equipment.Sum(e => e.cost);
         }
     }
 }

@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day09
 {
-     public class Challenge : BaseChallenge
-     {
-        public class DistSubMap : Dictionary<int, int> { }
-        public class DistMap : Dictionary<int, DistSubMap> { }
+    public class Challenge : BaseChallenge
+    {
+        private class DistSubMap : Dictionary<int, int> { }
+        private class DistMap : Dictionary<int, DistSubMap> { }
 
-        private List<string> _cities = new List<string>();
-        private DistMap _distMap = new DistMap();
+        private readonly List<string> _cities = new List<string>();
+        private readonly DistMap _distMap = new DistMap();
 
         private int[] _order;
         private int[] _bestOrder;
@@ -49,21 +49,17 @@ namespace AdventOfCode.Year2015.Day09
         public override object part1ExpectedAnswer => 141;
         public override (string message, object answer) SolvePart1()
         {
-            bool IsShorter(int dist, int best) => dist < best;
-            
             _bestDist = int.MaxValue;
-            FindBestOrder(condition:IsShorter);
+            FindBestOrder(condition: (dist, best) => dist < best);
             return ("Shortest route: ", _bestDist);
         }
 
         public override object part2ExpectedAnswer => 736;
         public override (string message, object answer) SolvePart2()
         {
-            bool IsLonger(int dist, int best) => dist > best;
-            
             _bestDist = 0;
-            FindBestOrder(condition:IsLonger);
-            return ("Shortest route: ", _bestDist);
+            FindBestOrder(condition: (dist, best) => dist > best);
+            return ("Longest route: ", _bestDist);
         }
 
         private void FindBestOrder(Func<int, int, bool> condition)

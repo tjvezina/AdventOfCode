@@ -1,8 +1,10 @@
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
+using JetBrains.Annotations;
 
 namespace AdventOfCode
 {
+    [PublicAPI]
     public static class DataUtil
     {
         public static void Swap<T>(ref T a, ref T b)
@@ -136,13 +138,7 @@ namespace AdventOfCode
         /// </summary>
         public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, Range comboCountRange)
         {
-            foreach (int comboCount in comboCountRange)
-            {
-                foreach (T[] items in GetAllCombinations(list, comboCount))
-                {
-                    yield return items;
-                }
-            }
+            return comboCountRange.SelectMany(comboCount => GetAllCombinations(list, comboCount));
         }
     }
 }

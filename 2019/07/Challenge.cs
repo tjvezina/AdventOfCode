@@ -2,8 +2,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day07
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private readonly AmplifierManager _ampManager;
 
         public Challenge() => _ampManager = new AmplifierManager(inputList[0]);

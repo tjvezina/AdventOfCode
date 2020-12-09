@@ -8,7 +8,7 @@ namespace AdventOfCode.Year2015.Day22
         public int manaCost { get; }
         public int duration { get; }
 
-        public readonly ICollection<ISpellEffect> effects;
+        private readonly ICollection<ISpellEffect> _effects;
 
         public Spell(string name, int manaCost, params ISpellEffect[] effects)
             : this(name, manaCost, duration:0, effects) { }
@@ -18,12 +18,12 @@ namespace AdventOfCode.Year2015.Day22
             this.name = name;
             this.manaCost = manaCost;
             this.duration = duration;
-            this.effects = new List<ISpellEffect>(effects);
+            _effects = new List<ISpellEffect>(effects);
         }
 
         public void Apply(CombatState state)
         {
-            foreach (ISpellEffect effect in effects)
+            foreach (ISpellEffect effect in _effects)
             {
                 effect.Apply(state);
             }
@@ -37,49 +37,49 @@ namespace AdventOfCode.Year2015.Day22
 
     public class DamageEffect : ISpellEffect
     {
-        public int damage { get; }
+        private readonly int _damage;
 
-        public DamageEffect(int damage) => this.damage = damage;
+        public DamageEffect(int damage) => _damage = damage;
 
         public void Apply(CombatState state)
         {
-            state.boss.TakeHit(DamageType.Magical, damage);
+            state.boss.TakeHit(DamageType.Magical, _damage);
         }
     }
 
     public class HealEffect : ISpellEffect
     {
-        public int healing { get; }
+        private readonly int _healing;
 
-        public HealEffect(int healing) => this.healing = healing;
+        public HealEffect(int healing) => _healing = healing;
 
         public void Apply(CombatState state)
         {
-            state.player.Heal(healing);
+            state.player.Heal(_healing);
         }
     }
 
     public class ArmorEffect : ISpellEffect
     {
-        public int armor { get; }
+        private readonly int _armor;
 
-        public ArmorEffect(int armor) => this.armor = armor;
+        public ArmorEffect(int armor) => _armor = armor;
 
         public void Apply(CombatState state)
         {
-            state.player.ApplyTemporaryArmor(armor);
+            state.player.ApplyTemporaryArmor(_armor);
         }
     }
 
     public class ManaRestoreEffect : ISpellEffect
     {
-        public int mana { get; }
+        private readonly int _mana;
 
-        public ManaRestoreEffect(int mana) => this.mana = mana;
+        public ManaRestoreEffect(int mana) => _mana = mana;
 
         public void Apply(CombatState state)
         {
-            state.player.RestoreMana(mana);
+            state.player.RestoreMana(_mana);
         }
     }
 }

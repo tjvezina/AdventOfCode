@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day13
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private MatrixInt _happyMatrix;
 
         private int[] _order;
@@ -42,7 +42,7 @@ namespace AdventOfCode.Year2015.Day13
             {
                 string[] parts = data.Split(' ');
                 string guestA = parts[0];
-                string guestB = parts[parts.Length - 1];
+                string guestB = parts[^1];
                 guestB = guestB.Substring(0, guestB.Length - 1); // Trim period
                 int points = int.Parse(parts[3]);
                 points *= (parts[2] == "gain" ? 1 : -1);

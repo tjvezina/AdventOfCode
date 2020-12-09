@@ -2,11 +2,10 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Year2016.Day13
 {
+    [CoordSystem(CoordSystem.YDown)]
     public class Challenge : BaseChallenge
     {
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
-
-        public const int Input = 1364;
+        private const int Input = 1364;
         private static readonly Point Start = new Point(1, 1);
         private static readonly Point End = new Point(31, 39);
 

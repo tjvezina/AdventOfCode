@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day14
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const int RaceDuration = 2503;
         private const string Pattern = @"can fly (\d+) km/s for (\d+) seconds, but then must rest for (\d+) seconds";
 
-        private List<Reindeer> _reindeer = new List<Reindeer>();
+        private readonly List<Reindeer> _reindeer = new List<Reindeer>();
 
         public Challenge()
         {

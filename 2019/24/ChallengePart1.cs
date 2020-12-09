@@ -3,10 +3,9 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day24
 {
+    [CoordSystem(CoordSystem.YDown)]
     public partial class Challenge : BaseChallenge
     {
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
-
         private CharMap _map;
 
         public Challenge() => _map = new CharMap(inputList.ToArray());

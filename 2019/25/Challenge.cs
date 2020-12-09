@@ -5,7 +5,7 @@ namespace AdventOfCode.Year2019.Day25
 {
     public class Challenge : BaseChallenge
     {
-        public override object part1ExpectedAnswer => 8912902;
+        public override object part1ExpectedAnswer => "8912902";
         public override (string message, object answer) SolvePart1()
         {
             Droid droid = new Droid(inputList[0]);

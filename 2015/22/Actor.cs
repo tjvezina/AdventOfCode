@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace AdventOfCode.Year2015.Day22
 {
@@ -9,14 +7,12 @@ namespace AdventOfCode.Year2015.Day22
 
     public abstract class Actor<T> : IDeepCloneable<T> where T : Actor<T>
     {
-        public abstract int startHitPoints { get; }
-
-        public int hitPoints { get; protected set; }
-        public abstract int armor { get; }
+        public int hitPoints { get; private set; }
+        protected abstract int armor { get; }
 
         public bool isDead => hitPoints == 0;
 
-        protected Actor()
+        protected Actor(int startHitPoints)
         {
             hitPoints = startHitPoints;
         }
@@ -27,8 +23,6 @@ namespace AdventOfCode.Year2015.Day22
         }
 
         public abstract T DeepClone();
-
-        public virtual void HandleTurnEnd() { }
 
         public void TakeHit(DamageType type, int amount)
         {
@@ -50,15 +44,14 @@ namespace AdventOfCode.Year2015.Day22
 
     public class Player : Actor<Player>
     {
-        public const int StartMana = 500;
+        private const int StartMana = 500;
 
-        public override int startHitPoints => 50;
-        public override int armor => _temporaryArmor; 
+        protected override int armor => _temporaryArmor;
         public int mana { get; private set; } = StartMana;
 
         private int _temporaryArmor;
 
-        public Player() { }
+        public Player() : base(startHitPoints: 50) { }
         private Player(Player toCopy) : base(toCopy)
         {
             mana = toCopy.mana;
@@ -79,13 +72,13 @@ namespace AdventOfCode.Year2015.Day22
             mana += amount;
         }
 
-        public void ApplyTemporaryArmor(int armor)
+        public void ApplyTemporaryArmor(int temporaryArmor)
         {
-            Debug.Assert(armor >= 0, "Cannot apply negative armor");
-            _temporaryArmor += armor;
+            Debug.Assert(temporaryArmor >= 0, "Cannot apply negative armor");
+            _temporaryArmor += temporaryArmor;
         }
 
-        public override void HandleTurnEnd()
+        public void HandleTurnEnd()
         {
             _temporaryArmor = 0;
         }
@@ -93,11 +86,10 @@ namespace AdventOfCode.Year2015.Day22
 
     public class Boss : Actor<Boss>
     {
-        public override int startHitPoints => 71;
-        public override int armor => 999;
+        protected override int armor => 999;
         public int damage => 10;
 
-        public Boss() { }
+        public Boss() : base(startHitPoints: 71) { }
         private Boss(Boss toCopy) : base(toCopy) { }
 
         public override Boss DeepClone() => new Boss(this);

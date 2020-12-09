@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Year2015.Day07
 {
-     public class Challenge : BaseChallenge
-     {
-        public enum WireOpType
+    public class Challenge : BaseChallenge
+    {
+        private enum WireOpType
         {
             Assign,
             And,
@@ -15,18 +15,18 @@ namespace AdventOfCode.Year2015.Day07
             RShift
         }
 
-        public class WireOp
+        private class WireOp
         {
             public WireOpType type;
             public string operandA;
             public string operandB;
-            public UInt16? value;
+            public ushort? value;
 
             public override string ToString() => $"{operandA} {type} {operandB} = {value}";
         }
 
         private readonly Dictionary<string, WireOp> _wireMap = new Dictionary<string, WireOp>();
-        private UInt16 _part1Output;
+        private ushort _part1Output;
 
         public Challenge()
         {
@@ -37,27 +37,29 @@ namespace AdventOfCode.Year2015.Day07
                 string outputWire = parts[1];
 
                 WireOp op = new WireOp();
-                if (opData.Length == 1) { // Assignment op
-                    op.type = WireOpType.Assign;
-                    op.operandA = opData[0];
-                }
-                else if (opData.Length == 2) { // NOT op
-                    op.type = WireOpType.Not;
-                    op.operandA = opData[1];
-                }
-                else
+                switch (opData.Length)
                 {
-                    op.type = opData[1] switch
-                    {
-                        "AND" => WireOpType.And,
-                        "OR" => WireOpType.Or,
-                        "LSHIFT" => WireOpType.LShift,
-                        "RSHIFT" => WireOpType.RShift,
-                        _ => throw new Exception($"Unrecognized op: {opData[1]}")
-                    };
+                    case 1: // Assignment op
+                        op.type = WireOpType.Assign;
+                        op.operandA = opData[0];
+                        break;
+                    case 2: // NOT op
+                        op.type = WireOpType.Not;
+                        op.operandA = opData[1];
+                        break;
+                    default:
+                        op.type = opData[1] switch
+                        {
+                            "AND" => WireOpType.And,
+                            "OR" => WireOpType.Or,
+                            "LSHIFT" => WireOpType.LShift,
+                            "RSHIFT" => WireOpType.RShift,
+                            _ => throw new Exception($"Unrecognized op: {opData[1]}")
+                        };
 
-                    op.operandA = opData[0];
-                    op.operandB = opData[2];
+                        op.operandA = opData[0];
+                        op.operandB = opData[2];
+                        break;
                 }
 
                 _wireMap[outputWire] = op;
@@ -87,27 +89,33 @@ namespace AdventOfCode.Year2015.Day07
             return ("Wire \"a\" output (round 2): ", Resolve("a"));
         }
 
-        private UInt16 Resolve(string operand)
+        private ushort Resolve(string operand)
         {
             // Handle literal values (base case)
-            if (UInt16.TryParse(operand, out UInt16 value)) return value;
+            if (ushort.TryParse(operand, out ushort value)) return value;
 
             WireOp op = _wireMap[operand];
 
             if (op.value == null)
             {
                 // Unary operators
-                UInt16 valueA = Resolve(op.operandA);
-                if      (op.type == WireOpType.Assign) op.value = valueA;
-                else if (op.type == WireOpType.Not)    op.value = (UInt16)~valueA;
-                else
+                ushort valueA = Resolve(op.operandA);
+                switch (op.type)
                 {
-                    // Binary operators
-                    UInt16 valueB = Resolve(op.operandB);
-                    if      (op.type == WireOpType.LShift) op.value = (UInt16)(valueA << valueB);
-                    else if (op.type == WireOpType.RShift) op.value = (UInt16)(valueA >> valueB);
-                    else if (op.type == WireOpType.And)    op.value = (UInt16)(valueA & valueB);
-                    else if (op.type == WireOpType.Or)     op.value = (UInt16)(valueA | valueB);
+                    case WireOpType.Assign: op.value = valueA;          break;
+                    case WireOpType.Not:    op.value = (ushort)~valueA; break;
+                    default:
+                        // Binary operators
+                        ushort valueB = Resolve(op.operandB);
+                        op.value = op.type switch
+                        {
+                            WireOpType.LShift => (ushort)(valueA << valueB),
+                            WireOpType.RShift => (ushort)(valueA >> valueB),
+                            WireOpType.And => (ushort)(valueA & valueB),
+                            WireOpType.Or => (ushort)(valueA | valueB),
+                            _ => op.value
+                        };
+                        break;
                 }
             }
 
@@ -116,7 +124,7 @@ namespace AdventOfCode.Year2015.Day07
                 throw new Exception($"Failed to resolve operand {operand} with operator {op.type}");
             }
 
-            return (UInt16)op.value;
+            return (ushort)op.value;
         }
     }
 }

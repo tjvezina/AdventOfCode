@@ -1,11 +1,11 @@
 namespace AdventOfCode
 {
-    public interface IDeepCloneable<T>
+    public interface IDeepCloneable<out T>
     {
         T DeepClone();
     }
 
-    public interface IShallowCloneable<T>
+    public interface IShallowCloneable<out T>
     {
         T ShallowClone();
     }

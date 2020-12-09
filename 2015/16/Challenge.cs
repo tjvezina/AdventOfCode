@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace AdventOfCode.Year2015.Day16
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private enum PropType
         {
             Equal,
@@ -14,11 +14,11 @@ namespace AdventOfCode.Year2015.Day16
 
         private class Sue
         {
-            public Dictionary<string, int> properties = new Dictionary<string, int>();
+            public readonly Dictionary<string, int> properties = new Dictionary<string, int>();
         }
 
-        private List<Sue> _sues = new List<Sue>();
-        private Dictionary<string, int> _knownProps = new Dictionary<string, int>();
+        private readonly List<Sue> _sues = new List<Sue>();
+        private readonly Dictionary<string, int> _knownProps = new Dictionary<string, int>();
 
         public Challenge()
         {

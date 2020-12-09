@@ -5,16 +5,9 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019.Day19
 {
-     public class Challenge : BaseChallenge
-     {
-        private enum Result
-        {
-            Stationary = 0,
-            Pulled = 1
-        }
-
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
-
+    [CoordSystem(CoordSystem.YDown)]
+    public class Challenge : BaseChallenge
+    {
         private readonly IntCode _intCode;
         private int _pulledCount = 0;
 

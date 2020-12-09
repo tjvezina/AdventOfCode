@@ -5,12 +5,11 @@ using AdventOfCode.Year2019.IntCodeV4;
 
 namespace AdventOfCode.Year2019.Day17
 {
-     public class Challenge : BaseChallenge
-     {
+    [CoordSystem(CoordSystem.YDown)]
+    public class Challenge : BaseChallenge
+    {
         private const int MaxBotFuncLength = 20;
         private const int MaxActionsPerFunc = (MaxBotFuncLength + 1) / 4;
-
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
 
         private readonly string _intCodeMemory;
 

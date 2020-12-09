@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day17
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const int Total = 150;
 
         private readonly IReadOnlyList<int> _containers;
@@ -34,7 +34,7 @@ namespace AdventOfCode.Year2015.Day17
 
                 do
                 {
-                    IEnumerable<int> usedContainers = indices.Select(i => _containers[i]);
+                    int[] usedContainers = indices.Select(i => _containers[i]).ToArray();
 
                     if (usedContainers.Sum() == Total)
                     {

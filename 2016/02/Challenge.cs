@@ -1,16 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AdventOfCode.Year2016.Day02
 {
+    [CoordSystem(CoordSystem.YDown)]
     public class Challenge : BaseChallenge
     {
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
-
-        private static readonly Point StartPos = new Point(2, 2);
-
         private readonly Direction[][] _instructions;
 
         public Challenge()

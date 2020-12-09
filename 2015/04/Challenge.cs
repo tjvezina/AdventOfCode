@@ -6,12 +6,12 @@ using System.Threading;
 
 namespace AdventOfCode.Year2015.Day04
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const string Key = "ckczppom";
         private const int ThreadCount = 10;
 
-        private object _lockObj = new object();
+        private readonly object _lockObj = new object();
         private int _targetInput;
 
         public override void Reset() => _targetInput = 0;
@@ -41,7 +41,7 @@ namespace AdventOfCode.Year2015.Day04
                 threads[i].Start();
             }
 
-            while (threads.Any(t => t.IsAlive));
+            while (threads.Any(t => t.IsAlive)) { }
 
             return _targetInput;
         }

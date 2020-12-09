@@ -4,7 +4,7 @@ namespace AdventOfCode.Year2015.Day11
 {
     public class Password
     {
-        public const int Length = 8;
+        private const int Length = 8;
 
         private string _data;
 

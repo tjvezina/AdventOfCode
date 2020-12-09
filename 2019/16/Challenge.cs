@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day16
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private static readonly int[] Pattern = new[] { 0, 1, 0, -1 };
 
         private readonly int[] _input;

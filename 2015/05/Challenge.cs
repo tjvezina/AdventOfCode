@@ -1,23 +1,24 @@
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day05
 {
-     public class Challenge : BaseChallenge
-     {
-        private static readonly char[] Vowels = new char[] { 'a', 'e', 'i', 'o', 'u' };
-        private static readonly List<string> BadStrings = new List<string> { "ab", "cd", "pq", "xy" };
+    public class Challenge : BaseChallenge
+    {
+        private static readonly char[] Vowels = { 'a', 'e', 'i', 'o', 'u' };
+        private static readonly string[] BadStrings = { "ab", "cd", "pq", "xy" };
 
         public override object part1ExpectedAnswer => 236;
-        public override (string message, object answer) SolvePart1() => ("Nice strings (rule set A): ", inputList.Count(IsNiceRuleSetA));
+        public override (string message, object answer) SolvePart1() =>
+            ("Nice strings (rule set A): ", inputList.Count(IsNiceRuleSetA));
         
         public override object part2ExpectedAnswer => 51;
-        public override (string message, object answer) SolvePart2() => ("Nice strings (rule set B): ", inputList.Count(IsNiceRuleSetB));
+        public override (string message, object answer) SolvePart2() =>
+            ("Nice strings (rule set B): ", inputList.Count(IsNiceRuleSetB));
 
         private bool IsNiceRuleSetA(string str)
         {
             // If the string contains any of the bad strings, it is naughty
-            if (BadStrings.Any(s => str.Contains(s))) return false;
+            if (BadStrings.Any(str.Contains)) return false;
             // If the string contains less than 3 vowels, it is naughty
             if (Vowels.Sum(v => str.Count(c => c == v)) < 3) return false;
 

@@ -30,15 +30,7 @@ namespace AdventOfCode.Year2015.Day08
             int escIndex;
             while ((escIndex = str.IndexOf('\\')) != -1)
             {
-                int delta;
-                if (str[escIndex + 1] == 'x')
-                {
-                    delta = 3;
-                } else
-                {
-                    delta = 1;
-                }
-
+                int delta = (str[escIndex + 1] == 'x' ? 3 : 1);
                 length -= delta;
                 str = str.Substring(escIndex + 1 + delta);
             }

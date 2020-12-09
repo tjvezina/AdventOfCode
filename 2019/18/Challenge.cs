@@ -3,12 +3,11 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day18
 {
-     public class Challenge : BaseChallenge
-     {
+    [CoordSystem(CoordSystem.YDown)]
+    public class Challenge : BaseChallenge
+    {
         private class NodeData : Dictionary<char, (int, string)> { }
         private class RouteData : Dictionary<(string, string), int> { }
-
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
 
         private bool IsWall(char c) => c == '#';
         private bool IsStart(char c) => "@1234".Contains(c);

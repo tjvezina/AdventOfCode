@@ -10,14 +10,13 @@ namespace AdventOfCode.Year2015.Day22
 
     public class Challenge : BaseChallenge
     {
-        public static readonly ImmutableList<Spell> Spells = ImmutableList.Create(new[]
-        {
+        private static readonly ImmutableList<Spell> Spells = ImmutableList.Create(
             new Spell("Magic Missile", manaCost:53, new DamageEffect(4)),
             new Spell("Drain",         manaCost:73, new DamageEffect(2), new HealEffect(2)),
             new Spell("Shield",        manaCost:113, duration:6, new ArmorEffect(7)),
             new Spell("Poison",        manaCost:173, duration:6, new DamageEffect(3)),
             new Spell("Recharge",      manaCost:229, duration:5, new ManaRestoreEffect(101))
-        });
+        );
 
         public override object part1ExpectedAnswer => 1824;
         public override (string message, object answer) SolvePart1()

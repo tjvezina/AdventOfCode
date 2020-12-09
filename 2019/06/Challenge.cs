@@ -3,8 +3,8 @@ using System.Diagnostics;
 
 namespace AdventOfCode.Year2019.Day06
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private class Body
         {
             public string name;

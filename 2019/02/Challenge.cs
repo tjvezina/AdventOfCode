@@ -3,8 +3,8 @@ using AdventOfCode.Year2019.IntCodeV1;
 
 namespace AdventOfCode.Year2019.Day02
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private const int Noun = 12;
         private const int Verb = 02;
 

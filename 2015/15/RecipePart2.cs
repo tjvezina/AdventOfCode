@@ -3,13 +3,20 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day15
 {
-    public class RecipePart2 : Recipe
+    public class RecipePart2 : BaseRecipe
     {
         public override void MaximizeScore()
         {
-            int[] recipe = new int[_ingredients.Count];
+            int[] recipe = new int[Ingredients.Count];
+            int[] bestRecipe = new int[Ingredients.Count];
 
             bestScore = 0;
+
+            RecipeLoop();
+
+            Console.WriteLine($"Optimized: {bestScore}\n" +
+                bestRecipe.Select((q, i) => $"- {q} {Ingredients[i].name}").Aggregate((a, b) => $"{a}\n{b}")
+            );
 
             void RecipeLoop(int index = 0, int max = Quantity)
             {
@@ -22,7 +29,7 @@ namespace AdventOfCode.Year2015.Day15
                         if (bestScore < score)
                         {
                             bestScore = score;
-                            recipe.CopyTo(_quantities, 0);
+                            recipe.CopyTo(bestRecipe, 0);
                         }
                     }
                     return;
@@ -34,11 +41,6 @@ namespace AdventOfCode.Year2015.Day15
                     RecipeLoop(index + 1, max - i);
                 }
             }
-
-            RecipeLoop();
-
-            string ingredients = _quantities.Select(i => $"{i}").Aggregate((a, b) => $"{a} {b}");
-            Console.WriteLine($"Optimized: {ingredients} = {bestScore}");
         }
     }
 }

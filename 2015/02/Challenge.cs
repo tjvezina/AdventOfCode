@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day02
 {
-     public class Challenge : BaseChallenge
-     {
-        private struct Box
+    public class Challenge : BaseChallenge
+    {
+        private readonly struct Box
         {
             private readonly IReadOnlyList<int> _sides;
 
-            public int l => _sides[0];
-            public int w => _sides[1];
-            public int h => _sides[2];
+            private int l => _sides[0];
+            private int w => _sides[1];
+            private int h => _sides[2];
 
             public int volume => l * w * h;
             public int surfaceArea => (2 * l * w) + (2 * w * h) + (2 * h * l);

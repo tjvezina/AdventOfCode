@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 
 namespace AdventOfCode.Year2015.Day18
 {
     public class LightBoard
     {
-        private bool[,] _board;
-        private int _width;
-        private int _height;
+        private readonly bool[,] _board;
+        private readonly int _width;
+        private readonly int _height;
 
-        private bool _cornersAlwaysOn;
+        private readonly bool _cornersAlwaysOn;
 
         public int litCount
         {
@@ -26,12 +27,12 @@ namespace AdventOfCode.Year2015.Day18
             }
         }
 
-        public LightBoard(string[] input, bool cornersAlwaysOn = false)
+        public LightBoard(IReadOnlyList<string> input, bool cornersAlwaysOn = false)
         {
             _cornersAlwaysOn = cornersAlwaysOn;
 
             _width = input[0].Length;
-            _height = input.Length;
+            _height = input.Count;
 
             _board = new bool[_width, _height];
             for (int y = 0; y < _height; y++)
@@ -64,7 +65,7 @@ namespace AdventOfCode.Year2015.Day18
                     {
                         if ((x == 0 && y == 0) || (x == _width-1 && y == 0) ||
                             (x == 0 && y == _height-1) || (x == _width-1 && y == _height-1))
-                            {
+                        {
                             nextBoard[x, y] = true;
                             continue;
                         }
@@ -79,7 +80,7 @@ namespace AdventOfCode.Year2015.Day18
                             if ((x2 == 0 && y2 == 0) || 
                                 (x + x2 < 0 || x + x2 >= _width) ||
                                 (y + y2 < 0 || y + y2 >= _height))
-                                {
+                            {
                                 continue;
                             }
 

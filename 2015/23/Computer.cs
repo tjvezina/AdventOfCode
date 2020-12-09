@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day23
@@ -11,9 +12,10 @@ namespace AdventOfCode.Year2015.Day23
             public ulong value;
         }
 
-        private Dictionary<string, Register> _registers = new Dictionary<string, Register>
+        private readonly Dictionary<string, Register> _registers = new Dictionary<string, Register>
         {
-            { "a", new Register() }, { "b", new Register() }
+            ["a"] = new Register(),
+            ["b"] = new Register()
         };
 
         public ulong this[string registerID]
@@ -22,13 +24,14 @@ namespace AdventOfCode.Year2015.Day23
             set => _registers[registerID].value = value;
         }
 
-        private Instruction[] _instructions;
+        private readonly Instruction[] _instructions;
 
         public Computer(string[] input)
         {
             _instructions = input.Select(i => new Instruction(i)).ToArray();
         }
 
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public void Run()
         {
             int instructionPtr = 0;

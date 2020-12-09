@@ -2,8 +2,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2015.Day18
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         public override object part1ExpectedAnswer => 814;
         public override (string message, object answer) SolvePart1()
         {

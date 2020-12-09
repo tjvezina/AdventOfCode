@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace AdventOfCode.Year2015.Day22
@@ -16,32 +14,40 @@ namespace AdventOfCode.Year2015.Day22
             Victory
         }
 
-        public Difficulty difficulty;
-        public Result result;
-        public Player player;
-        public Boss boss;
-        public IList<(Spell spell, int turnsLeft)> activeSpells;
-        public IList<Spell> spellsCast;
-        public int manaSpent;
+        public Player player { get; }
+        public Boss boss { get; }
+
+        public Result result { get; private set; }
+        public int manaSpent { get; private set; }
+
+        public IEnumerable<Spell> spellsCast => _spellsCast.AsReadOnly();
+
+        private readonly Difficulty _difficulty;
+        private readonly List<(Spell spell, int turnsLeft)> _activeSpells;
+        private readonly List<Spell> _spellsCast;
 
         public CombatState(Difficulty difficulty)
         {
-            this.difficulty = difficulty;
+            _difficulty = difficulty;
             result = Result.InProgress;
+
             player = new Player();
             boss = new Boss();
-            activeSpells = new List<(Spell, int)>();
-            spellsCast = new List<Spell>();
+
+            _activeSpells = new List<(Spell, int)>();
+            _spellsCast = new List<Spell>();
         }
 
         private CombatState(CombatState toCopy)
         {
-            difficulty = toCopy.difficulty;
+            _difficulty = toCopy._difficulty;
             result = toCopy.result;
+
             player = toCopy.player.DeepClone();
             boss = toCopy.boss.DeepClone();
-            activeSpells = toCopy.activeSpells.ToList();
-            spellsCast = toCopy.spellsCast.ToList();
+
+            _activeSpells = new List<(Spell, int)>(toCopy._activeSpells);
+            _spellsCast = new List<Spell>(toCopy._spellsCast);
             manaSpent = toCopy.manaSpent;
         }
 
@@ -64,11 +70,11 @@ namespace AdventOfCode.Year2015.Day22
                 return false;
             }
 
-            spellsCast.Add(spellToCast);
+            _spellsCast.Add(spellToCast);
             manaSpent += spellToCast.manaCost;
 
             // --- PLAYER TURN ---
-            if (difficulty == Difficulty.Hard)
+            if (_difficulty == Difficulty.Hard)
             {
                 player.TakeHit(DamageType.Physical, 1);
                 if (CheckForGameOver()) return;
@@ -90,13 +96,13 @@ namespace AdventOfCode.Year2015.Day22
             } else
             {
                 // Unable to cast an already active effect
-                if (activeSpells.Any(a => a.spell == spellToCast))
+                if (_activeSpells.Any(a => a.spell == spellToCast))
                 {
                     result = Result.EffectAlreadyActive;
                     return;
                 }
 
-                activeSpells.Add((spellToCast, spellToCast.duration));
+                _activeSpells.Add((spellToCast, spellToCast.duration));
             }
             player.ConsumeMana(spellToCast.manaCost);
             player.HandleTurnEnd();
@@ -113,18 +119,18 @@ namespace AdventOfCode.Year2015.Day22
 
         private void ApplyActiveEffects()
         {
-            for (int i = activeSpells.Count - 1; i >= 0; i--)
+            for (int i = _activeSpells.Count - 1; i >= 0; i--)
             {
-                (Spell spell, int turnsLeft) = activeSpells[i];
+                (Spell spell, int turnsLeft) = _activeSpells[i];
 
                 spell.Apply(this);
 
                 if (--turnsLeft == 0)
                 {
-                    activeSpells.RemoveAt(i);
+                    _activeSpells.RemoveAt(i);
                 } else
                 {
-                    activeSpells[i] = (spell, turnsLeft);
+                    _activeSpells[i] = (spell, turnsLeft);
                 }
             }
         }

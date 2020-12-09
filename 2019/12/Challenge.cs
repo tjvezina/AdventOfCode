@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day12
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private struct Body
         {
             public Point3 position;

@@ -4,8 +4,9 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day20
 {
-     public class Challenge : BaseChallenge
-     {
+    [CoordSystem(CoordSystem.YDown)]
+    public class Challenge : BaseChallenge
+    {
         public struct Node
         {
             public Point pos;
@@ -23,8 +24,6 @@ namespace AdventOfCode.Year2019.Day20
             public static bool operator==(Node a, Node b) => a.Equals(b);
             public static bool operator!=(Node a, Node b) => !(a == b);
         }
-
-        public override CoordSystem? coordSystem => CoordSystem.YDown;
 
         private CharMap _map;
 

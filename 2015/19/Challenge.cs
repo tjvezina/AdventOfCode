@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace AdventOfCode.Year2015.Day19
             foreach ((string pattern, string replace) in _replacements)
             {
                 int i = 0;
-                while ((i = _molecule.IndexOf(pattern, i)) != -1)
+                while ((i = _molecule.IndexOf(pattern, i, StringComparison.Ordinal)) != -1)
                 {
                     subMolecules.Add(_molecule.Remove(i, pattern.Length).Insert(i, replace));
                     i++;
@@ -44,16 +45,16 @@ namespace AdventOfCode.Year2015.Day19
         public override object part2ExpectedAnswer => 207;
         public override (string message, object answer) SolvePart2()
         {
-            int Count(string match)
-            {
-                int count = 0;
-                for (int i = 0; (i = _molecule.IndexOf(match, i)) != -1; i++, count++);
-                return count;
-            }
-
             int steps = _molecule.Count(char.IsUpper) - Count("Rn") - Count("Ar") - 2 * Count("Y") - 1;
 
             return ("Steps to molecule: ", steps);
+
+            int Count(string match)
+            {
+                int count = 0;
+                for (int i = 0; (i = _molecule.IndexOf(match, i, StringComparison.Ordinal)) != -1; i++, count++) { }
+                return count;
+            }
         }
     }
 }

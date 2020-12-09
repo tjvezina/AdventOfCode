@@ -1,7 +1,7 @@
 namespace AdventOfCode.Year2019.Day13
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private readonly string _intCodeMemory;
 
         public Challenge() => _intCodeMemory = inputList[0];

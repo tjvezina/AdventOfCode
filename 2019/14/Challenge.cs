@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace AdventOfCode.Year2019.Day14
 {
-     public class Challenge : BaseChallenge
-     {
+    public class Challenge : BaseChallenge
+    {
         private struct ElementData
         {
             public static ElementData Parse(string rawData)
