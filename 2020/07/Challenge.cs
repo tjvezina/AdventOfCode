@@ -8,11 +8,8 @@ namespace AdventOfCode.Year2020.Day07
     {
         private class Bag
         {
-            public string Name { get; }
-            public readonly List<Bag> Parents = new List<Bag>();
-            public readonly List<(int count, Bag bag)> Children = new List<(int, Bag)>();
-
-            public Bag(string name) => Name = name;
+            public readonly List<Bag> parents = new List<Bag>();
+            public readonly List<(int count, Bag bag)> children = new List<(int, Bag)>();
         }
 
         private const string MyBagColor = "shiny gold";
@@ -32,7 +29,7 @@ namespace AdventOfCode.Year2020.Day07
 
             while (parentsToCheck.TryDequeue(out Bag bag))
             {
-                foreach (Bag parent in bag.Parents.Where(parent => parents.Add(parent)))
+                foreach (Bag parent in bag.parents.Where(parent => parents.Add(parent)))
                 {
                     parentsToCheck.Enqueue(parent);
                 }
@@ -50,7 +47,7 @@ namespace AdventOfCode.Year2020.Day07
 
             static long GetChildCountRecursive(Bag bag)
             {
-                return bag.Children.Sum(x => x.count * (1 + GetChildCountRecursive(x.bag)));
+                return bag.children.Sum(x => x.count * (1 + GetChildCountRecursive(x.bag)));
             }
         }
 
@@ -71,8 +68,8 @@ namespace AdventOfCode.Year2020.Day07
 
                     Bag child = GetOrCreate(childName);
 
-                    bag.Children.Add((count, child));
-                    child.Parents.Add(bag);
+                    bag.children.Add((count, child));
+                    child.parents.Add(bag);
                 }
             }
 
@@ -83,7 +80,7 @@ namespace AdventOfCode.Year2020.Day07
                     return _bagMap[bagName];
                 }
 
-                Bag bag = new Bag(bagName);
+                Bag bag = new Bag();
                 _bagMap[bagName] = bag;
                 return bag;
             }

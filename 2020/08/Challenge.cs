@@ -34,24 +34,24 @@ namespace AdventOfCode.Year2020.Day08
                 return new Instruction(type, value);
             }
 
-            public InstructionType Type { get; private set; }
-            public int Value { get; }
+            public InstructionType type { get; private set; }
+            public int value { get; }
 
             private Instruction(InstructionType type, int value)
             {
-                Type = type;
-                Value = value;
+                this.type = type;
+                this.value = value;
             }
 
             public bool Uncorrupt()
             {
-                switch (Type)
+                switch (type)
                 {
                     case InstructionType.Jump:
-                        Type = InstructionType.NoOp;
+                        type = InstructionType.NoOp;
                         return true;
                     case InstructionType.NoOp:
-                        Type = InstructionType.Jump;
+                        type = InstructionType.Jump;
                         return true;
                     default:
                         return false;
@@ -92,7 +92,7 @@ namespace AdventOfCode.Year2020.Day08
 
                     if (pointer == _program.Count)
                     {
-                        return ($"Program success! Swapped #{i} to {instruction.Type}. Accumulator: ", accumulator);
+                        return ($"Program success! Swapped #{i} to {instruction.type}. Accumulator: ", accumulator);
                     }
 
                     instruction.Uncorrupt();
@@ -121,14 +121,14 @@ namespace AdventOfCode.Year2020.Day08
 
                 Instruction instruction = _program[pointer];
 
-                switch (instruction.Type)
+                switch (instruction.type)
                 {
                     case InstructionType.Accumulator:
-                        accumulator += instruction.Value;
+                        accumulator += instruction.value;
                         pointer++;
                         break;
                     case InstructionType.Jump:
-                        pointer += instruction.Value;
+                        pointer += instruction.value;
                         break;
                     case InstructionType.NoOp:
                         pointer++;

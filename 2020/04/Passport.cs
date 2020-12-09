@@ -35,19 +35,18 @@ namespace AdventOfCode.Year2020.Day04
 
         private static Field CodeToField(string fieldCode)
         {
-            switch (fieldCode)
+            return fieldCode switch
             {
-                case "byr": return Field.BirthYear;
-                case "iyr": return Field.IssueYear;
-                case "eyr": return Field.ExpirationYear;
-                case "hgt": return Field.Height;
-                case "hcl": return Field.HairColor;
-                case "ecl": return Field.EyeColor;
-                case "pid": return Field.PassportID;
-                case "cid": return Field.CountryID;
-                default:
-                    throw new Exception($"Unrecognized field code: {fieldCode}");
-            }
+                "byr" => Field.BirthYear,
+                "iyr" => Field.IssueYear,
+                "eyr" => Field.ExpirationYear,
+                "hgt" => Field.Height,
+                "hcl" => Field.HairColor,
+                "ecl" => Field.EyeColor,
+                "pid" => Field.PassportID,
+                "cid" => Field.CountryID,
+                _ => throw new Exception($"Unrecognized field code: {fieldCode}")
+            };
         }
 
         private static bool ValidateBirthYear(string data) => ValidateRange(data, 1920, 2002);
