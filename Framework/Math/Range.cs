@@ -1,9 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace AdventOfCode
 {
+    [PublicAPI]
     public struct Range : IEnumerable<int>
     {
         public int a;
