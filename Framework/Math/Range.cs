@@ -10,8 +10,8 @@ namespace AdventOfCode
         public int a;
         public int b;
         
-        public int min => a < b ? a : b;
-        public int max => a > b ? a : b;
+        public readonly int min => a < b ? a : b;
+        public readonly int max => a > b ? a : b;
         
         public int count => (max - min) + 1;
         
@@ -23,9 +23,9 @@ namespace AdventOfCode
         
         public override string ToString() => $"[{a}, {b}]";
 
-        public bool Contains(int value) => (min <= value && value <= max);
+        public readonly bool Contains(int value) => (min <= value && value <= max);
         
-        public int Wrap(int value) => MathUtil.Wrap(value, a, b);
+        public readonly int Wrap(int value) => MathUtil.Wrap(value, a, b);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public IEnumerator<int> GetEnumerator()

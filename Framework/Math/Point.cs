@@ -15,7 +15,7 @@ namespace AdventOfCode
         public int x;
         public int y;
 
-        public int taxiLength => TaxiDist(this, Point.zero);
+        public int taxiLength => TaxiDist(this, zero);
 
         public int this[int i]
         {

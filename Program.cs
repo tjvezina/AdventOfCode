@@ -15,17 +15,18 @@ namespace AdventOfCode
     /// </summary>
     public static class Program
     {
-        private const int FirstYear = 2015;
-        private static Range AllYears => new Range(FirstYear, DateTime.Now.Year);
-        private static Range AllDays => new Range(1, 25);
-
         // Set to a specific year while working on puzzles from that year, or null for current year
         private static readonly int? ActiveYear = 2020;
+
+        private const int FirstYear = 2015;
+        private static Range allYears => new Range(FirstYear, DateTime.Now.Year);
+        private static Range allDays => new Range(1, 25);
+
         private static int GetDefaultYear() => ActiveYear ?? DateTime.Now.Year - (DateTime.Now.Month < 12 ? 1 : 0);
         private static int GetDefaultDay()
         {
             bool isCurrentYear = (!ActiveYear.HasValue || ActiveYear == DateTime.Now.Year);
-            return (DateTime.Now.Month == 12 && isCurrentYear ? DateTime.Now.Day : 25);
+            return (DateTime.Now.Month == 12 && isCurrentYear ? DateTime.Now.Day : allDays.max);
         }
 
         private static void Main(string[] args)
@@ -160,15 +161,14 @@ namespace AdventOfCode
             return 0;
         }
 
-        private static void TestAll() => TestRange(AllYears, AllDays);
-        private static void TestYear(int year) => TestRange(new Range(year, year), AllDays);
+        private static void TestAll() => TestRange(allYears, allDays);
+        private static void TestYear(int year) => TestRange(new Range(year, year), allDays);
         private static void TestDay(int year, int day) => TestRange(new Range(year, year), new Range(day, day));
         private static void TestRange(Range years, Range days)
         {
-            bool wasYearHeaderDrawn;
             for (int year = years.min; year <= years.max; year++)
             {
-                wasYearHeaderDrawn = false;
+                bool wasYearHeaderDrawn = false;
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 for (int day = days.min; day <= days.max; day++)
                 {

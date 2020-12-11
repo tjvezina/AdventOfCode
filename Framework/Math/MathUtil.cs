@@ -1,8 +1,10 @@
 using System;
 using System.Numerics;
+using JetBrains.Annotations;
 
 namespace AdventOfCode
 {
+    [PublicAPI]
     public static class MathUtil
     {
         public static int Mod(int value, int divisor)
@@ -26,7 +28,7 @@ namespace AdventOfCode
         public static long LCM(long a, long b) => (a * b) / GCD(a, b);
 
         // Greatest common divisor
-        public static int GCD(int a, int b) => (int)GCD((long)a, (long)b);
+        public static int GCD(int a, int b) => (int)GCD((long)a, b);
         public static long GCD(long a, long b)
         {
             a = Math.Abs(a);
