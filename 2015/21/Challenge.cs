@@ -47,11 +47,11 @@ namespace AdventOfCode.Year2015.Day21
             int bestCost = (leastGold ? int.MaxValue : 0);
             Equipment[] bestEquipment = null;
 
-            foreach (Equipment[] rings in DataUtil.GetAllCombinations(_allRings, new Range(0, 2)))
+            foreach (IList<Equipment> rings in _allRings.Subsets(0, 2))
             {
-                foreach (Equipment[] weapons in DataUtil.GetAllCombinations(_allWeapons, 1))
+                foreach (IList<Equipment> weapons in _allWeapons.Subsets(1))
                 {
-                    foreach (Equipment[] armor in DataUtil.GetAllCombinations(_allArmor, new Range(0, 1)))
+                    foreach (IList<Equipment> armor in _allArmor.Subsets(0, 1))
                     {
                         Equipment[] equipment = rings.Concat(weapons).Concat(armor).ToArray();
                         Player player = new Player(equipment);

@@ -83,10 +83,10 @@ namespace AdventOfCode.Year2016.Day11
                     foreach (int comboCount in comboCountRange)
                     {
                         if (statesFound) break;
-                        foreach (ElementObject[] objects in DataUtil.GetAllCombinations(floorObjects, comboCount))
+                        foreach (IList<ElementObject> objects in floorObjects.Subsets(comboCount))
                         {
                             State nextState = state.DeepClone();
-                            if (nextState.TryStep(direction, objects) && visited.Add(nextState.GetHashCode()))
+                            if (nextState.TryStep(direction, objects.ToArray()) && visited.Add(nextState.GetHashCode()))
                             {
                                 statesFound = true;
                                 yield return nextState;

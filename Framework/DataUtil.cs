@@ -108,13 +108,19 @@ namespace AdventOfCode
         }
 
         /// <summary>
-        /// Determines and returns all possible combinations of comboCount items in the given list.
+        /// Determines and returns all possible subsets of 'size' items in the given list.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, int comboCount)
+        public static IEnumerable<IList<T>> Subsets<T>(this IList<T> list, int size)
         {
-            if (comboCount > list.Count) yield break;
+            if (size == 0)
+            {
+                yield return new T[0];
+                yield break;
+            }
 
-            int[] combo = new int[comboCount];
+            if (size > list.Count) yield break;
+
+            int[] combo = new int[size];
             for (int i = 0; i < combo.Length; i++)
             {
                 combo[i] = i;
@@ -122,7 +128,7 @@ namespace AdventOfCode
 
             do
             {
-                T[] items = new T[comboCount];
+                T[] items = new T[size];
                 for (int i = 0; i < combo.Length; i++)
                 {
                     items[i] = list[combo[i]];
@@ -132,13 +138,24 @@ namespace AdventOfCode
         }
 
         /// <summary>
-        /// Determines and returns all possible combinations of items in the given list containing a number of items
+        /// Determines and returns all possible subsets of items in the given list containing a number of items
+        /// between minSize and maxSize. For example, if the range [1, 3] is given, all combinations of 1, 2, or 3
+        /// items will be returned.
+        /// </summary>
+        public static IEnumerable<IList<T>> Subsets<T>(this IList<T> list, int minSize, int maxSize) =>
+            Subsets(list, new Range(minSize, maxSize));
+
+        /// <summary>
+        /// Determines and returns all possible subsets of items in the given list containing a number of items
         /// within the given range. For example, if the range [1, 3] is given, all combinations of 1, 2, or 3 items
         /// will be returned.
         /// </summary>
-        public static IEnumerable<T[]> GetAllCombinations<T>(IList<T> list, Range comboCountRange)
-        {
-            return comboCountRange.SelectMany(comboCount => GetAllCombinations(list, comboCount));
-        }
+        public static IEnumerable<IList<T>> Subsets<T>(this IList<T> list, Range sizeRange)
+            => sizeRange.SelectMany(size => Subsets(list, size));
+
+        /// <summary>
+        /// Determines and returns all possible subsets of items in the given list, from an empty set up to the full list.
+        /// </summary>
+        public static IEnumerable<IList<T>> Subsets<T>(this IList<T> list) => Subsets(list, new Range(0, list.Count));
     }
 }

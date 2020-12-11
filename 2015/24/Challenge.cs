@@ -29,7 +29,7 @@ namespace AdventOfCode.Year2015.Day24
             return ("Quantum entanglement of first group: ", GetQuantumEntanglement(groups[0]));
         }
 
-        private long GetQuantumEntanglement(int[] group) => group.Select(p => (long)p).Aggregate((a, b) => a * b);
+        private long GetQuantumEntanglement(IList<int> group) => group.Select(p => (long)p).Aggregate((a, b) => a * b);
 
         private List<int[]> FindBestGroups(int groupCount)
         {
@@ -42,14 +42,14 @@ namespace AdventOfCode.Year2015.Day24
             int groupSize = 1;
             while (groupSize <= _packages.Length)
             {
-                int[] group = DataUtil.GetAllCombinations(_packages, groupSize)
+                IList<int> group = _packages.Subsets(groupSize)
                     .Where(g => g.Sum() == groupSum)
                     .OrderBy(GetQuantumEntanglement)
                     .FirstOrDefault();
 
                 if (group != null)
                 {
-                    groups.Add(group);
+                    groups.Add(group.ToArray());
                     break;
                 }
 

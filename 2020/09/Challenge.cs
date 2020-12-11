@@ -26,7 +26,7 @@ namespace AdventOfCode.Year2020.Day09
             {
                 long next = _xmasData[i];
 
-                if (DataUtil.GetAllCombinations(subset.ToArray(), 2).All(pair => pair.Sum() != next))
+                if (subset.ToArray().Subsets(2).All(pair => pair.Sum() != next))
                 {
                     _invalidNumber = next;
                     return ($"{{0}} at index {i} breaks the XMAS data rule", _invalidNumber);
