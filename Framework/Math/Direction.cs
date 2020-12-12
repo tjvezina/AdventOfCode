@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace AdventOfCode
 {
@@ -11,6 +12,7 @@ namespace AdventOfCode
         Down
     }
 
+    [PublicAPI]
     public static class DirectionExtensions
     {
         public static bool IsHorizontal(this Direction dir) => dir == Direction.Right || dir == Direction.Left;
@@ -24,40 +26,40 @@ namespace AdventOfCode
             yield return dir.RotateCCW();
         }
 
-        public static Direction GetOpposite(this Direction dir)
+        public static Direction GetOpposite(this Direction direction)
         {
-            switch (dir)
+            return direction switch
             {
-                case Direction.Right: return Direction.Left;
-                case Direction.Left:  return Direction.Right;
-                case Direction.Up:    return Direction.Down;
-                case Direction.Down:  return Direction.Up;
-            }
-            throw new Exception($"Unknown direction {dir}");
+                Direction.Right => Direction.Left,
+                Direction.Left =>  Direction.Right,
+                Direction.Up =>    Direction.Down,
+                Direction.Down =>  Direction.Up,
+                _ => throw new Exception($"Unknown direction {direction}")
+            };
         }
 
-        public static Direction RotateCW(this Direction dir)
+        public static Direction RotateCW(this Direction direction)
         {
-            switch (dir)
+            return direction switch
             {
-                case Direction.Up:    return Direction.Right;
-                case Direction.Right: return Direction.Down;
-                case Direction.Down:  return Direction.Left;
-                case Direction.Left:  return Direction.Up;
-            }
-            throw new Exception($"Unknown direction {dir}");
+                Direction.Up =>    Direction.Right,
+                Direction.Right => Direction.Down,
+                Direction.Down =>  Direction.Left,
+                Direction.Left =>  Direction.Up,
+                _ => throw new Exception($"Unknown direction {direction}")
+            };
         }
 
-        public static Direction RotateCCW(this Direction dir)
+        public static Direction RotateCCW(this Direction direction)
         {
-            switch (dir)
+            return direction switch
             {
-                case Direction.Up:    return Direction.Left;
-                case Direction.Left:  return Direction.Down;
-                case Direction.Down:  return Direction.Right;
-                case Direction.Right: return Direction.Up;
-            }
-            throw new Exception($"Unknown direction {dir}");
+                Direction.Up =>    Direction.Left,
+                Direction.Left =>  Direction.Down,
+                Direction.Down =>  Direction.Right,
+                Direction.Right => Direction.Up,
+                _ => throw new Exception($"Unknown direction {direction}")
+            };
         }
     }
 }
