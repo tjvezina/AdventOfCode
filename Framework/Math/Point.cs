@@ -4,8 +4,8 @@ namespace AdventOfCode
 {
     public struct Point
     {
-        public static readonly Point zero = new Point(0, 0);
-        public static readonly Point one = new Point(1, 1);
+        public static Point zero => new Point(0, 0);
+        public static Point one => new Point(1, 1);
 
         public static implicit operator Direction(Point point) => point.ToDirection();
         public static implicit operator Point(Direction direction) => direction.ToPoint();
@@ -21,9 +21,11 @@ namespace AdventOfCode
         {
             get
             {
-                if (i == 0) return x;
-                if (i == 1) return y;
-                throw new IndexOutOfRangeException();
+                return i switch
+                {
+                    0 => x, 1 => y,
+                    _ => throw new IndexOutOfRangeException()
+                };
             }
             set
             {
@@ -53,7 +55,7 @@ namespace AdventOfCode
         public static Point operator*(Point a, Point b) => new Point(a.x * b.x, a.y * b.y);
 
         public bool Equals(Point p) => x == p.x && y == p.y;
-        public override bool Equals(object obj) => obj is Point && Equals((Point)obj);
+        public override bool Equals(object obj) => obj is Point p && Equals(p);
         public override int GetHashCode() => x ^ y;
         public static bool operator==(Point a, Point b) => a.Equals(b);
         public static bool operator!=(Point a, Point b) => !(a == b);

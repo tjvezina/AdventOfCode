@@ -1,10 +1,12 @@
 using System;
+using JetBrains.Annotations;
 
 namespace AdventOfCode
 {
+    [PublicAPI]
     public struct Point3
     {
-        public static readonly Point3 zero  = new Point3(0, 0, 0);
+        public static Point3 zero => new Point3(0, 0, 0);
 
         public static implicit operator Point3(Point p) => new Point3(p.x, p.y, 0);
         public static explicit operator Point(Point3 p) => new Point(p.x, p.y);
@@ -17,10 +19,11 @@ namespace AdventOfCode
         {
             get
             {
-                if (i == 0) return x;
-                if (i == 1) return y;
-                if (i == 2) return z;
-                throw new IndexOutOfRangeException();
+                return i switch
+                {
+                    0 => x, 1 => y, 2 => z,
+                    _ => throw new IndexOutOfRangeException()
+                };
             }
             set
             {
@@ -46,7 +49,7 @@ namespace AdventOfCode
         public static Point3 operator*(Point3 a, Point3 b) => new Point3(a.x * b.x, a.y * b.y, a.z * b.z);
 
         public bool Equals(Point3 p) => x == p.x && y == p.y && z == p.z;
-        public override bool Equals(object obj) => obj is Point3 && Equals((Point3)obj);
+        public override bool Equals(object obj) => obj is Point3 p && Equals(p);
         public override int GetHashCode() => x ^ y ^ z;
         public static bool operator==(Point3 a, Point3 b) => a.Equals(b);
         public static bool operator!=(Point3 a, Point3 b) => !(a == b);
