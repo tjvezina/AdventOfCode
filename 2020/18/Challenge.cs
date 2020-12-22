@@ -1,37 +1,44 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode.Year2020.Day18
 {
     public class Challenge : BaseChallenge
     {
+        public enum RuleSet { Part1, Part2 }
+
+        public static RuleSet ruleSet { get; private set; }
+
         public override object part1ExpectedAnswer => 5374004645253;
         public override (string message, object answer) SolvePart1()
         {
-            return ("The sum of all expressions is ", inputList.Select(Evaluate).Sum());
+            ruleSet = RuleSet.Part1;
+
+            return ("The sum of all expressions is ", inputList.Select(ParseExpression).Sum(x => x.value));
         }
         
-        public override object part2ExpectedAnswer => null;
+        public override object part2ExpectedAnswer => 88782789402798;
         public override (string message, object answer) SolvePart2()
         {
-            return ("", null);
+            ruleSet = RuleSet.Part2;
+
+            return ("The sum of all expressions is ", inputList.Select(ParseExpression).Sum(x => x.value));
         }
 
-        private long Evaluate(string expression)
+        private Expression ParseExpression(string expression)
         {
-            int index = 0;
+            List<IOperand> operands = new List<IOperand>();
+            List<char> operators = new List<char>();
 
-            long? result = null;
-            char op = default;
-
-            while (index < expression.Length)
+            int i = 0;
+            while (i < expression.Length)
             {
-                char c = expression[index];
-                long? value = null;
+                char c = expression[i];
 
                 if ('0' <= c && c <= '9')
                 {
-                    value = long.Parse($"{c}");
+                    operands.Add(new Number(long.Parse($"{c}")));
                 }
                 else
                 {
@@ -41,38 +48,20 @@ namespace AdventOfCode.Year2020.Day18
                             break;
                         case '+':
                         case '*':
-                            op = c;
+                            operators.Add(c);
                             break;
                         case '(':
-                            int iClose = IndexOfClosing(expression, index);
-                            value = Evaluate(expression.Substring(index + 1, iClose - index - 1));
-                            index = iClose;
+                            int iClose = IndexOfClosing(expression, i);
+                            operands.Add(ParseExpression(expression.Substring(i + 1, iClose - i - 1)));
+                            i = iClose;
                             break;
                     }
                 }
 
-                if (value.HasValue)
-                {
-                    if (!result.HasValue)
-                    {
-                        result = value;
-                    }
-                    else
-                    {
-                        result = op switch
-                        {
-                            '+' => result + value,
-                            '*' => result * value,
-                            _ => throw new Exception($"Unknown operator {op}")
-                        };
-                        op = default;
-                    }
-                }
-
-                index++;
+                i++;
             }
 
-            return result ?? throw new Exception($"Failed to evaluate \"{expression}\", no numbers found");
+            return new Expression(operands, operators);
         }
 
         private int IndexOfClosing(string expression, int iOpen)
