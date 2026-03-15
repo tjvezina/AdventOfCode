@@ -16,7 +16,8 @@ namespace AdventOfCode
     public static class DirectionExtensions
     {
         public static bool IsHorizontal(this Direction dir) => dir == Direction.Right || dir == Direction.Left;
-        public static bool IsPositive(this Direction dir) => dir == Direction.Right || dir == Direction.Up;
+        public static bool IsPositive(this Direction dir) => dir == Direction.Right
+            || dir == (CoordUtil.system == CoordSystem.YUp ? Direction.Up : Direction.Down);
 
         public static int Sign(this Direction dir) => (dir.IsPositive() ? 1 : -1);
 
